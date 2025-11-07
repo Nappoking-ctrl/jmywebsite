@@ -242,6 +242,7 @@ function eggFlash() {
 /* Keyboard Easter Egg */
 window.addEventListener("keydown", (e) => {
   secret += e.key.toLowerCase();
+
   if (secret.includes("curious")) {
     document.body.classList.add("theme-purple");
     text.textContent = "Too curious...";
@@ -270,7 +271,7 @@ window.addEventListener("keydown", (e) => {
     window.location.href = "https://open.spotify.com/user/31lkhiohnznx3fyeuyueyroxwbty?si=8bdc94309e32445d";
   }
 
-  /* Playlist links functionality */
+  /* Playlist links functionality (keyboard type 'playlist') */
   if (secret.includes("playlist")) {
     hint.innerHTML = `
       <a href="https://open.spotify.com/playlist/4f5vyzbM3LrhJbwyCjMrsj?si=957c2f3c5da7409c" target="_blank">Playlist 1</a>
@@ -284,6 +285,8 @@ window.addEventListener("keydown", (e) => {
 </script>
 </body>
 </html>
+
+
 
 
 
