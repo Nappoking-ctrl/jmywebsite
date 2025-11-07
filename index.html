@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Don't be so curious</title>
+<style>
+  :root {
+    --bg: #0b0f19;
+    --text: #ffffff;
+    --accent: #7dd3fc;
+    --transition: 0.4s ease;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    transition: background var(--transition), color var(--transition);
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  h1 {
+    font-size: clamp(32px, 6vw, 64px);
+    margin: 0 0 40px 0;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 20px rgba(125,211,252,0.2);
+    cursor: pointer;
+    user-select: none;
+    transition: text-shadow 0.5s ease, transform 0.3s ease;
+  }
+
+  h1:hover {
+    text-shadow: 0 0 25px var(--accent);
+    transform: scale(1.03);
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  button:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-1px);
+  }
+
+  .hint {
+    position: absolute;
+    bottom: 30px;
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    user-select: none;
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  /* Easter egg effects */
+  .glitch {
+    animation: glitch 0.6s steps(2,end) infinite;
+  }
+
+  @keyframes glitch {
+    0% { text-shadow: 2px 0 red, -2px 0 blue; }
+    50% { text-shadow: -2px 0 red, 2px 0 blue; }
+    100% { text-shadow: 2px 0 red, -2px 0 blue; }
+  }
+
+  .rotate {
+    animation: spin 1.5s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .flash {
+    animation: flash 0.4s ease-in-out 4;
+  }
+
+  @keyframes flash {
+    0%,100% { color: var(--text); }
+    50% { color: var(--accent); }
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { text-shadow: 0 0 10px var(--accent); }
+    50% { text-shadow: 0 0 30px var(--accent); }
+  }
+
+  /* Themes */
+  .theme-light {
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --accent: #2563eb;
+  }
+
+  .theme-purple {
+    --bg: #2e1a47;
+    --text: #e9d5ff;
+    --accent: #c084fc;
+  }
+
+  .theme-green {
+    --bg: #062a23;
+    --text: #d1fae5;
+    --accent: #6ee7b7;
+  }
+
+  .theme-red {
+    --bg: #240909;
+    --text: #ffe4e6;
+    --accent: #f87171;
+  }
+</style>
+</head>
+<body>
+  <h1 id="text">Don't be so curious</h1>
+
+  <div class="controls">
+    <button id="langBtn">Switch to German</button>
+    <button id="themeBtn">Change Color</button>
+  </div>
+
+  <div class="hint" id="hint">
+    🔍 Sometimes curiosity pays off. Try clicking, typing... or waiting.
+  </div>
+
+<script>
+const text = document.getElementById("text");
+const langBtn = document.getElementById("langBtn");
+const themeBtn = document.getElementById("themeBtn");
+const hint = document.getElementById("hint");
+
+let lang = "en";
+let themes = ["", "theme-light", "theme-purple", "theme-green", "theme-red"];
+let themeIndex = 0;
+
+/* Fade glow hint reveal */
+setTimeout(() => hint.style.opacity = 1, 1500);
+
+langBtn.onclick = () => {
+  if (lang === "en") {
+    text.textContent = "Sei nicht so neugierig";
+    lang = "de";
+    langBtn.textContent = "Switch to English";
+  } else {
+    text.textContent = "Don't be so curious";
+    lang = "en";
+    langBtn.textContent = "Switch to German";
+  }
+  eggFlash();
+};
+
+themeBtn.onclick = () => {
+  themeIndex = (themeIndex + 1) % themes.length;
+  document.body.className = themes[themeIndex];
+  eggFlash();
+};
+
+/* Easter eggs */
+let clicks = 0;
+let secret = "";
+let waiting = false;
+
+text.addEventListener("click", () => {
+  clicks++;
+  if (clicks === 3) {
+    text.classList.add("glitch");
+    hint.textContent = "👀 Something feels... off?";
+    setTimeout(()=>{ text.classList.remove("glitch"); hint.textContent = "🔍 Keep trying."; }, 2000);
+    clicks = 0;
+  } else if (clicks === 7) {
+    text.classList.add("rotate");
+    hint.textContent = "💫 You found another one!";
+    setTimeout(()=>{ text.classList.remove("rotate"); hint.textContent = "Try typing something."; }, 2000);
+    clicks = 0;
+  }
+});
+
+function eggFlash() {
+  text.classList.add("flash");
+  setTimeout(()=>text.classList.remove("flash"), 600);
+}
+
+/* Keyboard Easter Egg */
+window.addEventListener("keydown", (e) => {
+  secret += e.key.toLowerCase();
+  if (secret.includes("curious")) {
+    document.body.classList.add("theme-purple");
+    text.textContent = "Too curious...";
+    hint.textContent = "💜 Curiosity unlocked.";
+    setTimeout(()=>{
+      text.textContent = lang === "en" ? "Don't be so curious" : "Sei nicht so neugierig";
+      document.body.classList.remove("theme-purple");
+      hint.textContent = "🔍 There might be more.";
+      secret = "";
+    }, 2500);
+  }
+});
+
+/* Hidden time-based Easter Egg */
+setTimeout(() => {
+  if (!waiting) {
+    waiting = true;
+    text.classList.add("pulse");
+    hint.textContent = "⌛ Patience has its own rewards...";
+    setTimeout(() => {
+      text.classList.remove("pulse");
+      hint.textContent = "🔍 Or maybe it doesn’t?";
+    }, 4000);
+  }
+}, 12000);
+</script>
+</body>
+</html>
