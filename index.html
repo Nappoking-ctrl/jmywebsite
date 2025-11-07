@@ -273,6 +273,8 @@ function eggFlash() {
 /* Keyboard Easter Egg */
 window.addEventListener("keydown", (e) => {
   secret += e.key.toLowerCase();
+
+  // curious
   if (secret.includes("curious")) {
     document.body.classList.add("theme-purple");
     text.textContent = "Too curious...";
@@ -322,6 +324,103 @@ window.addEventListener("keydown", (e) => {
       secret = "";
     }, 2000);
   }
+
+  /* ---------- NEUE EASTER EGGS ---------- */
+
+  // mirror: flips horizontally for a moment
+  if (secret.includes("mirror")) {
+    document.body.style.transform = "scaleX(-1)";
+    text.textContent = "↩️ Reflections of curiosity...";
+    hint.textContent = "🔮 Sometimes you need to look from another side.";
+    setTimeout(() => {
+      document.body.style.transform = "scaleX(1)";
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Back to normal.";
+      secret = "";
+    }, 4000);
+  }
+
+  // dream: slow floating dream sequence
+  if (secret.includes("dream")) {
+    document.body.style.transition = "background 2s ease";
+    const prevBg = document.body.style.background || "";
+    document.body.style.background = "linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)";
+    const prevTransform = text.style.transform || "";
+    const prevOpacity = text.style.opacity || "";
+    text.style.transition = "transform 3s ease, opacity 3s ease";
+    text.style.transform = "translateY(-20px)";
+    text.style.opacity = "0.7";
+    text.textContent = "💭 You’re dreaming...";
+    hint.textContent = "✨ Feels unreal, doesn’t it?";
+    setTimeout(() => {
+      document.body.style.background = prevBg;
+      text.style.transform = prevTransform;
+      text.style.opacity = prevOpacity;
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Keep exploring...";
+      secret = "";
+    }, 6000);
+  }
+
+  // 404: visual glitch / error vibe
+  if (secret.includes("404")) {
+    text.classList.add("glitch");
+    hint.textContent = "⚠️ You broke reality.";
+    const prevFilter = document.body.style.filter || "";
+    document.body.style.filter = "contrast(2) saturate(0.5)";
+    setTimeout(() => {
+      text.classList.remove("glitch");
+      document.body.style.filter = prevFilter;
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Try fixing it...";
+      secret = "";
+    }, 4000);
+  }
+
+  // night: dim / glow text
+  if (secret.includes("night")) {
+    const prevBg = document.body.style.background || "";
+    const prevShadow = text.style.textShadow || "";
+    document.body.style.background = "#000";
+    text.style.textShadow = "0 0 40px #7dd3fc";
+    text.textContent = "🌙 Good night...";
+    hint.textContent = "💤 Shhh...";
+    setTimeout(() => {
+      document.body.style.background = prevBg;
+      text.style.textShadow = prevShadow;
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 The night fades.";
+      secret = "";
+    }, 6000);
+  }
+
+  // glowup: uses .pulse class defined in CSS
+  if (secret.includes("glowup")) {
+    text.classList.add("pulse");
+    hint.textContent = "⚡ Glow activated!";
+    setTimeout(() => {
+      text.classList.remove("pulse");
+      hint.textContent = "🔍 Glow faded...";
+      secret = "";
+    }, 5000);
+  }
+
+  // error: fake system error / red flash
+  if (secret.includes("error")) {
+    const prevColor = text.style.color || "";
+    const prevBg = document.body.style.background || "";
+    text.textContent = "❌ SYSTEM ERROR";
+    text.style.color = "#ff4d4d";
+    document.body.style.background = "#330000";
+    hint.textContent = "💀 Something went wrong...";
+    setTimeout(() => {
+      text.style.color = prevColor;
+      document.body.style.background = prevBg;
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Or did it?";
+      secret = "";
+    }, 4000);
+  }
 });
 
 /* Playlist links functionality */
@@ -344,6 +443,8 @@ userInput.addEventListener("input", function() {
 </script>
 </body>
 </html>
+
+
 
 
 
