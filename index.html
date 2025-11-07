@@ -168,19 +168,26 @@ let lang = "en";
 let themes = ["", "theme-light", "theme-purple", "theme-green", "theme-red"];
 let themeIndex = 0;
 
+/* Supported languages */
+const languages = {
+  en: "Don't be so curious",
+  de: "Sei nicht so neugierig",
+  es: "No seas tan curioso",
+  fr: "Ne sois pas si curieux",
+  it: "Non essere così curioso",
+  zh: "不要太好奇",
+};
+
+/* Initial language */
+let currentLanguage = "en";
+
 /* Fade glow hint reveal */
 setTimeout(() => hint.style.opacity = 1, 1500);
 
 langBtn.onclick = () => {
-  if (lang === "en") {
-    text.textContent = "Sei nicht so neugierig";
-    lang = "de";
-    langBtn.textContent = "Switch to English";
-  } else {
-    text.textContent = "Don't be so curious";
-    lang = "en";
-    langBtn.textContent = "Switch to German";
-  }
+  currentLanguage = (currentLanguage === "en") ? "de" : (currentLanguage === "de") ? "es" : (currentLanguage === "es") ? "fr" : (currentLanguage === "fr") ? "it" : (currentLanguage === "it") ? "zh" : "en";
+  text.textContent = languages[currentLanguage];
+  langBtn.textContent = `Switch to ${currentLanguage === "en" ? "German" : currentLanguage === "de" ? "Spanish" : currentLanguage === "es" ? "French" : currentLanguage === "fr" ? "Italian" : "Mandarin"}`;
   eggFlash();
 };
 
@@ -200,15 +207,22 @@ text.addEventListener("click", () => {
   if (clicks === 3) {
     text.classList.add("glitch");
     hint.textContent = "👀 Something feels... off?";
-    setTimeout(()=>{ text.classList.remove("glitch"); hint.textContent = "🔍 Keep trying."; }, 2000);
-    clicks = 0;
+    setTimeout(() => {
+      text.classList.remove("glitch");
+      hint.textContent = "🔍 Keep trying.";
+    }, 2000);
+    clicks = 0;  // Reset clicks after 3 clicks
   } else if (clicks === 7) {
     text.classList.add("rotate");
     hint.textContent = "💫 You found another one!";
-    setTimeout(()=>{ text.classList.remove("rotate"); hint.textContent = "Try typing something."; }, 2000);
-    clicks = 0;
+    setTimeout(() => {
+      text.classList.remove("rotate");
+      hint.textContent = "Try typing something.";
+    }, 2000);
+    clicks = 0;  // Reset clicks after 7 clicks to start the process over
   }
 });
+
 
 function eggFlash() {
   text.classList.add("flash");
@@ -223,26 +237,64 @@ window.addEventListener("keydown", (e) => {
     text.textContent = "Too curious...";
     hint.textContent = "💜 Curiosity unlocked.";
     setTimeout(()=>{
-      text.textContent = lang === "en" ? "Don't be so curious" : "Sei nicht so neugierig";
+      text.textContent = languages[currentLanguage];
       document.body.classList.remove("theme-purple");
       hint.textContent = "🔍 There might be more.";
       secret = "";
     }, 2500);
   }
-});
 
-/* Hidden time-based Easter Egg */
-setTimeout(() => {
-  if (!waiting) {
-    waiting = true;
-    text.classList.add("pulse");
-    hint.textContent = "⌛ Patience has its own rewards...";
+  /* Special "love" Easter Egg */
+  if (secret.includes("love") || secret.includes("joline")) {
+    text.textContent = "Ich liebe dich Joline ❤️";
+    hint.textContent = "💖 A special message just for you!";
     setTimeout(() => {
-      text.classList.remove("pulse");
-      hint.textContent = "🔍 Or maybe it doesn’t?";
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Keep exploring...";
+      secret = "";
     }, 4000);
   }
-}, 12000);
+
+  /* Special Spotify Easter Egg */
+  if (secret.includes("spotify")) {
+    window.location.href = "https://open.spotify.com/user/31lkhiohnznx3fyeuyueyroxwbty?si=8bdc94309e32445d";
+  }
+
+  /* Hidden time-based Easter Egg */
+  if (secret.includes("cat") || secret.includes("katze")) {
+    text.textContent = "Meow! 🐱";
+    hint.textContent = "🐾 Cats love surprises!";
+    setTimeout(() => {
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Keep exploring...";
+      secret = "";
+    }, 3000);
+  }
+
+  /* Surprise Easter Egg */
+  if (secret.includes("qwe") || secret.includes("xyz")) {
+    text.textContent = "SURPRISE! 🎉";
+    hint.textContent = "🎉 Well, that was unexpected!";
+    setTimeout(() => {
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Try again!";
+      secret = "";
+    }, 2000);
+  }
+
+  /* Quiet Easter Egg */
+  if (secret.includes("quiet") || secret.includes("ruhig")) {
+    document.body.style.filter = "grayscale(100%)";
+    text.textContent = "Shh… Quiet please...";
+    hint.textContent = "🔕 Silence is golden...";
+    setTimeout(() => {
+      text.textContent = languages[currentLanguage];
+      document.body.style.filter = "none";
+      hint.textContent = "🔍 Keep exploring...";
+      secret = "";
+    }, 3000);
+  }
+});
 </script>
 </body>
 </html>
