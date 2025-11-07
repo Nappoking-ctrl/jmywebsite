@@ -161,6 +161,25 @@
   .playlist-links a:hover {
     text-decoration: underline;
   }
+
+  /* Input field styling */
+  #userInput {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    width: 250px;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+  }
+
+  #userInput:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
 </style>
 </head>
 <body>
@@ -176,7 +195,7 @@
   </div>
 
   <!-- Input field to trigger playlist -->
-  <input type="text" id="userInput" placeholder="Type 'playlist' to see the list" />
+  <input type="text" id="userInput" />
 
   <!-- Section for displaying the playlist links -->
   <div class="playlist-links" id="playlistLinks"></div>
@@ -234,7 +253,7 @@ text.addEventListener("click", () => {
       text.classList.remove("glitch");
       hint.textContent = "🔍 Keep trying.";
     }, 2000);
-    clicks = 0;  // Reset clicks after 3 clicks
+    clicks = 0;
   } else if (clicks === 7) {
     text.classList.add("rotate");
     hint.textContent = "💫 You found another one!";
@@ -242,10 +261,9 @@ text.addEventListener("click", () => {
       text.classList.remove("rotate");
       hint.textContent = "Try typing something.";
     }, 2000);
-    clicks = 0;  // Reset clicks after 7 clicks to start the process over
+    clicks = 0;
   }
 });
-
 
 function eggFlash() {
   text.classList.add("flash");
@@ -293,30 +311,6 @@ window.addEventListener("keydown", (e) => {
       secret = "";
     }, 3000);
   }
-
-  /* Surprise Easter Egg */
-  if (secret.includes("qwe") || secret.includes("xyz")) {
-    text.textContent = "SURPRISE! 🎉";
-    hint.textContent = "🎉 Well, that was unexpected!";
-    setTimeout(() => {
-      text.textContent = languages[currentLanguage];
-      hint.textContent = "🔍 Try again!";
-      secret = "";
-    }, 2000);
-  }
-
-  /* Quiet Easter Egg */
-  if (secret.includes("quiet") || secret.includes("ruhig")) {
-    document.body.style.filter = "grayscale(100%)";
-    text.textContent = "Shh… Quiet please...";
-    hint.textContent = "🔕 Silence is golden...";
-    setTimeout(() => {
-      text.textContent = languages[currentLanguage];
-      document.body.style.filter = "none";
-      hint.textContent = "🔍 Keep exploring...";
-      secret = "";
-    }, 3000);
-  }
 });
 
 /* Playlist links functionality */
@@ -324,7 +318,7 @@ const playlistLinks = document.getElementById("playlistLinks");
 const userInput = document.getElementById("userInput");
 
 userInput.addEventListener("input", function() {
-  if (userInput.value.toLowerCase().includes("playlist")) {
+  if (userInput.value.toLowerCase().includes("jonny")) {
     playlistLinks.innerHTML = `
       <a href="https://open.spotify.com/playlist/4f5vyzbM3LrhJbwyCjMrsj?si=957c2f3c5da7409c" target="_blank">Playlist 1</a>
       <a href="https://open.spotify.com/playlist/0lIHcjXjm0PTAlkTDTu44u?si=ced6b3066fc94217" target="_blank">Playlist 2</a>
@@ -333,12 +327,14 @@ userInput.addEventListener("input", function() {
       <a href="https://open.spotify.com/playlist/4p4Wx5Yj3STdc2AbkhiGdP?si=ca9494d3a5f64a65" target="_blank">Playlist 5</a>
     `;
   } else {
-    playlistLinks.innerHTML = ""; // Clear when input doesn't contain "playlist"
+    playlistLinks.innerHTML = "";
   }
 });
 </script>
 </body>
 </html>
+
+
 
 
 
