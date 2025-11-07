@@ -311,6 +311,17 @@ window.addEventListener("keydown", (e) => {
       secret = "";
     }, 3000);
   }
+
+  /* Surprise Easter Egg */
+  if (secret.includes("qwe") || secret.includes("julius")) {
+    text.textContent = "SURPRISE! 🎉";
+    hint.textContent = "🎉 Well, that was unexpected!";
+    setTimeout(() => {
+      text.textContent = languages[currentLanguage];
+      hint.textContent = "🔍 Try again!";
+      secret = "";
+    }, 2000);
+  }
 });
 
 /* Playlist links functionality */
@@ -333,6 +344,8 @@ userInput.addEventListener("input", function() {
 </script>
 </body>
 </html>
+
+
 
 
 
