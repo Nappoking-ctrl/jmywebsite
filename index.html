@@ -144,6 +144,23 @@
     --text: #ffe4e6;
     --accent: #f87171;
   }
+
+  /* Playlist links styling */
+  .playlist-links {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .playlist-links a {
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+  }
+
+  .playlist-links a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -157,6 +174,12 @@
   <div class="hint" id="hint">
     🔍 Sometimes curiosity pays off. Try clicking, typing... or waiting.
   </div>
+
+  <!-- Input field to trigger playlist -->
+  <input type="text" id="userInput" placeholder="Type 'playlist' to see the list" />
+
+  <!-- Section for displaying the playlist links -->
+  <div class="playlist-links" id="playlistLinks"></div>
 
 <script>
 const text = document.getElementById("text");
@@ -295,6 +318,26 @@ window.addEventListener("keydown", (e) => {
     }, 3000);
   }
 });
+
+/* Playlist links functionality */
+const playlistLinks = document.getElementById("playlistLinks");
+const userInput = document.getElementById("userInput");
+
+userInput.addEventListener("input", function() {
+  if (userInput.value.toLowerCase().includes("playlist")) {
+    playlistLinks.innerHTML = `
+      <a href="https://open.spotify.com/playlist/4f5vyzbM3LrhJbwyCjMrsj?si=957c2f3c5da7409c" target="_blank">Playlist 1</a>
+      <a href="https://open.spotify.com/playlist/0lIHcjXjm0PTAlkTDTu44u?si=ced6b3066fc94217" target="_blank">Playlist 2</a>
+      <a href="https://open.spotify.com/playlist/6p8IMS8kEOUep45AgRL6KZ?si=ee274ffcfff040c2" target="_blank">Playlist 3</a>
+      <a href="https://open.spotify.com/playlist/0CKD379eGblSAKlL0P91qg?si=697f1be5c59f4ef7" target="_blank">Playlist 4</a>
+      <a href="https://open.spotify.com/playlist/4p4Wx5Yj3STdc2AbkhiGdP?si=ca9494d3a5f64a65" target="_blank">Playlist 5</a>
+    `;
+  } else {
+    playlistLinks.innerHTML = ""; // Clear when input doesn't contain "playlist"
+  }
+});
 </script>
 </body>
 </html>
+
+
