@@ -83,6 +83,17 @@
     text-align: center;
   }
 
+  .hint a {
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+  }
+
+  .hint a:hover {
+    text-decoration: underline;
+  }
+
   /* Easter egg effects */
   .glitch {
     animation: glitch 0.6s steps(2,end) infinite;
@@ -158,9 +169,6 @@
     🔍 Sometimes curiosity pays off. Try clicking, typing... or waiting.
   </div>
 
-  <!-- Input field to trigger playlist -->
-  <input type="text" id="userInput" placeholder="Type 'playlist' to see the list" />
-
 <script>
 const text = document.getElementById("text");
 const langBtn = document.getElementById("langBtn");
@@ -226,7 +234,6 @@ text.addEventListener("click", () => {
   }
 });
 
-
 function eggFlash() {
   text.classList.add("flash");
   setTimeout(()=>text.classList.remove("flash"), 600);
@@ -263,11 +270,9 @@ window.addEventListener("keydown", (e) => {
     window.location.href = "https://open.spotify.com/user/31lkhiohnznx3fyeuyueyroxwbty?si=8bdc94309e32445d";
   }
 
-  /* Playlist links functionality (inside hint box) */
-  const playlistLinks = document.getElementById("hint");
-
+  /* Playlist links functionality */
   if (secret.includes("playlist")) {
-    playlistLinks.innerHTML = `
+    hint.innerHTML = `
       <a href="https://open.spotify.com/playlist/4f5vyzbM3LrhJbwyCjMrsj?si=957c2f3c5da7409c" target="_blank">Playlist 1</a>
       <a href="https://open.spotify.com/playlist/0lIHcjXjm0PTAlkTDTu44u?si=ced6b3066fc94217" target="_blank">Playlist 2</a>
       <a href="https://open.spotify.com/playlist/6p8IMS8kEOUep45AgRL6KZ?si=ee274ffcfff040c2" target="_blank">Playlist 3</a>
@@ -279,6 +284,8 @@ window.addEventListener("keydown", (e) => {
 </script>
 </body>
 </html>
+
+
 
 
 
