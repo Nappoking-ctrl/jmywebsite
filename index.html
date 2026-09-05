@@ -1,2918 +1,2435 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Don't be so curious</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curiosity Casino</title>
 
 <style>
-
 :root {
-  --bg: #070912;
-  --text: #ffffff;
-  --accent: #7dd3fc;
-  --gold: #facc15;
-  --green: #4ade80;
-  --red: #fb7185;
-  --purple: #c084fc;
-  --muted: #8991a7;
-  --panel: rgba(18, 22, 38, .84);
-  --border: rgba(255,255,255,.1);
-  --transition: .4s ease;
+    --bg: #070912;
+    --panel: rgba(18, 22, 38, 0.92);
+    --panel2: rgba(25, 30, 50, 0.88);
+    --text: #f4f7ff;
+    --muted: #8e98b2;
+    --accent: #54bfff;
+    --accent2: #7f8cff;
+    --green: #52e29a;
+    --red: #ff5d78;
+    --gold: #ffd45a;
+    --purple: #b978ff;
+    --border: rgba(255,255,255,.09);
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(125,211,252,.13),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 10% 90%,
-      rgba(168,85,247,.08),
-      transparent 30%
-    ),
-    var(--bg);
-
-  color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
-
-  overflow-x: hidden;
-
-  opacity: 0;
-  animation: pageFadeIn 1.5s ease forwards;
-
-  transition:
-    background 1s ease,
-    color .5s ease,
-    filter .5s ease;
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(84,191,255,.12), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(127,140,255,.12), transparent 30%),
+        linear-gradient(135deg, #050711, #0b0e1b 50%, #050711);
+    overflow-x: hidden;
+    transition: .5s;
 }
-
-@keyframes pageFadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-
-/* =========================================
-   BACKGROUND GRID
-========================================= */
 
 body::before {
-  content: "";
-
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-
-  opacity: .035;
-
-  background-image:
-    linear-gradient(
-      rgba(255,255,255,.5) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.5) 1px,
-      transparent 1px
-    );
-
-  background-size: 45px 45px;
-
-  z-index: -1;
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .25;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 44px 44px;
 }
 
+body.night-mode {
+    background:
+        radial-gradient(circle at center, #111 0%, #020204 65%);
+}
 
-/* =========================================
-   HEADER
-========================================= */
+body.dream-mode {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,100,230,.18), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(100,180,255,.2), transparent 30%),
+        linear-gradient(135deg,#100719,#071426,#17081b);
+}
+
+body.julius-mode {
+    --accent: #ff405c;
+    --accent2: #ff8a3d;
+}
+
+.container {
+    width: min(1120px, calc(100% - 30px));
+    margin: auto;
+    padding: 35px 0 70px;
+}
 
 header {
-  width: 100%;
-  max-width: 1100px;
-
-  margin: auto;
-  padding: 22px 24px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    text-align: center;
+    margin-bottom: 28px;
 }
 
 .logo {
-  font-size: 18px;
-  font-weight: 900;
-
-  letter-spacing: .08em;
-
-  user-select: none;
-}
-
-.logo span {
-  color: var(--accent);
-}
-
-.balance {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-
-  padding: 10px 16px;
-
-  border-radius: 999px;
-
-  background: rgba(255,255,255,.045);
-
-  border: 1px solid var(--border);
-
-  backdrop-filter: blur(15px);
-
-  transition: .3s ease;
-}
-
-.balance:hover {
-  transform: scale(1.04);
-}
-
-.coin {
-  color: var(--gold);
-  font-weight: 900;
-}
-
-#balance {
-  font-weight: 900;
-}
-
-
-/* =========================================
-   MAIN
-========================================= */
-
-main {
-  width: 100%;
-  max-width: 900px;
-
-  margin: 25px auto 70px;
-
-  padding: 0 20px;
-
-  text-align: center;
-}
-
-h1 {
-  margin: 20px 0 8px;
-
-  font-size: clamp(38px, 7vw, 72px);
-
-  letter-spacing: -.04em;
-
-  cursor: pointer;
-  user-select: none;
-
-  text-shadow:
-    0 0 35px rgba(125,211,252,.2);
-
-  transition: .3s ease;
-}
-
-h1:hover {
-  transform: scale(1.025);
-
-  text-shadow:
-    0 0 40px var(--accent);
+    display: inline-block;
+    font-size: clamp(32px, 6vw, 62px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--purple));
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: logoGlow 3s ease-in-out infinite;
 }
 
 .subtitle {
-  color: var(--muted);
-
-  margin-bottom: 35px;
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 16px;
 }
 
+.balance-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 22px auto;
+    padding: 14px 24px;
+    width: fit-content;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(10,14,27,.8);
+    box-shadow: 0 10px 40px rgba(0,0,0,.25);
+}
 
-/* =========================================
-   CASINO
-========================================= */
+.coin {
+    font-size: 25px;
+}
+
+.balance {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.currency {
+    color: var(--gold);
+    font-weight: 800;
+}
 
 .casino {
-  padding: 30px;
-
-  border-radius: 28px;
-
-  background: var(--panel);
-
-  border: 1px solid var(--border);
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.35),
-    inset 0 1px rgba(255,255,255,.05);
-
-  backdrop-filter: blur(25px);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 25px;
+    background: linear-gradient(145deg, rgba(18,22,38,.96), rgba(9,12,23,.95));
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.04);
+    position: relative;
+    overflow: hidden;
 }
 
-.machine-title {
-  font-size: 13px;
-
-  text-transform: uppercase;
-
-  letter-spacing: .25em;
-
-  color: var(--accent);
-
-  margin-bottom: 20px;
+.casino::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(circle, rgba(84,191,255,.07), transparent 65%);
+    pointer-events: none;
 }
 
-
-/* =========================================
-   SLOT MACHINE
-========================================= */
-
-.slots {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  margin: 15px auto 25px;
+.section-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 18px;
 }
 
-.slot {
-  width: 115px;
-  height: 135px;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #151a2b,
-      #080b14
-    );
-
-  border: 2px solid rgba(255,255,255,.09);
-
-  box-shadow:
-    inset 0 0 30px rgba(0,0,0,.7),
-    0 10px 30px rgba(0,0,0,.25);
-
-  font-size: 66px;
-
-  user-select: none;
-
-  transition: .2s ease;
+.slot-wrapper {
+    max-width: 850px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
 }
 
-.slot.spinning {
-  animation: shake .09s infinite;
+.reels {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+    padding: 12px;
+    border-radius: 22px;
+    background: #050711;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,.75),
+        0 0 50px rgba(84,191,255,.05);
 }
 
-@keyframes shake {
-
-  0% {
-    transform: translateY(-3px);
-  }
-
-  50% {
-    transform: translateY(3px);
-  }
-
-  100% {
-    transform: translateY(-3px);
-  }
-
+.cell {
+    aspect-ratio: 1 / 1;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(28px, 5vw, 54px);
+    border-radius: 15px;
+    background:
+        linear-gradient(145deg, rgba(35,40,63,.96), rgba(15,19,33,.98));
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.04),
+        0 8px 20px rgba(0,0,0,.25);
+    transition: .25s;
+    user-select: none;
 }
 
-.slot.win {
-  border-color: var(--gold);
-
-  box-shadow:
-    0 0 30px rgba(250,204,21,.3),
-    inset 0 0 30px rgba(250,204,21,.08);
-
-  animation:
-    winPulse .7s ease infinite alternate;
+.cell.win {
+    animation: winCell .65s ease-in-out infinite alternate;
+    border-color: var(--gold);
+    box-shadow:
+        0 0 25px rgba(255,212,90,.45),
+        inset 0 0 25px rgba(255,212,90,.12);
 }
 
-@keyframes winPulse {
-
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.06);
-  }
-
+.cell.scatter {
+    animation: scatterPulse .7s ease-in-out infinite alternate;
 }
 
-
-/* =========================================
-   CONTROLS
-========================================= */
-
-.bet-area {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  gap: 15px;
-
-  margin: 15px 0;
+.cell.wild {
+    border-color: #b978ff;
+    box-shadow: 0 0 22px rgba(185,120,255,.35);
 }
 
-.bet-button {
-  width: 42px;
-  height: 42px;
-
-  padding: 0;
-
-  border-radius: 50%;
-
-  font-size: 20px;
+.cell.bonus {
+    border-color: #54bfff;
 }
 
-.bet {
-  min-width: 130px;
-
-  font-weight: 700;
+.spinning .cell {
+    filter: blur(2px);
+    transform: translateY(4px);
 }
 
-button {
-  border: 1px solid var(--border);
-
-  background: rgba(255,255,255,.06);
-
-  color: var(--text);
-
-  padding: 11px 16px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  transition: .2s ease;
-
-  font-family: inherit;
+.controls {
+    margin-top: 22px;
 }
 
-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-
-  background:
-    rgba(255,255,255,.11);
+.bet-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 
-button:disabled {
-  opacity: .4;
-
-  cursor: not-allowed;
+.control-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.05);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: .2s;
 }
 
-
-/* =========================================
-   SPIN BUTTON
-========================================= */
-
-.spin {
-  width: 100%;
-  max-width: 300px;
-
-  margin-top: 10px;
-
-  padding: 16px;
-
-  border: none;
-
-  background:
-    linear-gradient(
-      135deg,
-      #38bdf8,
-      #818cf8
-    );
-
-  color: #07101c;
-
-  font-size: 18px;
-
-  font-weight: 900;
-
-  box-shadow:
-    0 10px 30px
-    rgba(56,189,248,.2);
+.control-button:hover {
+    transform: scale(1.08);
+    background: rgba(255,255,255,.1);
 }
 
-.spin:hover:not(:disabled) {
-  background:
-    linear-gradient(
-      135deg,
-      #7dd3fc,
-      #a78bfa
-    );
+.bet-display {
+    min-width: 190px;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
 }
 
-
-/* =========================================
-   RESULT
-========================================= */
-
-.result {
-  min-height: 32px;
-
-  margin-top: 20px;
-
-  font-weight: 700;
-
-  color: var(--muted);
-
-  transition: .3s ease;
+.bet-small {
+    color: var(--muted);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 4px;
 }
 
-.result.win {
-  color: var(--green);
+.spin-button {
+    width: min(500px, 100%);
+    height: 70px;
+    display: block;
+    margin: auto;
+    border: 0;
+    border-radius: 18px;
+    background: linear-gradient(100deg, var(--accent), var(--accent2));
+    color: #050711;
+    font-size: 25px;
+    font-weight: 1000;
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(84,191,255,.18);
+    transition: .2s;
 }
 
-.result.lose {
-  color: var(--red);
+.spin-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px rgba(84,191,255,.3);
 }
 
-.result.jackpot {
-  color: var(--gold);
-
-  font-size: 21px;
+.spin-button:active {
+    transform: scale(.98);
 }
 
-
-/* =========================================
-   INFO
-========================================= */
-
-.info-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap: 12px;
-
-  margin-top: 20px;
+.spin-button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.info {
-  padding: 18px;
-
-  border-radius: 16px;
-
-  background:
-    rgba(255,255,255,.035);
-
-  border: 1px solid var(--border);
-
-  transition: .25s ease;
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
 }
 
-.info:hover {
-  transform: translateY(-3px);
-
-  background:
-    rgba(255,255,255,.055);
+.option-button {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.04);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .2s;
 }
 
-.info small {
-  color: var(--muted);
+.option-button:hover,
+.option-button.active {
+    background: rgba(84,191,255,.13);
+    border-color: rgba(84,191,255,.35);
 }
 
-.info strong {
-  display: block;
-
-  margin-top: 6px;
-
-  font-size: 20px;
+.info-bar {
+    margin-top: 18px;
+    text-align: center;
+    min-height: 32px;
+    color: var(--muted);
+    font-weight: 700;
 }
 
-
-/* =========================================
-   DAILY BONUS
-========================================= */
-
-.bonus {
-  margin-top: 20px;
-
-  padding: 18px;
-
-  border-radius: 18px;
-
-  border:
-    1px solid
-    rgba(125,211,252,.15);
-
-  background:
-    rgba(125,211,252,.035);
+.message {
+    font-size: 17px;
 }
 
-.bonus button {
-  margin-top: 10px;
+.message.win {
+    color: var(--gold);
 }
 
-
-/* =========================================
-   SECRET INPUT
-========================================= */
-
-.secret {
-  margin-top: 50px;
-
-  color:
-    rgba(255,255,255,.18);
-
-  font-size: 12px;
+.message.big {
+    color: var(--green);
+    font-size: 22px;
+    animation: pulse .7s infinite alternate;
 }
 
-#secretInput {
-  margin-top: 12px;
-
-  padding: 10px 14px;
-
-  border-radius: 10px;
-
-  border:
-    1px solid var(--border);
-
-  background:
-    rgba(255,255,255,.04);
-
-  color: white;
-
-  outline: none;
-
-  transition: .3s ease;
+.message.loss {
+    color: var(--muted);
 }
 
-#secretInput:focus {
-  border-color:
-    rgba(125,211,252,.5);
-
-  box-shadow:
-    0 0 20px
-    rgba(125,211,252,.1);
+.free-spins {
+    display: none;
+    text-align: center;
+    margin: 15px auto 0;
+    padding: 12px 20px;
+    width: fit-content;
+    border-radius: 999px;
+    background: rgba(185,120,255,.12);
+    border: 1px solid rgba(185,120,255,.3);
+    color: #d9b8ff;
+    font-weight: 900;
 }
 
-
-/* =========================================
-   JACKPOT SCREEN
-========================================= */
-
-.jackpot-screen {
-  position: fixed;
-
-  inset: 0;
-
-  display: none;
-
-  justify-content: center;
-  align-items: center;
-
-  background:
-    rgba(0,0,0,.78);
-
-  backdrop-filter: blur(10px);
-
-  z-index: 100;
+.free-spins.active {
+    display: block;
+    animation: pulse .8s infinite alternate;
 }
 
-.jackpot-box {
-  text-align: center;
-
-  padding: 50px;
-
-  border-radius: 30px;
-
-  background: #111522;
-
-  border:
-    1px solid
-    rgba(250,204,21,.4);
-
-  box-shadow:
-    0 0 100px
-    rgba(250,204,21,.25);
-
-  animation:
-    jackpotAppear .5s ease;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 25px;
 }
 
-@keyframes jackpotAppear {
-
-  from {
-    transform: scale(.5);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-
+.stat {
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    text-align: center;
 }
 
-.jackpot-box h2 {
-  font-size: 50px;
-
-  margin: 0;
-
-  color: var(--gold);
-
-  text-shadow:
-    0 0 30px
-    rgba(250,204,21,.5);
+.stat-label {
+    color: var(--muted);
+    font-size: 14px;
 }
 
-.jackpot-box p {
-  color: var(--muted);
+.stat-value {
+    margin-top: 8px;
+    font-size: 25px;
+    font-weight: 900;
 }
 
-.close {
-  margin-top: 15px;
+.lower-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 20px;
 }
 
-
-/* =========================================
-   FALLING EMOJIS
-========================================= */
-
-.falling {
-  position: fixed;
-
-  top: -60px;
-
-  pointer-events: none;
-
-  z-index: 200;
-
-  animation:
-    fall linear forwards;
+.card {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    background: rgba(13,17,30,.75);
 }
 
-@keyframes fall {
-
-  to {
-    transform:
-      translateY(110vh)
-      rotate(720deg);
-
-    opacity: 0;
-  }
-
+.card h3 {
+    margin-top: 0;
 }
 
-
-/* =========================================
-   GLITCH
-========================================= */
-
-.glitch {
-  animation:
-    glitch .12s infinite;
+.paytable {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-@keyframes glitch {
-
-  0% {
-    transform:
-      translate(2px,-1px);
-    text-shadow:
-      3px 0 red,
-      -3px 0 blue;
-  }
-
-  50% {
-    transform:
-      translate(-2px,1px);
-    text-shadow:
-      -3px 0 red,
-      3px 0 blue;
-  }
-
-  100% {
-    transform:
-      translate(2px,-1px);
-    text-shadow:
-      3px 0 red,
-      -3px 0 blue;
-  }
-
+.paytable td {
+    padding: 9px 4px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
 }
 
+.paytable td:last-child {
+    text-align: right;
+    font-weight: 900;
+}
 
-/* =========================================
-   PULSE
-========================================= */
+.daily {
+    text-align: center;
+}
 
-.pulse {
-  animation:
-    pulse 1s infinite;
+.daily p {
+    color: var(--muted);
+}
+
+.daily-button {
+    border: 0;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #050711;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.daily-button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.secret-area {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.secret-area input {
+    width: min(420px, 100%);
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    outline: none;
+    background: rgba(0,0,0,.3);
+    color: white;
+    text-align: center;
+}
+
+.secret-hint {
+    color: #59627a;
+    margin-top: 9px;
+    font-size: 13px;
+}
+
+.jackpot-banner {
+    position: relative;
+    margin: 0 auto 20px;
+    max-width: 850px;
+    padding: 12px;
+    text-align: center;
+    border-radius: 16px;
+    background: linear-gradient(90deg, rgba(255,212,90,.08), rgba(255,120,180,.08));
+    border: 1px solid rgba(255,212,90,.16);
+}
+
+.jackpot-value {
+    color: var(--gold);
+    font-size: 21px;
+    font-weight: 1000;
+}
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.particle {
+    position: absolute;
+    animation: particleFall 1.5s forwards ease-out;
+    font-size: 24px;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(8px);
+}
+
+.overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: min(500px, calc(100% - 30px));
+    padding: 30px;
+    border-radius: 25px;
+    background: #101527;
+    border: 1px solid rgba(255,255,255,.1);
+    text-align: center;
+    box-shadow: 0 30px 100px rgba(0,0,0,.6);
+    animation: modalIn .3s ease;
+}
+
+.modal h2 {
+    font-size: 35px;
+    margin-top: 0;
+}
+
+.modal-buttons {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.chest {
+    padding: 20px 10px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.05);
+    color: white;
+    cursor: pointer;
+    font-size: 35px;
+    transition: .2s;
+}
+
+.chest:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+}
+
+.close-modal {
+    margin-top: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+@keyframes logoGlow {
+    0%,100% { filter: drop-shadow(0 0 3px rgba(84,191,255,.15)); }
+    50% { filter: drop-shadow(0 0 18px rgba(84,191,255,.45)); }
+}
+
+@keyframes winCell {
+    from { transform: scale(1); }
+    to { transform: scale(1.07); }
+}
+
+@keyframes scatterPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.12) rotate(2deg); }
 }
 
 @keyframes pulse {
-
-  0%,100% {
-    text-shadow:
-      0 0 10px
-      var(--accent);
-  }
-
-  50% {
-    text-shadow:
-      0 0 45px
-      var(--accent);
-  }
-
+    from { transform: scale(1); }
+    to { transform: scale(1.04); }
 }
 
-
-/* =========================================
-   SPECIAL THEMES
-========================================= */
-
-.theme-purple {
-  --bg: #211132;
-  --accent: #c084fc;
+@keyframes particleFall {
+    0% {
+        opacity: 1;
+        transform: translate(0,0) scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(.3) rotate(720deg);
+    }
 }
 
-.theme-green {
-  --bg: #05231d;
-  --accent: #6ee7b7;
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.theme-red {
-  --bg: #250808;
-  --accent: #f87171;
+.shake {
+    animation: shake .45s;
 }
 
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media(max-width:600px) {
-
-  header {
-    padding: 18px;
-  }
-
-  .slots {
-    gap: 7px;
-  }
-
-  .slot {
-    width: 90px;
-    height: 110px;
-
-    font-size: 50px;
-  }
-
-  .casino {
-    padding: 20px 12px;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  h1 {
-    font-size: 43px;
-  }
-
-  .jackpot-box {
-    margin: 20px;
-
-    padding: 35px 20px;
-  }
-
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-12px); }
+    40% { transform: translateX(12px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
 }
 
-
-/* =========================================
-   SPECIAL EASTER EGG EFFECTS
-========================================= */
-
-.julius-mode {
-  animation:
-    juliusShake .08s infinite;
+.glitch {
+    animation: glitch .12s infinite;
 }
 
-@keyframes juliusShake {
-
-  0% {
-    transform: translate(0,0);
-  }
-
-  25% {
-    transform: translate(3px,-2px);
-  }
-
-  50% {
-    transform: translate(-3px,2px);
-  }
-
-  75% {
-    transform: translate(2px,3px);
-  }
-
-  100% {
-    transform: translate(0,0);
-  }
-
+@keyframes glitch {
+    0% { transform: translate(0); filter: hue-rotate(0); }
+    25% { transform: translate(4px,-2px); filter: hue-rotate(70deg); }
+    50% { transform: translate(-4px,2px); filter: hue-rotate(150deg); }
+    75% { transform: translate(2px,2px); filter: hue-rotate(230deg); }
+    100% { transform: translate(0); filter: hue-rotate(360deg); }
 }
 
-.dream-mode {
-  animation:
-    dreamFloat 4s ease-in-out infinite;
+.mirror {
+    transform: scaleX(-1);
 }
 
-@keyframes dreamFloat {
+@media(max-width: 700px) {
+    .container {
+        width: min(100% - 14px, 1120px);
+        padding-top: 20px;
+    }
 
-  0%,100% {
-    transform: translateY(0);
-  }
+    .casino {
+        padding: 12px;
+        border-radius: 20px;
+    }
 
-  50% {
-    transform: translateY(-8px);
-  }
+    .reels {
+        gap: 5px;
+        padding: 6px;
+    }
 
+    .cell {
+        min-height: 58px;
+        border-radius: 9px;
+        font-size: 30px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .lower-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .spin-button {
+        height: 60px;
+    }
 }
-
 </style>
 </head>
 
-
 <body>
 
+<div class="particles" id="particles"></div>
 
-<!-- ======================================
-     HEADER
-====================================== -->
+<div class="overlay" id="bonusOverlay">
+    <div class="modal">
+        <h2>🎁 BONUS!</h2>
+        <p>Wähle eine Schatzkiste.</p>
+        <div class="modal-buttons">
+            <button class="chest" onclick="chooseChest(0)">🎁</button>
+            <button class="chest" onclick="chooseChest(1)">🎁</button>
+            <button class="chest" onclick="chooseChest(2)">🎁</button>
+        </div>
+        <button class="close-modal" onclick="closeBonus()">Später</button>
+    </div>
+</div>
+
+<div class="container">
 
 <header>
+    <div class="logo" id="logo">CURIOSITY CASINO</div>
+    <div class="subtitle">Nothing happened. Or did it?</div>
 
-  <div class="logo">
-    CURIOUS<span>ITY</span>
-  </div>
-
-  <div class="balance">
-
-    <span class="coin">◉</span>
-
-    <span id="balance">
-      1000
-    </span>
-
-    <span>
-      Curios
-    </span>
-
-  </div>
-
+    <div class="balance-panel">
+        <span class="coin">🪙</span>
+        <span class="balance" id="balance">1000</span>
+        <span class="currency">CURIOS</span>
+    </div>
 </header>
 
+<main class="casino" id="casino">
 
-<!-- ======================================
-     MAIN
-====================================== -->
-
-<main>
-
-
-  <h1 id="title">
-    Don't be so curious.
-  </h1>
-
-
-  <div class="subtitle" id="subtitle">
-    You probably shouldn't press this.
-  </div>
-
-
-  <!-- ====================================
-       SLOT MACHINE
-  ===================================== -->
-
-  <section class="casino">
-
-    <div class="machine-title">
-      The Curious Machine
+    <div class="jackpot-banner">
+        👑 MEGA JACKPOT
+        <div class="jackpot-value" id="jackpot">10.000 🪙</div>
     </div>
 
-
-    <div class="slots">
-
-      <div class="slot" id="slot1">
-        🍒
-      </div>
-
-      <div class="slot" id="slot2">
-        ⭐
-      </div>
-
-      <div class="slot" id="slot3">
-        💎
-      </div>
-
+    <div class="section-title">
+        🎰 Curiosity 5×5
     </div>
 
+    <div class="slot-wrapper">
 
-    <div class="bet-area">
+        <div class="reels" id="reels"></div>
 
-      <button
-        class="bet-button"
-        onclick="changeBet(-10)"
-      >
-        −
-      </button>
+        <div class="free-spins" id="freeSpins">
+            🎁 FREISPIELE:
+            <span id="freeSpinCount">0</span>
+        </div>
 
+        <div class="controls">
 
-      <div class="bet">
+            <div class="bet-row">
 
-        Einsatz:
+                <button class="control-button" id="minusBet">−</button>
 
-        <span id="bet">
-          10
-        </span>
+                <div class="bet-display">
+                    <span class="bet-small">EINSATZ</span>
+                    <span id="bet">20</span> 🪙
+                </div>
 
-        ◉
+                <button class="control-button" id="plusBet">+</button>
 
-      </div>
+            </div>
 
+            <button class="spin-button" id="spinButton">
+                SPIN 🎰
+            </button>
 
-      <button
-        class="bet-button"
-        onclick="changeBet(10)"
-      >
-        +
-      </button>
+            <div class="options">
+                <button class="option-button" id="turboButton">
+                    ⚡ Turbo
+                </button>
 
+                <button class="option-button" id="autoButton">
+                    🔄 Auto
+                </button>
+
+                <button class="option-button" id="linesButton">
+                    🎯 20 Lines
+                </button>
+            </div>
+
+            <div class="info-bar">
+                <div class="message" id="message">
+                    Bereit für den nächsten Spin...
+                </div>
+            </div>
+
+        </div>
     </div>
-
-
-    <button
-      class="spin"
-      id="spinButton"
-      onclick="spin()"
-    >
-      SPIN
-    </button>
-
-
-    <div
-      class="result"
-      id="result"
-    >
-      Let's see what happens...
-    </div>
-
-  </section>
-
-
-  <!-- ====================================
-       STATISTICS
-  ===================================== -->
-
-  <div class="info-grid">
-
-
-    <div class="info">
-
-      <small>
-        Spins
-      </small>
-
-      <strong id="spins">
-        0
-      </strong>
-
-    </div>
-
-
-    <div class="info">
-
-      <small>
-        Größter Gewinn
-      </small>
-
-      <strong id="biggestWin">
-        0 ◉
-      </strong>
-
-    </div>
-
-
-    <div class="info">
-
-      <small>
-        Jackpots
-      </small>
-
-      <strong id="jackpots">
-        0
-      </strong>
-
-    </div>
-
-
-  </div>
-
-
-  <!-- ====================================
-       DAILY BONUS
-  ===================================== -->
-
-  <div class="bonus">
-
-    🎁
-
-    <strong>
-      Daily Curiosity
-    </strong>
-
-    <br>
-
-    <small>
-      Komm morgen wieder und du bekommst
-      kostenlose Curios.
-    </small>
-
-    <br>
-
-    <button
-      id="bonusButton"
-      onclick="dailyBonus()"
-    >
-      Bonus abholen
-    </button>
-
-  </div>
-
-
-  <!-- ====================================
-       SECRET AREA
-  ===================================== -->
-
-  <div class="secret">
-
-    There may be more hidden here...
-
-    <br>
-
-    <input
-      type="text"
-      id="secretInput"
-      placeholder="enter a secret..."
-      autocomplete="off"
-      spellcheck="false"
-    >
-
-  </div>
-
-
 </main>
 
+<div class="stats">
 
-<!-- ======================================
-     JACKPOT OVERLAY
-====================================== -->
+    <div class="stat">
+        <div class="stat-label">Spins</div>
+        <div class="stat-value" id="spins">0</div>
+    </div>
 
-<div
-  class="jackpot-screen"
-  id="jackpotScreen"
->
+    <div class="stat">
+        <div class="stat-label">Größter Gewinn</div>
+        <div class="stat-value" id="biggestWin">0 🪙</div>
+    </div>
 
-  <div class="jackpot-box">
+    <div class="stat">
+        <div class="stat-label">Jackpots</div>
+        <div class="stat-value" id="jackpots">0</div>
+    </div>
 
-    <h2>
-      JACKPOT
-    </h2>
-
-    <p>
-      Curiosity really did pay off.
-    </p>
-
-    <h3 id="jackpotAmount">
-      +0 Curios
-    </h3>
-
-    <button
-      class="close"
-      onclick="closeJackpot()"
-    >
-      Continue
-    </button>
-
-  </div>
+    <div class="stat">
+        <div class="stat-label">Win Streak</div>
+        <div class="stat-value" id="streak">0 🔥</div>
+    </div>
 
 </div>
 
+<div class="lower-grid">
+
+    <div class="card">
+        <h3>💰 Gewinn-Tabelle</h3>
+
+        <table class="paytable">
+            <tr>
+                <td>🍒🍒🍒</td>
+                <td>× 5</td>
+            </tr>
+            <tr>
+                <td>🍋🍋🍋</td>
+                <td>× 7</td>
+            </tr>
+            <tr>
+                <td>🔔🔔🔔</td>
+                <td>× 10</td>
+            </tr>
+            <tr>
+                <td>⭐️⭐️⭐️</td>
+                <td>× 15</td>
+            </tr>
+            <tr>
+                <td>💎💎💎</td>
+                <td>× 25</td>
+            </tr>
+            <tr>
+                <td>👑👑👑</td>
+                <td>× 50</td>
+            </tr>
+            <tr>
+                <td>👁️👁️👁️</td>
+                <td>JACKPOT</td>
+            </tr>
+            <tr>
+                <td>💎 Scatter ×3</td>
+                <td>+ 5 Freispiele</td>
+            </tr>
+            <tr>
+                <td>💎 Scatter ×4</td>
+                <td>+ 10 Freispiele</td>
+            </tr>
+            <tr>
+                <td>💎 Scatter ×5+</td>
+                <td>+ 20 Freispiele</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card daily">
+        <h3>🎁 Daily Curiosity</h3>
+        <p>
+            Jeden Tag kannst du dir einen kostenlosen Bonus holen.
+        </p>
+
+        <button class="daily-button" id="dailyButton">
+            BONUS ABHOLEN
+        </button>
+
+        <p id="dailyText"></p>
+
+        <hr style="border-color:rgba(255,255,255,.06); margin:25px 0;">
+
+        <h3>🔥 Spiel-Features</h3>
+
+        <p>
+            👁️ Wild ersetzt Symbole<br>
+            💎 Scatter startet Freispiele<br>
+            🎁 Bonus-Kisten<br>
+            👑 Jackpot<br>
+            ⚡ Turbo Spin<br>
+            🔄 Auto Spin
+        </p>
+    </div>
+
+</div>
+
+<div class="secret-area">
+
+    <input
+        id="secretInput"
+        type="text"
+        autocomplete="off"
+        placeholder="There may be more hidden here..."
+    >
+
+    <div class="secret-hint">
+        Vielleicht gibt es geheime Wörter...
+    </div>
+
+</div>
+
+</div>
 
 <script>
+/* =========================================================
+   CURIOSITY CASINO
+   ========================================================= */
 
+const SYMBOLS = [
+    "🍒",
+    "🍋",
+    "🔔",
+    "⭐",
+    "💎",
+    "👑",
+    "👁️",
+    "🃏"
+];
 
-/* =========================================
-   GAME DATA
-========================================= */
+const NORMAL_SYMBOLS = [
+    "🍒",
+    "🍋",
+    "🔔",
+    "⭐",
+    "💎",
+    "👑"
+];
 
-let game =
-  JSON.parse(
-    localStorage.getItem(
-      "curiosityCasino"
-    )
-  ) ||
-  {
+const ROWS = 5;
+const COLS = 5;
 
+const BETS = [10,20,30,50,75,100,150,200,300,500];
+
+const PAYOUTS = {
+    "🍒": 5,
+    "🍋": 7,
+    "🔔": 10,
+    "⭐": 15,
+    "💎": 25,
+    "👑": 50
+};
+
+let state = {
     balance: 1000,
-
-    bet: 10,
-
+    bet: 20,
     spins: 0,
-
     biggestWin: 0,
-
     jackpots: 0,
+    streak: 0,
+    freeSpins: 0,
+    totalWon: 0,
+    totalLost: 0,
+    autoSpin: false,
+    turbo: false,
+    jackpot: 10000,
+    lastDaily: null
+};
 
-    lastBonus: null
+let grid = [];
+let spinning = false;
+let autoTimer = null;
 
-  };
+const reels = document.getElementById("reels");
+const balanceEl = document.getElementById("balance");
+const betEl = document.getElementById("bet");
+const spinsEl = document.getElementById("spins");
+const biggestWinEl = document.getElementById("biggestWin");
+const jackpotsEl = document.getElementById("jackpots");
+const streakEl = document.getElementById("streak");
+const messageEl = document.getElementById("message");
+const freeSpinBox = document.getElementById("freeSpins");
+const freeSpinCountEl = document.getElementById("freeSpinCount");
+const jackpotEl = document.getElementById("jackpot");
+const spinButton = document.getElementById("spinButton");
+const turboButton = document.getElementById("turboButton");
+const autoButton = document.getElementById("autoButton");
+const secretInput = document.getElementById("secretInput");
 
+function loadGame() {
+    try {
+        const saved = localStorage.getItem("curiosityCasino");
 
-/* =========================================
-   DOM
-========================================= */
+        if (saved) {
+            state = {
+                ...state,
+                ...JSON.parse(saved)
+            };
+        }
+    } catch (e) {
+        console.log("Save konnte nicht geladen werden.");
+    }
 
-const title =
-  document.getElementById("title");
-
-const subtitle =
-  document.getElementById("subtitle");
-
-const balance =
-  document.getElementById("balance");
-
-const betDisplay =
-  document.getElementById("bet");
-
-const result =
-  document.getElementById("result");
-
-const spinButton =
-  document.getElementById("spinButton");
-
-const secretInput =
-  document.getElementById("secretInput");
-
-
-const slots = [
-
-  document.getElementById("slot1"),
-
-  document.getElementById("slot2"),
-
-  document.getElementById("slot3")
-
-];
-
-
-/* =========================================
-   SYMBOLS
-========================================= */
-
-const symbols = [
-
-  {
-    icon: "🍒",
-    multiplier: 3
-  },
-
-  {
-    icon: "🍋",
-    multiplier: 4
-  },
-
-  {
-    icon: "🔔",
-    multiplier: 6
-  },
-
-  {
-    icon: "⭐",
-    multiplier: 10
-  },
-
-  {
-    icon: "💎",
-    multiplier: 20
-  },
-
-  {
-    icon: "👁️",
-    multiplier: 50
-  }
-
-];
-
-
-/* =========================================
-   SAVE
-========================================= */
+    updateUI();
+}
 
 function saveGame() {
-
-  localStorage.setItem(
-    "curiosityCasino",
-    JSON.stringify(game)
-  );
-
+    try {
+        localStorage.setItem(
+            "curiosityCasino",
+            JSON.stringify(state)
+        );
+    } catch (e) {
+        console.log("Save konnte nicht gespeichert werden.");
+    }
 }
-
-
-/* =========================================
-   UI
-========================================= */
 
 function updateUI() {
+    balanceEl.textContent = Math.floor(state.balance).toLocaleString("de-DE");
+    betEl.textContent = state.bet;
+    spinsEl.textContent = state.spins;
+    biggestWinEl.textContent =
+        Math.floor(state.biggestWin).toLocaleString("de-DE") + " 🪙";
 
-  balance.textContent =
-    game.balance;
+    jackpotsEl.textContent = state.jackpots;
+    streakEl.textContent = state.streak + " 🔥";
 
-  betDisplay.textContent =
-    game.bet;
+    jackpotEl.textContent =
+        Math.floor(state.jackpot).toLocaleString("de-DE") + " 🪙";
 
-  document.getElementById(
-    "spins"
-  ).textContent =
-    game.spins;
+    freeSpinCountEl.textContent = state.freeSpins;
 
-  document.getElementById(
-    "biggestWin"
-  ).textContent =
-    game.biggestWin + " ◉";
+    if (state.freeSpins > 0) {
+        freeSpinBox.classList.add("active");
+    } else {
+        freeSpinBox.classList.remove("active");
+    }
 
-  document.getElementById(
-    "jackpots"
-  ).textContent =
-    game.jackpots;
+    spinButton.disabled = spinning;
 
+    saveGame();
 }
-
-
-updateUI();
-
-
-/* =========================================
-   BET
-========================================= */
-
-function changeBet(amount) {
-
-  game.bet += amount;
-
-  if (game.bet < 10) {
-    game.bet = 10;
-  }
-
-  if (game.bet > 100) {
-    game.bet = 100;
-  }
-
-  updateUI();
-
-}
-
-
-/* =========================================
-   RANDOM SYMBOL
-========================================= */
 
 function randomSymbol() {
 
-  return symbols[
-    Math.floor(
-      Math.random() *
-      symbols.length
-    )
-  ];
+    const r = Math.random();
 
+    /*
+       Wild: ca. 5%
+       Scatter: ca. 7%
+       Bonus: ca. 3%
+    */
+
+    if (r < 0.05) return "🃏";
+    if (r < 0.12) return "💎";
+    if (r < 0.15) return "🎁";
+
+    return NORMAL_SYMBOLS[
+        Math.floor(Math.random() * NORMAL_SYMBOLS.length)
+    ];
 }
 
+function generateGrid() {
 
-/* =========================================
-   SPIN
-========================================= */
+    grid = [];
 
-function spin() {
+    for (let row = 0; row < ROWS; row++) {
 
-  if (game.balance < game.bet) {
+        grid[row] = [];
 
-    showResult(
-      "Nicht genug Curios. 👀",
-      "lose"
-    );
+        for (let col = 0; col < COLS; col++) {
+            grid[row][col] = randomSymbol();
+        }
+    }
 
-    return;
-  }
+    renderGrid();
+}
 
+function renderGrid(winPositions = []) {
 
-  game.balance -= game.bet;
+    reels.innerHTML = "";
 
-  game.spins++;
+    for (let row = 0; row < ROWS; row++) {
 
+        for (let col = 0; col < COLS; col++) {
 
-  spinButton.disabled = true;
+            const cell = document.createElement("div");
 
+            cell.className = "cell";
 
-  slots.forEach(slot => {
+            const symbol = grid[row][col];
 
-    slot.classList.remove(
-      "win"
-    );
+            cell.textContent = symbol;
 
-    slot.classList.add(
-      "spinning"
-    );
+            const isWin = winPositions.some(
+                p => p[0] === row && p[1] === col
+            );
 
-  });
+            if (isWin) {
+                cell.classList.add("win");
+            }
 
+            if (symbol === "💎") {
+                cell.classList.add("scatter");
+            }
 
-  const animation =
-    setInterval(() => {
+            if (symbol === "🃏") {
+                cell.classList.add("wild");
+            }
 
-      slots.forEach(slot => {
+            if (symbol === "🎁") {
+                cell.classList.add("bonus");
+            }
 
-        slot.textContent =
-          randomSymbol().icon;
+            reels.appendChild(cell);
+        }
+    }
+}
 
-      });
+function createRandomGrid() {
 
-    }, 70);
+    for (let row = 0; row < ROWS; row++) {
 
+        for (let col = 0; col < COLS; col++) {
 
-  setTimeout(() => {
+            grid[row][col] = randomSymbol();
+        }
+    }
+}
 
-    clearInterval(
-      animation
-    );
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+async function spin() {
 
-    const finalSymbols = [
+    if (spinning) return;
 
-      randomSymbol(),
+    const freeSpin = state.freeSpins > 0;
 
-      randomSymbol(),
+    if (!freeSpin && state.balance < state.bet) {
 
-      randomSymbol()
+        showMessage(
+            "Zu wenig Curios! 🪙",
+            "loss"
+        );
 
-    ];
+        state.autoSpin = false;
+        autoButton.classList.remove("active");
 
+        return;
+    }
 
-    finalSymbols.forEach(
-      (symbol, index) => {
+    spinning = true;
 
-        slots[index]
-          .textContent =
-          symbol.icon;
+    if (!freeSpin) {
+        state.balance -= state.bet;
+        state.totalLost += state.bet;
+    } else {
+        state.freeSpins--;
+    }
 
-        slots[index]
-          .classList.remove(
-            "spinning"
-          );
-
-      }
-    );
-
-
-    calculateWin(
-      finalSymbols
-    );
-
-
-    spinButton.disabled = false;
-
-
-    saveGame();
+    state.spins++;
 
     updateUI();
 
-  }, 1100);
+    reels.classList.add("spinning");
 
-}
+    const duration = state.turbo ? 350 : 900;
 
+    const cycles = state.turbo ? 3 : 8;
 
-/* =========================================
-   WIN CALCULATION
-========================================= */
+    for (let i = 0; i < cycles; i++) {
 
-function calculateWin(resultSymbols) {
+        createRandomGrid();
+        renderGrid();
 
-  const icons =
-    resultSymbols.map(
-      x => x.icon
-    );
+        await sleep(duration / cycles);
+    }
 
+    createRandomGrid();
 
-  let win = 0;
+    reels.classList.remove("spinning");
 
+    const result = calculateWins();
 
-  /* ================================
-     JACKPOT
-  ================================= */
+    applyResult(result);
 
-  if (
-    icons[0] === "👁️" &&
-    icons[1] === "👁️" &&
-    icons[2] === "👁️"
-  ) {
+    renderGrid(result.positions);
 
-    win =
-      game.bet * 100;
+    spinning = false;
 
-
-    game.balance += win;
-
-    game.jackpots++;
-
-
-    game.biggestWin =
-      Math.max(
-        game.biggestWin,
-        win
-      );
-
-
-    slots.forEach(slot => {
-
-      slot.classList.add(
-        "win"
-      );
-
-    });
-
-
-    document.getElementById(
-      "jackpotAmount"
-    ).textContent =
-      "+" + win + " Curios";
-
-
-    document.getElementById(
-      "jackpotScreen"
-    ).style.display =
-      "flex";
-
-
-    createParticles(
-      "💎"
-    );
-
-
-    return;
-
-  }
-
-
-  /* ================================
-     THREE EQUAL
-  ================================= */
-
-  if (
-    icons[0] === icons[1] &&
-    icons[1] === icons[2]
-  ) {
-
-    const multiplier =
-      resultSymbols[0]
-        .multiplier;
-
-
-    win =
-      game.bet *
-      multiplier;
-
-
-    game.balance += win;
-
-
-    game.biggestWin =
-      Math.max(
-        game.biggestWin,
-        win
-      );
-
-
-    slots.forEach(slot => {
-
-      slot.classList.add(
-        "win"
-      );
-
-    });
-
-
-    showResult(
-      "✨ Drei gleiche! +" +
-      win +
-      " Curios",
-      "win"
-    );
-
-
-    createParticles(
-      resultSymbols[0].icon
-    );
-
-
-    return;
-
-  }
-
-
-  /* ================================
-     TWO EQUAL
-  ================================= */
-
-  if (
-    icons[0] === icons[1] ||
-    icons[1] === icons[2] ||
-    icons[0] === icons[2]
-  ) {
-
-    win =
-      game.bet * 2;
-
-
-    game.balance += win;
-
-
-    game.biggestWin =
-      Math.max(
-        game.biggestWin,
-        win
-      );
-
-
-    showResult(
-      "Nicht schlecht. +" +
-      win +
-      " Curios",
-      "win"
-    );
-
-
-    return;
-
-  }
-
-
-  /* ================================
-     NOTHING
-  ================================= */
-
-  showResult(
-    "Nichts diesmal... 👀",
-    "lose"
-  );
-
-}
-
-
-/* =========================================
-   RESULT
-========================================= */
-
-function showResult(
-  message,
-  type = ""
-) {
-
-  result.textContent =
-    message;
-
-  result.className =
-    "result " + type;
-
-}
-
-
-/* =========================================
-   DAILY BONUS
-========================================= */
-
-function dailyBonus() {
-
-  const today =
-    new Date()
-      .toISOString()
-      .slice(0,10);
-
-
-  if (
-    game.lastBonus ===
-    today
-  ) {
-
-    showResult(
-      "Der Bonus wurde heute schon abgeholt.",
-      "lose"
-    );
-
-    return;
-
-  }
-
-
-  const amount =
-    250 +
-    Math.floor(
-      Math.random() * 251
-    );
-
-
-  game.balance += amount;
-
-  game.lastBonus =
-    today;
-
-
-  showResult(
-    "🎁 +" +
-    amount +
-    " kostenlose Curios!",
-    "win"
-  );
-
-
-  updateUI();
-
-  saveGame();
-
-  checkBonus();
-
-}
-
-
-/* =========================================
-   CHECK BONUS
-========================================= */
-
-function checkBonus() {
-
-  const today =
-    new Date()
-      .toISOString()
-      .slice(0,10);
-
-
-  if (
-    game.lastBonus ===
-    today
-  ) {
-
-    const button =
-      document.getElementById(
-        "bonusButton"
-      );
-
-
-    button.disabled =
-      true;
-
-
-    button.textContent =
-      "Morgen wieder";
-
-  }
-
-}
-
-
-checkBonus();
-
-
-/* =========================================
-   PARTICLES
-========================================= */
-
-function createParticles(
-  emoji
-) {
-
-  for (
-    let i = 0;
-    i < 35;
-    i++
-  ) {
-
-    const element =
-      document.createElement(
-        "div"
-      );
-
-
-    element.className =
-      "falling";
-
-
-    element.textContent =
-      emoji;
-
-
-    element.style.left =
-      Math.random() * 100 +
-      "vw";
-
-
-    element.style.fontSize =
-      18 +
-      Math.random() * 30 +
-      "px";
-
-
-    element.style.animationDuration =
-      2 +
-      Math.random() * 3 +
-      "s";
-
-
-    document.body.appendChild(
-      element
-    );
-
-
-    setTimeout(() => {
-
-      element.remove();
-
-    }, 5500);
-
-  }
-
-}
-
-
-/* =========================================
-   JACKPOT CLOSE
-========================================= */
-
-function closeJackpot() {
-
-  document.getElementById(
-    "jackpotScreen"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =========================================
-   EASTER EGG SYSTEM
-========================================= */
-
-/*
-   Die Codes funktionieren auf zwei Wegen:
-
-   1. Unten im geheimen Eingabefeld
-   2. Einfach irgendwo auf der Seite tippen
-
-   Dadurch bleiben die alten Easter Eggs erhalten.
-*/
-
-
-let secret =
-  "";
-
-let secretTimer;
-
-
-/* =========================================
-   NORMAL KEYBOARD
-========================================= */
-
-window.addEventListener(
-  "keydown",
-  function(e) {
+    updateUI();
 
     /*
-      Wenn man gerade im
-      Secret Input schreibt,
-      übernimmt dieser die Eingabe.
+       Auto Spin
     */
 
-    if (
-      document.activeElement ===
-      secretInput
-    ) {
-      return;
-    }
+    if (state.autoSpin) {
 
+        if (
+            state.balance >= state.bet ||
+            state.freeSpins > 0
+        ) {
+
+            autoTimer = setTimeout(
+                spin,
+                state.turbo ? 500 : 1100
+            );
+
+        } else {
+
+            state.autoSpin = false;
+            autoButton.classList.remove("active");
+
+            showMessage(
+                "Auto Spin beendet – Curios aufgebraucht.",
+                "loss"
+            );
+        }
+    }
+}
+
+function calculateWins() {
+
+    const positions = [];
+    let win = 0;
 
     /*
-      Nur Buchstaben,
-      Zahlen und Sonderzeichen
-      aufnehmen.
+       20 Gewinnlinien:
+
+       0-4 gerade
+       5-9 Spalten
+       10-19 verschiedene Diagonalen / Muster
     */
 
-    secret +=
-      e.key.toLowerCase();
-
-
-    clearTimeout(
-      secretTimer
-    );
-
-
-    secretTimer =
-      setTimeout(() => {
-
-        secret = "";
-
-      }, 5000);
-
-
-    checkSecret(
-      secret
-    );
-
-  }
-);
-
-
-/* =========================================
-   SECRET INPUT
-========================================= */
-
-secretInput.addEventListener(
-  "keydown",
-  function(e) {
-
-    if (
-      e.key !== "Enter"
-    ) {
-      return;
-    }
-
-
-    const code =
-      this.value
-        .toLowerCase()
-        .trim();
-
-
-    if (code) {
-
-      checkSecret(
-        code
-      );
-
-    }
-
-
-    this.value =
-      "";
-
-  }
-);
-
-
-/* =========================================
-   SECRET HANDLER
-========================================= */
-
-function checkSecret(code) {
-
-
-  /* =======================================
-     JULIUS
-  ======================================= */
-
-  if (
-    code.includes("julius")
-  ) {
-
-    juliusEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     SOPHIE
-  ======================================= */
-
-  if (
-    code.includes("sophie")
-  ) {
-
-    sophieEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     LOVE
-  ======================================= */
-
-  if (
-    code.includes("love")
-  ) {
-
-    sophieEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     CURIOUS
-  ======================================= */
-
-  if (
-    code.includes("curious")
-  ) {
-
-    curiousEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     CAT
-  ======================================= */
-
-  if (
-    code.includes("cat") ||
-    code.includes("katze")
-  ) {
-
-    catEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     MIRROR
-  ======================================= */
-
-  if (
-    code.includes("mirror")
-  ) {
-
-    mirrorEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     DREAM
-  ======================================= */
-
-  if (
-    code.includes("dream")
-  ) {
-
-    dreamEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     404
-  ======================================= */
-
-  if (
-    code.includes("404")
-  ) {
-
-    error404Egg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     NIGHT
-  ======================================= */
-
-  if (
-    code.includes("night")
-  ) {
-
-    nightEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     GLOWUP
-  ======================================= */
-
-  if (
-    code.includes("glowup")
-  ) {
-
-    glowEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     ERROR
-  ======================================= */
-
-  if (
-    code.includes("error")
-  ) {
-
-    systemErrorEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     QWE
-  ======================================= */
-
-  if (
-    code.includes("qwe")
-  ) {
-
-    surpriseEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-  /* =======================================
-     SPOTIFY
-  ======================================= */
-
-  if (
-    code.includes("spotify")
-  ) {
-
-    spotifyEgg();
-
-    secret = "";
-
-    return;
-
-  }
-
-
-}
-
-
-/* =========================================
-   JULIUS EASTER EGG
-========================================= */
-
-function juliusEgg() {
-
-  title.textContent =
-    "JULIUS DETECTED.";
-
-  subtitle.textContent =
-    "You weren't supposed to find this. 👀";
-
-
-  document.body
-    .classList.add(
-      "julius-mode"
-    );
-
-
-  document.body
-    .classList.add(
-      "theme-red"
-    );
-
-
-  slots.forEach(
-    slot => {
-
-      slot.textContent =
-        "🤨";
-
-    }
-  );
-
-
-  createParticles(
-    "🤨"
-  );
-
-
-  /*
-     Kleiner Bonus,
-     aber der Effekt steht
-     im Vordergrund.
-  */
-
-  game.balance += 100;
-
-
-  updateUI();
-
-  saveGame();
-
-
-  setTimeout(() => {
-
-    document.body
-      .classList.remove(
-        "julius-mode"
-      );
-
-    document.body
-      .classList.remove(
-        "theme-red"
-      );
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "Julius was here.";
-
-
-    slots[0].textContent =
-      "🍒";
-
-    slots[1].textContent =
-      "⭐";
-
-    slots[2].textContent =
-      "💎";
-
-
-    showResult(
-      "🤨 Julius schenkt dir 100 Curios.",
-      "win"
-    );
-
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   SOPHIE EASTER EGG
-========================================= */
-
-function sophieEgg() {
-
-  title.textContent =
-    "Ich liebe dich Sophie ❤️";
-
-
-  subtitle.textContent =
-    "💖 A special message just for you.";
-
-
-  document.body.style.background =
-    "radial-gradient(circle, #521b45, #160914)";
-
-
-  createParticles(
-    "❤️"
-  );
-
-
-  createParticles(
-    "💕"
-  );
-
-
-  game.balance += 250;
-
-
-  updateUI();
-
-  saveGame();
-
-
-  setTimeout(() => {
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "Some secrets are worth finding.";
-
-
-    document.body.style.background =
-      "";
-
-
-    showResult(
-      "❤️ Sophie hat dir 250 Curios dagelassen.",
-      "win"
-    );
-
-
-  }, 5000);
-
-}
-
-
-/* =========================================
-   CURIOUS EASTER EGG
-========================================= */
-
-function curiousEgg() {
-
-  title.textContent =
-    "Too curious...";
-
-
-  subtitle.textContent =
-    "👁️ Curiosity unlocked.";
-
-
-  document.body
-    .classList.add(
-      "theme-purple"
-    );
-
-
-  title.classList.add(
-    "pulse"
-  );
-
-
-  game.balance += 500;
-
-
-  updateUI();
-
-  saveGame();
-
-
-  createParticles(
-    "👁️"
-  );
-
-
-  setTimeout(() => {
-
-    document.body
-      .classList.remove(
-        "theme-purple"
-      );
-
-
-    title.classList.remove(
-      "pulse"
-    );
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "🔍 You really are curious.";
-
-    showResult(
-      "👁️ +500 Curios",
-      "win"
-    );
-
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   CAT
-========================================= */
-
-function catEgg() {
-
-  title.textContent =
-    "Meow! 🐱";
-
-
-  subtitle.textContent =
-    "🐾 Cats love surprises.";
-
-
-  createParticles(
-    "🐱"
-  );
-
-
-  createParticles(
-    "🐾"
-  );
-
-
-  game.balance += 150;
-
-
-  updateUI();
-
-  saveGame();
-
-
-  setTimeout(() => {
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "The cat has left the casino.";
-
-
-    showResult(
-      "🐱 +150 Curios",
-      "win"
-    );
-
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   MIRROR
-========================================= */
-
-function mirrorEgg() {
-
-  document.body.style.transform =
-    "scaleX(-1)";
-
-
-  title.textContent =
-    "Reflections of curiosity...";
-
-
-  subtitle.textContent =
-    "🪞 Everything is backwards.";
-
-
-  setTimeout(() => {
-
-    document.body.style.transform =
-      "scaleX(1)";
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "Back to normal.";
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   DREAM
-========================================= */
-
-function dreamEgg() {
-
-  document.body
-    .classList.add(
-      "dream-mode"
-    );
-
-
-  title.textContent =
-    "You're dreaming...";
-
-
-  subtitle.textContent =
-    "✨ Feels unreal, doesn't it?";
-
-
-  document.body.style.background =
-    "linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d)";
-
-
-  createParticles(
-    "✨"
-  );
-
-
-  setTimeout(() => {
-
-    document.body
-      .classList.remove(
-        "dream-mode"
-      );
-
-
-    document.body.style.background =
-      "";
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "🔍 The dream fades.";
-
-  }, 6000);
-
-}
-
-
-/* =========================================
-   404
-========================================= */
-
-function error404Egg() {
-
-  title.classList.add(
-    "glitch"
-  );
-
-
-  document.body.style.filter =
-    "contrast(2) saturate(.4)";
-
-
-  document.body.style.background =
-    "#300000";
-
-
-  title.textContent =
-    "404";
-
-
-  subtitle.textContent =
-    "⚠️ You broke reality.";
-
-
-  setTimeout(() => {
-
-    title.classList.remove(
-      "glitch"
-    );
-
-
-    document.body.style.filter =
-      "";
-
-
-    document.body.style.background =
-      "";
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "Reality restored.";
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   NIGHT
-========================================= */
-
-function nightEgg() {
-
-  document.body.style.background =
-    "#000";
-
-
-  title.textContent =
-    "Good night... 🌙";
-
-
-  subtitle.textContent =
-    "Shhh...";
-
-
-  title.style.textShadow =
-    "0 0 50px #7dd3fc";
-
-
-  setTimeout(() => {
-
-    document.body.style.background =
-      "";
-
-
-    title.style.textShadow =
-      "";
-
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "The night fades.";
-
-  }, 6000);
-
-}
-
-
-/* =========================================
-   GLOWUP
-========================================= */
-
-function glowEgg() {
-
-  title.classList.add(
-    "pulse"
-  );
-
-
-  subtitle.textContent =
-    "⚡ Glow activated!";
-
-
-  createParticles(
-    "⚡"
-  );
-
-
-  setTimeout(() => {
-
-    title.classList.remove(
-      "pulse"
-    );
-
-
-    subtitle.textContent =
-      "🔍 Glow faded...";
-
-  }, 5000);
-
-}
-
-
-/* =========================================
-   SYSTEM ERROR
-========================================= */
-
-function systemErrorEgg() {
-
-  const oldTitle =
-    title.textContent;
-
-
-  title.textContent =
-    "❌ SYSTEM ERROR";
-
-
-  title.classList.add(
-    "glitch"
-  );
-
-
-  title.style.color =
-    "#ff4d4d";
-
-
-  document.body.style.background =
-    "#330000";
-
-
-  subtitle.textContent =
-    "💀 Something went wrong...";
-
-
-  setTimeout(() => {
-
-    title.classList.remove(
-      "glitch"
-    );
-
-
-    title.style.color =
-      "";
-
-
-    document.body.style.background =
-      "";
-
-
-    title.textContent =
-      oldTitle;
-
-
-    subtitle.textContent =
-      "Or did it?";
-
-  }, 4500);
-
-}
-
-
-/* =========================================
-   SURPRISE
-========================================= */
-
-function surpriseEgg() {
-
-  title.textContent =
-    "SURPRISE! 🎉";
-
-
-  subtitle.textContent =
-    "Well, that was unexpected.";
-
-
-  createParticles(
-    "🎉"
-  );
-
-
-  createParticles(
-    "🎊"
-  );
-
-
-  game.balance += 300;
-
-
-  updateUI();
-
-  saveGame();
-
-
-  setTimeout(() => {
-
-    title.textContent =
-      "Don't be so curious.";
-
-
-    subtitle.textContent =
-      "Try again!";
-
-
-    showResult(
-      "🎉 Surprise! +300 Curios",
-      "win"
-    );
-
-  }, 4000);
-
-}
-
-
-/* =========================================
-   SPOTIFY
-========================================= */
-
-function spotifyEgg() {
-
-  title.textContent =
-    "🎵 Music unlocked";
-
-
-  subtitle.textContent =
-    "Opening the secret playlist...";
-
-
-  /*
-    Dein bisheriges Spotify-Profil.
-  */
-
-  setTimeout(() => {
-
-    window.location.href =
-      "https://open.spotify.com/user/31lkhiohnznx3fyeuyueyroxwbty";
-
-  }, 1200);
-
-}
-
-
-/* =========================================
-   TITLE EASTER EGG
-========================================= */
-
-let titleClicks = 0;
-
-
-title.addEventListener(
-  "click",
-  () => {
-
-    titleClicks++;
-
-
-    if (
-      titleClicks === 3
-    ) {
-
-      title.classList.add(
-        "glitch"
-      );
-
-
-      subtitle.textContent =
-        "👀 Something feels... off?";
-
-
-      setTimeout(() => {
-
-        title.classList.remove(
-          "glitch"
+    const lines = [
+
+        [[0,0],[0,1],[0,2],[0,3],[0,4]],
+        [[1,0],[1,1],[1,2],[1,3],[1,4]],
+        [[2,0],[2,1],[2,2],[2,3],[2,4]],
+        [[3,0],[3,1],[3,2],[3,3],[3,4]],
+        [[4,0],[4,1],[4,2],[4,3],[4,4]],
+
+        [[0,0],[1,0],[2,0],[3,0],[4,0]],
+        [[0,1],[1,1],[2,1],[3,1],[4,1]],
+        [[0,2],[1,2],[2,2],[3,2],[4,2]],
+        [[0,3],[1,3],[2,3],[3,3],[4,3]],
+        [[0,4],[1,4],[2,4],[3,4],[4,4]],
+
+        [[0,0],[1,1],[2,2],[3,3],[4,4]],
+        [[0,4],[1,3],[2,2],[3,1],[4,0]],
+
+        [[2,0],[1,1],[0,2],[1,3],[2,4]],
+        [[2,0],[3,1],[4,2],[3,3],[2,4]],
+
+        [[0,2],[1,2],[2,2],[3,2],[4,2]],
+        [[0,0],[1,1],[2,2],[3,1],[4,0]],
+        [[0,4],[1,3],[2,2],[3,3],[4,4]],
+        [[1,0],[2,1],[3,2],[2,3],[1,4]],
+        [[3,0],[2,1],[1,2],[2,3],[3,4]],
+        [[0,1],[1,2],[2,3],[3,2],[4,1]]
+    ];
+
+    for (const line of lines) {
+
+        const symbols = line.map(
+            p => grid[p[0]][p[1]]
         );
 
+        /*
+           Nur normale Symbole als reguläre Gewinne.
+           Wild kann alles ersetzen.
+        */
 
-        subtitle.textContent =
-          "🔍 Keep trying.";
+        let bestSymbol = null;
+        let bestCount = 0;
 
-      }, 2000);
+        for (const symbol of NORMAL_SYMBOLS) {
 
+            let count = 0;
 
-      titleClicks = 0;
+            for (const current of symbols) {
 
+                if (
+                    current === symbol ||
+                    current === "🃏"
+                ) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+
+            if (count > bestCount) {
+                bestCount = count;
+                bestSymbol = symbol;
+            }
+        }
+
+        if (bestCount >= 3) {
+
+            let multiplier = PAYOUTS[bestSymbol];
+
+            if (bestCount === 4) {
+                multiplier *= 2;
+            }
+
+            if (bestCount === 5) {
+                multiplier *= 5;
+            }
+
+            const lineWin =
+                state.bet * multiplier * (bestCount / 3);
+
+            win += Math.floor(lineWin);
+
+            for (
+                let i = 0;
+                i < bestCount;
+                i++
+            ) {
+                positions.push(line[i]);
+            }
+        }
     }
 
+    /*
+       Scatter zählen
+    */
 
-    else if (
-      titleClicks === 7
-    ) {
+    let scatterCount = 0;
 
-      title.style.transform =
-        "rotate(360deg)";
+    for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
 
-
-      subtitle.textContent =
-        "💫 You found another one!";
-
-
-      setTimeout(() => {
-
-        title.style.transform =
-          "";
-
-
-        subtitle.textContent =
-          "Try typing something.";
-
-      }, 1800);
-
-
-      titleClicks = 0;
-
+            if (grid[row][col] === "💎") {
+                scatterCount++;
+                positions.push([row,col]);
+            }
+        }
     }
 
-  }
-);
+    let scatterBonus = 0;
+    let freeSpinsWon = 0;
 
+    if (scatterCount >= 5) {
 
-/* =========================================
-   RANDOM CASINO EVENT
-========================================= */
+        freeSpinsWon = 20;
+        scatterBonus = state.bet * 10;
 
-/*
-   Sehr selten passiert einfach
-   etwas, wenn man spielt.
-*/
+    } else if (scatterCount === 4) {
 
-function randomEvent() {
+        freeSpinsWon = 10;
+        scatterBonus = state.bet * 5;
 
-  const chance =
-    Math.random();
+    } else if (scatterCount === 3) {
 
+        freeSpinsWon = 5;
+        scatterBonus = state.bet * 2;
+    }
 
-  if (
-    chance < 0.025
-  ) {
+    win += scatterBonus;
 
-    title.textContent =
-      "👁️ Someone is watching.";
+    /*
+       Bonus-Symbole
+    */
 
+    let bonusCount = 0;
 
-    subtitle.textContent =
-      "You shouldn't have looked.";
+    for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
 
+            if (grid[row][col] === "🎁") {
+                bonusCount++;
+            }
+        }
+    }
 
-    createParticles(
-      "👁️"
-    );
-
-
-    setTimeout(() => {
-
-      title.textContent =
-        "Don't be so curious.";
-
-
-      subtitle.textContent =
-        "Probably nothing...";
-
-    }, 3500);
-
-  }
-
+    return {
+        win,
+        positions,
+        scatterCount,
+        freeSpinsWon,
+        bonusCount
+    };
 }
 
+function applyResult(result) {
 
-setInterval(
-  randomEvent,
-  15000
+    let win = result.win;
+
+    /*
+       Win Streak
+    */
+
+    if (win > 0) {
+
+        state.streak++;
+
+        let streakMultiplier = 1;
+
+        if (state.streak >= 5) {
+            streakMultiplier = 2;
+        } else if (state.streak >= 3) {
+            streakMultiplier = 1.5;
+        }
+
+        if (streakMultiplier > 1) {
+            win = Math.floor(
+                win * streakMultiplier
+            );
+        }
+
+        state.balance += win;
+        state.totalWon += win;
+
+        if (win > state.biggestWin) {
+            state.biggestWin = win;
+        }
+
+        createParticles(
+            win >= state.bet * 10
+                ? ["💰","💎","🔥","✨","🪙"]
+                : ["✨","🪙","💰"],
+            win >= state.bet * 10 ? 40 : 15
+        );
+
+        if (win >= state.bet * 25) {
+
+            showMessage(
+                "🔥 MEGA WIN! +" +
+                win.toLocaleString("de-DE") +
+                " 🪙",
+                "big"
+            );
+
+        } else {
+
+            showMessage(
+                "🎉 Gewinn! +" +
+                win.toLocaleString("de-DE") +
+                " 🪙",
+                "win"
+            );
+        }
+
+        playWinSound();
+
+    } else {
+
+        state.streak = 0;
+
+        showMessage(
+            "Nothing happened. Or did it?",
+            "loss"
+        );
+    }
+
+    /*
+       Freispiele
+    */
+
+    if (result.freeSpinsWon > 0) {
+
+        state.freeSpins += result.freeSpinsWon;
+
+        showMessage(
+            "💎 " +
+            result.scatterCount +
+            " SCATTER! +" +
+            result.freeSpinsWon +
+            " FREISPIELE!",
+            "big"
+        );
+
+        createParticles(
+            ["💎","🎁","✨","🪙"],
+            35
+        );
+
+        playBonusSound();
+    }
+
+    /*
+       Bonus Game
+    */
+
+    if (result.bonusCount >= 3) {
+
+        setTimeout(
+            openBonus,
+            600
+        );
+    }
+
+    /*
+       Jackpot
+    */
+
+    const eyes = countSymbol("👁️");
+
+    if (eyes >= 3) {
+
+        const jackpotWin = state.jackpot;
+
+        state.balance += jackpotWin;
+        state.biggestWin = Math.max(
+            state.biggestWin,
+            jackpotWin
+        );
+
+        state.jackpots++;
+
+        state.jackpot = 10000;
+
+        showMessage(
+            "👑👑👑 JACKPOT! +" +
+            jackpotWin.toLocaleString("de-DE") +
+            " 🪙",
+            "big"
+        );
+
+        createParticles(
+            ["👑","💎","💰","🪙","✨","🔥"],
+            80
+        );
+
+        playJackpotSound();
+
+    } else {
+
+        /*
+           Jackpot wächst leicht
+        */
+
+        state.jackpot += Math.floor(
+            state.bet * 0.1
+        );
+    }
+}
+
+function countSymbol(symbol) {
+
+    let count = 0;
+
+    for (const row of grid) {
+        for (const item of row) {
+
+            if (item === symbol) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+function showMessage(text, type = "") {
+
+    messageEl.textContent = text;
+
+    messageEl.className =
+        "message " + type;
+}
+
+/* =========================================================
+   BET
+   ========================================================= */
+
+function changeBet(direction) {
+
+    let index = BETS.indexOf(state.bet);
+
+    if (index === -1) {
+        index = 1;
+    }
+
+    index += direction;
+
+    index = Math.max(
+        0,
+        Math.min(
+            BETS.length - 1,
+            index
+        )
+    );
+
+    state.bet = BETS[index];
+
+    updateUI();
+}
+
+document
+    .getElementById("minusBet")
+    .addEventListener(
+        "click",
+        () => changeBet(-1)
+    );
+
+document
+    .getElementById("plusBet")
+    .addEventListener(
+        "click",
+        () => changeBet(1)
+    );
+
+spinButton.addEventListener(
+    "click",
+    spin
 );
 
+/* =========================================================
+   TURBO
+   ========================================================= */
 
-/* =========================================
-   INITIAL MESSAGE
-========================================= */
+turboButton.addEventListener(
+    "click",
+    () => {
 
-setTimeout(() => {
+        state.turbo = !state.turbo;
 
-  subtitle.textContent =
-    "🔍 Sometimes curiosity pays off.";
+        turboButton.classList.toggle(
+            "active",
+            state.turbo
+        );
+    }
+);
 
-}, 1800);
+/* =========================================================
+   AUTO SPIN
+   ========================================================= */
 
+autoButton.addEventListener(
+    "click",
+    () => {
+
+        state.autoSpin = !state.autoSpin;
+
+        autoButton.classList.toggle(
+            "active",
+            state.autoSpin
+        );
+
+        if (state.autoSpin && !spinning) {
+            spin();
+        }
+
+        if (!state.autoSpin && autoTimer) {
+            clearTimeout(autoTimer);
+            autoTimer = null;
+        }
+    }
+);
+
+/* =========================================================
+   DAILY BONUS
+   ========================================================= */
+
+const dailyButton =
+    document.getElementById("dailyButton");
+
+const dailyText =
+    document.getElementById("dailyText");
+
+function checkDaily() {
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    if (state.lastDaily === today) {
+
+        dailyButton.disabled = true;
+        dailyButton.textContent = "MORGEN WIEDER";
+
+        dailyText.textContent =
+            "Du hast deinen Bonus heute schon abgeholt.";
+
+    } else {
+
+        dailyButton.disabled = false;
+        dailyButton.textContent = "BONUS ABHOLEN";
+
+        dailyText.textContent =
+            "Heute wartet ein Bonus auf dich.";
+    }
+}
+
+dailyButton.addEventListener(
+    "click",
+    () => {
+
+        const today =
+            new Date().toISOString().split("T")[0];
+
+        if (state.lastDaily === today) return;
+
+        const bonus =
+            Math.floor(
+                250 + Math.random() * 251
+            );
+
+        state.balance += bonus;
+        state.lastDaily = today;
+
+        showMessage(
+            "🎁 Daily Bonus: +" +
+            bonus +
+            " 🪙",
+            "win"
+        );
+
+        createParticles(
+            ["🎁","🪙","✨"],
+            25
+        );
+
+        checkDaily();
+        updateUI();
+    }
+);
+
+/* =========================================================
+   BONUS GAME
+   ========================================================= */
+
+const bonusOverlay =
+    document.getElementById("bonusOverlay");
+
+function openBonus() {
+    bonusOverlay.classList.add("show");
+}
+
+function closeBonus() {
+    bonusOverlay.classList.remove("show");
+}
+
+function chooseChest(index) {
+
+    const rewards = [
+        100,
+        250,
+        500
+    ];
+
+    /*
+       Eine Kiste wird zufällig besonders gut.
+    */
+
+    const roll = Math.random();
+
+    let reward;
+
+    if (roll < 0.08) {
+        reward = 2000;
+    } else if (roll < 0.2) {
+        reward = 1000;
+    } else {
+        reward =
+            rewards[
+                Math.floor(
+                    Math.random() * rewards.length
+                )
+            ];
+    }
+
+    state.balance += reward;
+
+    if (reward > state.biggestWin) {
+        state.biggestWin = reward;
+    }
+
+    closeBonus();
+
+    showMessage(
+        "🎁 Schatzkiste: +" +
+        reward.toLocaleString("de-DE") +
+        " 🪙",
+        reward >= 1000
+            ? "big"
+            : "win"
+    );
+
+    createParticles(
+        ["🎁","💰","🪙","✨"],
+        reward >= 1000 ? 35 : 15
+    );
+
+    updateUI();
+}
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+function createParticles(symbols, amount) {
+
+    const container =
+        document.getElementById("particles");
+
+    for (let i = 0; i < amount; i++) {
+
+        const particle =
+            document.createElement("div");
+
+        particle.className = "particle";
+
+        particle.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() * symbols.length
+                )
+            ];
+
+        particle.style.left =
+            Math.random() * 100 + "%";
+
+        particle.style.top =
+            (20 + Math.random() * 60) + "%";
+
+        particle.style.setProperty(
+            "--x",
+            ((Math.random() - .5) * 500) + "px"
+        );
+
+        particle.style.setProperty(
+            "--y",
+            ((Math.random() - .5) * 500) + "px"
+        );
+
+        container.appendChild(particle);
+
+        setTimeout(
+            () => particle.remove(),
+            1600
+        );
+    }
+}
+
+/* =========================================================
+   SOUND
+   ========================================================= */
+
+let audioContext = null;
+
+function getAudio() {
+
+    if (!audioContext) {
+
+        try {
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+        } catch (e) {
+            return null;
+        }
+    }
+
+    return audioContext;
+}
+
+function beep(
+    frequency,
+    duration,
+    type = "sine",
+    volume = .035
+) {
+
+    const ctx = getAudio();
+
+    if (!ctx) return;
+
+    const oscillator =
+        ctx.createOscillator();
+
+    const gain =
+        ctx.createGain();
+
+    oscillator.type = type;
+
+    oscillator.frequency.value =
+        frequency;
+
+    gain.gain.value = volume;
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start();
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        ctx.currentTime + duration
+    );
+
+    oscillator.stop(
+        ctx.currentTime + duration
+    );
+}
+
+function playWinSound() {
+
+    beep(523, .12);
+    setTimeout(
+        () => beep(659,.12),
+        90
+    );
+    setTimeout(
+        () => beep(784,.18),
+        180
+    );
+}
+
+function playBonusSound() {
+
+    beep(440,.1);
+    setTimeout(
+        () => beep(660,.1),
+        100
+    );
+    setTimeout(
+        () => beep(880,.2),
+        200
+    );
+}
+
+function playJackpotSound() {
+
+    const notes =
+        [440,550,660,880,1100];
+
+    notes.forEach(
+        (note,index) => {
+
+            setTimeout(
+                () => beep(
+                    note,
+                    .18,
+                    "square",
+                    .04
+                ),
+                index * 100
+            );
+        }
+    );
+}
+
+/* =========================================================
+   SECRET EASTER EGGS
+   ========================================================= */
+
+let secret = "";
+
+const secretCodes = [
+    "julius",
+    "sophie",
+    "love",
+    "curious",
+    "cat",
+    "katze",
+    "qwe",
+    "mirror",
+    "dream",
+    "404",
+    "night",
+    "glowup",
+    "error",
+    "spotify"
+];
+
+function activateSecret(code) {
+
+    code = code.toLowerCase().trim();
+
+    if (!secretCodes.includes(code)) {
+        return;
+    }
+
+    /*
+       Julius
+    */
+
+    if (code === "julius") {
+
+        document.body.classList.add("julius-mode");
+        document.body.classList.add("shake");
+
+        state.balance += 100;
+
+        showMessage(
+            "🤨 JULIUS IST DA. +100 CURIOS",
+            "big"
+        );
+
+        createParticles(
+            ["🤨","👀","🔥","🪙"],
+            35
+        );
+
+        setTimeout(
+            () => document.body.classList.remove("shake"),
+            500
+        );
+    }
+
+    /*
+       Sophie / Love
+    */
+
+    if (
+        code === "sophie" ||
+        code === "love"
+    ) {
+
+        state.balance += 250;
+
+        showMessage(
+            "Ich liebe dich Sophie ❤️ +250 🪙",
+            "big"
+        );
+
+        createParticles(
+            ["❤️","💕","💖","💘"],
+            45
+        );
+    }
+
+    /*
+       Curious
+    */
+
+    if (code === "curious") {
+
+        state.balance += 500;
+
+        showMessage(
+            "👁️ CURIOSITY LEVEL: MAXIMUM +500",
+            "big"
+        );
+
+        createParticles(
+            ["👁️","👀","✨","🪙"],
+            50
+        );
+
+        document.body.style.filter =
+            "hue-rotate(80deg)";
+
+        setTimeout(
+            () => {
+                document.body.style.filter = "";
+            },
+            2500
+        );
+    }
+
+    /*
+       Cat
+    */
+
+    if (
+        code === "cat" ||
+        code === "katze"
+    ) {
+
+        state.balance += 150;
+
+        showMessage(
+            "🐱 MEOW. +150 CURIOS",
+            "win"
+        );
+
+        createParticles(
+            ["🐱","🐈","😺","🪙"],
+            35
+        );
+    }
+
+    /*
+       QWE
+    */
+
+    if (code === "qwe") {
+
+        state.balance += 300;
+
+        showMessage(
+            "QWE?! Was machst du denn hier? +300 🪙",
+            "win"
+        );
+
+        createParticles(
+            ["❓","❗","🪙","✨","👀"],
+            35
+        );
+    }
+
+    /*
+       Mirror
+    */
+
+    if (code === "mirror") {
+
+        document.body.classList.toggle(
+            "mirror"
+        );
+
+        showMessage(
+            "🪞 Look behind you...",
+            "win"
+        );
+    }
+
+    /*
+       Dream
+    */
+
+    if (code === "dream") {
+
+        document.body.classList.toggle(
+            "dream-mode"
+        );
+
+        showMessage(
+            "🌌 Dream Mode activated.",
+            "win"
+        );
+
+        createParticles(
+            ["🌙","⭐","✨","💫"],
+            30
+        );
+    }
+
+    /*
+       404
+    */
+
+    if (code === "404") {
+
+        document.body.classList.add(
+            "glitch"
+        );
+
+        showMessage(
+            "ERROR 404: CURIOS NOT FOUND",
+            "big"
+        );
+
+        setTimeout(
+            () => {
+                document.body.classList.remove(
+                    "glitch"
+                );
+            },
+            1600
+        );
+    }
+
+    /*
+       Night
+    */
+
+    if (code === "night") {
+
+        document.body.classList.toggle(
+            "night-mode"
+        );
+
+        showMessage(
+            "🌙 Night Mode.",
+            "win"
+        );
+    }
+
+    /*
+       Glowup
+    */
+
+    if (code === "glowup") {
+
+        document.body.style.setProperty(
+            "--accent",
+            "#ff55d9"
+        );
+
+        document.body.style.setProperty(
+            "--accent2",
+            "#ffd45a"
+        );
+
+        showMessage(
+            "✨ GLOW UP!",
+            "big"
+        );
+
+        createParticles(
+            ["✨","💖","⭐","🔥"],
+            40
+        );
+    }
+
+    /*
+       Error
+    */
+
+    if (code === "error") {
+
+        document.body.classList.add(
+            "glitch"
+        );
+
+        showMessage(
+            "SYSTEM ERROR. EVERYTHING IS FINE.",
+            "big"
+        );
+
+        setTimeout(
+            () => {
+                document.body.classList.remove(
+                    "glitch"
+                );
+            },
+            2200
+        );
+    }
+
+    /*
+       Spotify
+    */
+
+    if (code === "spotify") {
+
+        showMessage(
+            "🎵 Spotify Easter Egg!",
+            "win"
+        );
+
+        /*
+           Hier kannst du bei Bedarf deinen
+           Spotify-Link einsetzen.
+        */
+
+        setTimeout(
+            () => {
+                window.open(
+                    "https://open.spotify.com/",
+                    "_blank"
+                );
+            },
+            600
+        );
+    }
+
+    /*
+       Easter Egg Spezialbonus
+    */
+
+    if (
+        code === "julius" ||
+        code === "sophie" ||
+        code === "love" ||
+        code === "curious" ||
+        code === "cat" ||
+        code === "katze" ||
+        code === "qwe"
+    ) {
+
+        updateUI();
+    }
+}
+
+/* =========================================================
+   SECRET INPUT
+   ========================================================= */
+
+secretInput.addEventListener(
+    "input",
+    () => {
+
+        const value =
+            secretInput.value
+                .toLowerCase()
+                .trim();
+
+        for (const code of secretCodes) {
+
+            if (value === code) {
+
+                activateSecret(code);
+
+                secretInput.value = "";
+
+                break;
+            }
+        }
+    }
+);
+
+/*
+   Tastatur-Easter-Eggs
+
+   Funktioniert überall auf der Seite,
+   außer beim Schreiben ins Eingabefeld.
+*/
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            document.activeElement ===
+            secretInput
+        ) {
+            return;
+        }
+
+        if (
+            event.key.length !== 1 &&
+            event.key !== "Enter"
+        ) {
+            return;
+        }
+
+        if (event.key === "Enter") {
+            return;
+        }
+
+        secret += event.key.toLowerCase();
+
+        if (secret.length > 20) {
+            secret =
+                secret.slice(-20);
+        }
+
+        for (const code of secretCodes) {
+
+            if (secret.endsWith(code)) {
+
+                activateSecret(code);
+
+                secret = "";
+
+                break;
+            }
+        }
+    }
+);
+
+/* =========================================================
+   LOGO EASTER EGG
+   ========================================================= */
+
+let logoClicks = 0;
+
+document
+    .getElementById("logo")
+    .addEventListener(
+        "click",
+        () => {
+
+            logoClicks++;
+
+            if (logoClicks >= 7) {
+
+                logoClicks = 0;
+
+                state.balance += 777;
+
+                showMessage(
+                    "👑 Du hast das Logo geknackt! +777 🪙",
+                    "big"
+                );
+
+                createParticles(
+                    ["👑","💰","🪙","✨"],
+                    50
+                );
+
+                updateUI();
+            }
+        }
+    );
+
+/* =========================================================
+   RANDOM EVENTS
+   ========================================================= */
+
+setInterval(
+    () => {
+
+        if (spinning) return;
+
+        const chance =
+            Math.random();
+
+        if (chance < .12) {
+
+            const events = [
+                "👀 Ich beobachte dich.",
+                "🎰 Die Maschine wartet.",
+                "💎 Irgendwo liegt ein Scatter...",
+                "🃏 Vielleicht ist ein Wild in der Nähe.",
+                "🔥 Traust du dich noch einmal?",
+                "👑 Der Jackpot wächst..."
+            ];
+
+            showMessage(
+                events[
+                    Math.floor(
+                        Math.random() *
+                        events.length
+                    )
+                ]
+            );
+        }
+
+    },
+    15000
+);
+
+/* =========================================================
+   KEYBOARD SPIN
+   SPACE = SPIN
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.code === "Space" &&
+            document.activeElement !== secretInput
+        ) {
+
+            event.preventDefault();
+
+            spin();
+        }
+    }
+);
+
+/* =========================================================
+   START
+   ========================================================= */
+
+loadGame();
+checkDaily();
+generateGrid();
+
+/*
+   Falls ein alter Spielstand einen
+   unrealistischen negativen Wert enthält.
+*/
+
+if (state.balance < 0) {
+    state.balance = 0;
+}
+
+updateUI();
 
 </script>
 
