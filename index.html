@@ -994,6 +994,23 @@ button:disabled {
   border-color:var(--accent);
   box-shadow:0 0 14px rgba(125,211,252,.12);
 }
+.inventory-chip {
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.inventory-chip:hover:not(.equipped) {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,255,255,.25);
+}
+.inventory-chip.equipped {
+  cursor: default;
+}
+
 
 .achievement-grid {
   display:grid;
@@ -3679,9 +3696,9 @@ function updateProfile() {
         (item.type === "theme" && game.equippedTheme === id) ||
         (item.type === "title" && game.equippedTitle === item.name);
 
-      return `<span class="inventory-chip ${equipped ? "equipped" : ""}">
+      return `<button class="inventory-chip ${equipped ? "equipped" : ""}" onclick="equipItem('${item.id}')" title="${equipped ? "Bereits ausgerüstet" : "Ausrüsten"}">
         ${item.icon} ${item.name}${equipped ? " ✓" : ""}
-      </span>`;
+      </button>`;
     }).join("");
   }
 }
