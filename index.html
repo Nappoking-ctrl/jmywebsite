@@ -1674,6 +1674,25 @@ button:disabled {
   filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));
 }
 
+.roulette-ball {
+  position:absolute;
+  z-index:9;
+  top:50%;
+  left:50%;
+  width:16px;
+  height:16px;
+  margin:-8px;
+  border-radius:50%;
+  background:#f8fafc;
+  border:2px solid #d4d4d8;
+  box-shadow:
+    0 0 10px rgba(255,255,255,.65),
+    0 3px 6px rgba(0,0,0,.55);
+  transform-origin:0 0;
+  transform:rotate(0deg) translateX(132px);
+  transition:transform 4s cubic-bezier(.12,.76,.15,1);
+}
+
 .roulette-number-display {
   text-align:center;
   min-height:42px;
@@ -2862,6 +2881,8 @@ button:disabled {
 
           <div class="roulette-pointer"></div>
 
+          <div class="roulette-ball" id="rouletteBall"></div>
+
           <div class="roulette-center">
             ◉
           </div>
@@ -2905,7 +2926,6 @@ button:disabled {
           >
 
             <button
-              class="active"
               data-type="red"
               onclick="selectRouletteType('red')"
             >
@@ -4473,11 +4493,37 @@ function openSecretRoom() {
   }
 
 
+  const unlockScreen =
+    document.getElementById(
+      "secretUnlockScreen"
+    );
+
+
+  if (unlockScreen) {
+
+    unlockScreen.style.display =
+      "none";
+
+  }
+
+
+  const modal =
+    document.getElementById(
+      "secretRoomModal"
+    );
+
+
+  if (!modal) {
+    return;
+  }
+
+
   updateSecretRoomUI();
 
-  openModal(
-    "secretRoomModal"
-  );
+  modal.classList.add("open");
+
+  document.body.style.overflow =
+    "hidden";
 
 }
 
@@ -5796,8 +5842,37 @@ function openModal(id) {
 
 function closeModal(id) {
 
-  document.getElementById(id)
-    .classList.remove("open");
+  const modal =
+    document.getElementById(id);
+
+
+  if (!modal) {
+    return;
+  }
+
+
+  modal.classList.remove("open");
+
+
+  if (
+    id === "secretRoomModal"
+  ) {
+
+    const unlockScreen =
+      document.getElementById(
+        "secretUnlockScreen"
+      );
+
+
+    if (unlockScreen) {
+
+      unlockScreen.style.display =
+        "none";
+
+    }
+
+  }
+
 
   if (
     !document.querySelector(
@@ -7862,6 +7937,10 @@ function blackjackFinish(
 let rouletteType =
   "red";
 
+let rouletteTypes = [
+  "red"
+];
+
 let rouletteSpinning =
   false;
 
@@ -7935,8 +8014,36 @@ function selectRouletteType(
   type
 ) {
 
+  if (
+    rouletteTypes.includes(type)
+  ) {
+
+    rouletteTypes =
+      rouletteTypes.filter(
+        selectedType =>
+          selectedType !== type
+      );
+
+  }
+
+  else {
+
+    rouletteTypes.push(type);
+
+  }
+
+
+  if (
+    rouletteTypes.length === 0
+  ) {
+
+    rouletteTypes.push(type);
+
+  }
+
+
   rouletteType =
-    type;
+    rouletteTypes[0];
 
 
   document
@@ -7948,8 +8055,9 @@ function selectRouletteType(
 
         button.classList.toggle(
           "active",
-          button.dataset.type ===
-          type
+          rouletteTypes.includes(
+            button.dataset.type
+          )
         );
 
       }
@@ -7967,7 +8075,7 @@ function selectRouletteType(
   ) {
 
     numberControl.style.display =
-      type === "number"
+      rouletteTypes.includes("number")
         ? "block"
         : "none";
 
@@ -8078,6 +8186,38 @@ function rouletteBetWins(
 }
 
 
+function rouletteBetPayoutTotal(
+  types,
+  number,
+  selectedNumber,
+  betAmount
+) {
+
+  let payout = 0;
+
+  types.forEach(type => {
+
+    if (
+      rouletteBetWins(
+        type,
+        number,
+        selectedNumber
+      )
+    ) {
+
+      payout +=
+        betAmount *
+        rouletteBetPayout(type);
+
+    }
+
+  });
+
+  return payout;
+
+}
+
+
 function spinRoulette() {
 
   if (
@@ -8156,15 +8296,23 @@ function spinRoulette() {
   }
 
 
+  const selectedBets =
+    [...rouletteTypes];
+
+  const totalBet =
+    betAmount *
+    selectedBets.length;
+
+
   if (
     game.balance <
-    betAmount
+    totalBet
   ) {
 
     document.getElementById(
       "rouletteMessage"
     ).textContent =
-      "❌ Nicht genug Curios für diese Wette.";
+      "❌ Nicht genug Curios für diese Wetten.";
 
     return;
 
@@ -8172,7 +8320,7 @@ function spinRoulette() {
 
 
   game.balance -=
-    betAmount;
+    totalBet;
 
   game.rouletteRounds =
     (
@@ -8245,6 +8393,24 @@ function spinRoulette() {
     `rotate(${targetRotation}deg)`;
 
 
+  const ball =
+    document.getElementById(
+      "rouletteBall"
+    );
+
+
+  if (ball) {
+
+    const ballRotation =
+      Math.random() * 360;
+
+
+    ball.style.transform =
+      `rotate(${ballRotation}deg) translateX(132px)`;
+
+  }
+
+
   setTimeout(
     () => {
 
@@ -8254,25 +8420,28 @@ function spinRoulette() {
         );
 
 
+      const winningBets =
+        selectedBets.filter(
+          type =>
+            rouletteBetWins(
+              type,
+              winningNumber,
+              selectedNumber
+            )
+        );
+
+
       const won =
-        rouletteBetWins(
-          rouletteType,
-          winningNumber,
-          selectedNumber
-        );
-
-
-      const multiplier =
-        rouletteBetPayout(
-          rouletteType
-        );
+        winningBets.length > 0;
 
 
       const payout =
-        won
-          ? betAmount *
-            multiplier
-          : 0;
+        rouletteBetPayoutTotal(
+          selectedBets,
+          winningNumber,
+          selectedNumber,
+          betAmount
+        );
 
 
       if (
@@ -8297,8 +8466,7 @@ function spinRoulette() {
 
 
         if (
-          rouletteType ===
-          "number"
+          winningBets.includes("number")
         ) {
 
           game.rouletteExactWins =
@@ -8311,8 +8479,8 @@ function spinRoulette() {
 
 
         if (
-          rouletteType === "red" ||
-          rouletteType === "black"
+          winningBets.includes("red") ||
+          winningBets.includes("black")
         ) {
 
           game.rouletteRedBlackWins =
@@ -8392,9 +8560,22 @@ function spinRoulette() {
    INITIAL ROULETTE STATE
 ========================================= */
 
-selectRouletteType(
-  "red"
-);
+document
+  .querySelectorAll(
+    "#rouletteTypeButtons button"
+  )
+  .forEach(
+    button => {
+
+      button.classList.toggle(
+        "active",
+        rouletteTypes.includes(
+          button.dataset.type
+        )
+      );
+
+    }
+  );
 
 
 /* =========================================
@@ -8481,6 +8662,25 @@ window.addEventListener(
 </body>
 </html>
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
