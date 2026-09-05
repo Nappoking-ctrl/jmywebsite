@@ -1,60 +1,115 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Curiosity Casino</title>
+<title>Don't be so curious</title>
 
 <style>
+
 :root {
   --bg: #070912;
-  --panel: rgba(18, 22, 38, .82);
-  --panel2: rgba(255,255,255,.045);
-  --text: #f8fafc;
-  --muted: #8991a7;
+  --text: #ffffff;
   --accent: #7dd3fc;
   --gold: #facc15;
   --green: #4ade80;
   --red: #fb7185;
+  --purple: #c084fc;
+  --muted: #8991a7;
+  --panel: rgba(18, 22, 38, .84);
   --border: rgba(255,255,255,.1);
+  --transition: .4s ease;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+
   background:
-    radial-gradient(circle at 50% -10%, rgba(125,211,252,.13), transparent 35%),
-    radial-gradient(circle at 10% 90%, rgba(168,85,247,.08), transparent 30%),
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(125,211,252,.13),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(168,85,247,.08),
+      transparent 30%
+    ),
     var(--bg);
+
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
+
   overflow-x: hidden;
+
+  opacity: 0;
+  animation: pageFadeIn 1.5s ease forwards;
+
+  transition:
+    background 1s ease,
+    color .5s ease,
+    filter .5s ease;
 }
+
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   BACKGROUND GRID
+========================================= */
 
 body::before {
   content: "";
+
   position: fixed;
   inset: 0;
+
   pointer-events: none;
+
   opacity: .035;
+
   background-image:
-    linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    linear-gradient(
+      rgba(255,255,255,.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.5) 1px,
+      transparent 1px
+    );
+
   background-size: 45px 45px;
+
+  z-index: -1;
 }
 
-/* ---------------- HEADER ---------------- */
+
+/* =========================================
+   HEADER
+========================================= */
 
 header {
   width: 100%;
   max-width: 1100px;
+
   margin: auto;
   padding: 22px 24px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,8 +117,11 @@ header {
 
 .logo {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 900;
+
   letter-spacing: .08em;
+
+  user-select: none;
 }
 
 .logo span {
@@ -74,180 +132,321 @@ header {
   display: flex;
   align-items: center;
   gap: 9px;
+
   padding: 10px 16px;
+
   border-radius: 999px;
-  background: var(--panel2);
+
+  background: rgba(255,255,255,.045);
+
   border: 1px solid var(--border);
+
   backdrop-filter: blur(15px);
+
+  transition: .3s ease;
+}
+
+.balance:hover {
+  transform: scale(1.04);
 }
 
 .coin {
   color: var(--gold);
+  font-weight: 900;
 }
 
 #balance {
-  font-weight: 800;
+  font-weight: 900;
 }
 
-/* ---------------- MAIN ---------------- */
+
+/* =========================================
+   MAIN
+========================================= */
 
 main {
   width: 100%;
   max-width: 900px;
+
   margin: 25px auto 70px;
+
   padding: 0 20px;
+
   text-align: center;
 }
 
 h1 {
   margin: 20px 0 8px;
+
   font-size: clamp(38px, 7vw, 72px);
+
   letter-spacing: -.04em;
-  text-shadow: 0 0 35px rgba(125,211,252,.2);
+
+  cursor: pointer;
+  user-select: none;
+
+  text-shadow:
+    0 0 35px rgba(125,211,252,.2);
+
+  transition: .3s ease;
+}
+
+h1:hover {
+  transform: scale(1.025);
+
+  text-shadow:
+    0 0 40px var(--accent);
 }
 
 .subtitle {
   color: var(--muted);
+
   margin-bottom: 35px;
 }
 
-/* ---------------- CASINO ---------------- */
+
+/* =========================================
+   CASINO
+========================================= */
 
 .casino {
   padding: 30px;
+
   border-radius: 28px;
+
   background: var(--panel);
+
   border: 1px solid var(--border);
+
   box-shadow:
     0 25px 80px rgba(0,0,0,.35),
     inset 0 1px rgba(255,255,255,.05);
+
   backdrop-filter: blur(25px);
 }
 
 .machine-title {
   font-size: 13px;
+
   text-transform: uppercase;
+
   letter-spacing: .25em;
+
   color: var(--accent);
+
   margin-bottom: 20px;
 }
 
-/* ---------------- SLOTS ---------------- */
+
+/* =========================================
+   SLOT MACHINE
+========================================= */
 
 .slots {
   display: flex;
+
   justify-content: center;
+
   gap: 12px;
+
   margin: 15px auto 25px;
 }
 
 .slot {
   width: 115px;
   height: 135px;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
+
   border-radius: 18px;
+
   background:
-    linear-gradient(145deg,#151a2b,#080b14);
+    linear-gradient(
+      145deg,
+      #151a2b,
+      #080b14
+    );
+
   border: 2px solid rgba(255,255,255,.09);
+
   box-shadow:
     inset 0 0 30px rgba(0,0,0,.7),
     0 10px 30px rgba(0,0,0,.25);
+
   font-size: 66px;
+
   user-select: none;
+
+  transition: .2s ease;
 }
 
 .slot.spinning {
-  animation: shake .12s infinite;
+  animation: shake .09s infinite;
 }
 
 @keyframes shake {
-  0% { transform: translateY(-2px); }
-  50% { transform: translateY(2px); }
-  100% { transform: translateY(-2px); }
+
+  0% {
+    transform: translateY(-3px);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+
+  100% {
+    transform: translateY(-3px);
+  }
+
 }
 
 .slot.win {
   border-color: var(--gold);
+
   box-shadow:
     0 0 30px rgba(250,204,21,.3),
     inset 0 0 30px rgba(250,204,21,.08);
-  animation: winPulse .7s ease infinite alternate;
+
+  animation:
+    winPulse .7s ease infinite alternate;
 }
 
 @keyframes winPulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.04); }
+
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+
 }
 
-/* ---------------- CONTROLS ---------------- */
+
+/* =========================================
+   CONTROLS
+========================================= */
 
 .bet-area {
   display: flex;
+
   justify-content: center;
   align-items: center;
+
   gap: 15px;
+
   margin: 15px 0;
 }
 
 .bet-button {
   width: 42px;
   height: 42px;
+
   padding: 0;
+
   border-radius: 50%;
+
   font-size: 20px;
 }
 
 .bet {
   min-width: 130px;
+
   font-weight: 700;
 }
 
 button {
   border: 1px solid var(--border);
+
   background: rgba(255,255,255,.06);
+
   color: var(--text);
+
   padding: 11px 16px;
+
   border-radius: 12px;
+
   cursor: pointer;
-  transition: .2s;
+
+  transition: .2s ease;
+
+  font-family: inherit;
 }
 
 button:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: rgba(255,255,255,.11);
+
+  background:
+    rgba(255,255,255,.11);
 }
 
 button:disabled {
   opacity: .4;
+
   cursor: not-allowed;
 }
+
+
+/* =========================================
+   SPIN BUTTON
+========================================= */
 
 .spin {
   width: 100%;
   max-width: 300px;
+
   margin-top: 10px;
+
   padding: 16px;
+
   border: none;
-  background: linear-gradient(135deg,#38bdf8,#818cf8);
+
+  background:
+    linear-gradient(
+      135deg,
+      #38bdf8,
+      #818cf8
+    );
+
   color: #07101c;
+
   font-size: 18px;
+
   font-weight: 900;
-  box-shadow: 0 10px 30px rgba(56,189,248,.2);
+
+  box-shadow:
+    0 10px 30px
+    rgba(56,189,248,.2);
 }
 
 .spin:hover:not(:disabled) {
-  background: linear-gradient(135deg,#7dd3fc,#a78bfa);
+  background:
+    linear-gradient(
+      135deg,
+      #7dd3fc,
+      #a78bfa
+    );
 }
 
-/* ---------------- RESULT ---------------- */
+
+/* =========================================
+   RESULT
+========================================= */
 
 .result {
   min-height: 32px;
+
   margin-top: 20px;
+
   font-weight: 700;
+
   color: var(--muted);
+
+  transition: .3s ease;
 }
 
 .result.win {
@@ -260,23 +459,44 @@ button:disabled {
 
 .result.jackpot {
   color: var(--gold);
+
   font-size: 21px;
 }
 
-/* ---------------- INFO ---------------- */
+
+/* =========================================
+   INFO
+========================================= */
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap: 12px;
+
   margin-top: 20px;
 }
 
 .info {
   padding: 18px;
+
   border-radius: 16px;
-  background: var(--panel2);
+
+  background:
+    rgba(255,255,255,.035);
+
   border: 1px solid var(--border);
+
+  transition: .25s ease;
+}
+
+.info:hover {
+  transform: translateY(-3px);
+
+  background:
+    rgba(255,255,255,.055);
 }
 
 .info small {
@@ -285,68 +505,147 @@ button:disabled {
 
 .info strong {
   display: block;
+
   margin-top: 6px;
+
   font-size: 20px;
 }
 
-/* ---------------- BONUS ---------------- */
+
+/* =========================================
+   DAILY BONUS
+========================================= */
 
 .bonus {
   margin-top: 20px;
+
   padding: 18px;
+
   border-radius: 18px;
-  border: 1px solid rgba(125,211,252,.15);
-  background: rgba(125,211,252,.035);
+
+  border:
+    1px solid
+    rgba(125,211,252,.15);
+
+  background:
+    rgba(125,211,252,.035);
 }
 
 .bonus button {
   margin-top: 10px;
 }
 
-/* ---------------- EASTER EGG ---------------- */
+
+/* =========================================
+   SECRET INPUT
+========================================= */
 
 .secret {
   margin-top: 50px;
-  color: rgba(255,255,255,.18);
+
+  color:
+    rgba(255,255,255,.18);
+
   font-size: 12px;
 }
 
 #secretInput {
   margin-top: 12px;
+
   padding: 10px 14px;
+
   border-radius: 10px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,.04);
+
+  border:
+    1px solid var(--border);
+
+  background:
+    rgba(255,255,255,.04);
+
   color: white;
+
   outline: none;
+
+  transition: .3s ease;
 }
 
-/* ---------------- JACKPOT OVERLAY ---------------- */
+#secretInput:focus {
+  border-color:
+    rgba(125,211,252,.5);
+
+  box-shadow:
+    0 0 20px
+    rgba(125,211,252,.1);
+}
+
+
+/* =========================================
+   JACKPOT SCREEN
+========================================= */
 
 .jackpot-screen {
   position: fixed;
+
   inset: 0;
+
   display: none;
+
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,.75);
+
+  background:
+    rgba(0,0,0,.78);
+
   backdrop-filter: blur(10px);
-  z-index: 10;
+
+  z-index: 100;
 }
 
 .jackpot-box {
   text-align: center;
+
   padding: 50px;
+
   border-radius: 30px;
+
   background: #111522;
-  border: 1px solid rgba(250,204,21,.4);
-  box-shadow: 0 0 100px rgba(250,204,21,.25);
+
+  border:
+    1px solid
+    rgba(250,204,21,.4);
+
+  box-shadow:
+    0 0 100px
+    rgba(250,204,21,.25);
+
+  animation:
+    jackpotAppear .5s ease;
+}
+
+@keyframes jackpotAppear {
+
+  from {
+    transform: scale(.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+
 }
 
 .jackpot-box h2 {
   font-size: 50px;
+
   margin: 0;
+
   color: var(--gold);
+
+  text-shadow:
+    0 0 30px
+    rgba(250,204,21,.5);
 }
 
 .jackpot-box p {
@@ -357,7 +656,124 @@ button:disabled {
   margin-top: 15px;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+
+/* =========================================
+   FALLING EMOJIS
+========================================= */
+
+.falling {
+  position: fixed;
+
+  top: -60px;
+
+  pointer-events: none;
+
+  z-index: 200;
+
+  animation:
+    fall linear forwards;
+}
+
+@keyframes fall {
+
+  to {
+    transform:
+      translateY(110vh)
+      rotate(720deg);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================================
+   GLITCH
+========================================= */
+
+.glitch {
+  animation:
+    glitch .12s infinite;
+}
+
+@keyframes glitch {
+
+  0% {
+    transform:
+      translate(2px,-1px);
+    text-shadow:
+      3px 0 red,
+      -3px 0 blue;
+  }
+
+  50% {
+    transform:
+      translate(-2px,1px);
+    text-shadow:
+      -3px 0 red,
+      3px 0 blue;
+  }
+
+  100% {
+    transform:
+      translate(2px,-1px);
+    text-shadow:
+      3px 0 red,
+      -3px 0 blue;
+  }
+
+}
+
+
+/* =========================================
+   PULSE
+========================================= */
+
+.pulse {
+  animation:
+    pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+  0%,100% {
+    text-shadow:
+      0 0 10px
+      var(--accent);
+  }
+
+  50% {
+    text-shadow:
+      0 0 45px
+      var(--accent);
+  }
+
+}
+
+
+/* =========================================
+   SPECIAL THEMES
+========================================= */
+
+.theme-purple {
+  --bg: #211132;
+  --accent: #c084fc;
+}
+
+.theme-green {
+  --bg: #05231d;
+  --accent: #6ee7b7;
+}
+
+.theme-red {
+  --bg: #250808;
+  --accent: #f87171;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media(max-width:600px) {
 
@@ -372,6 +788,7 @@ button:disabled {
   .slot {
     width: 90px;
     height: 110px;
+
     font-size: 50px;
   }
 
@@ -386,11 +803,76 @@ button:disabled {
   h1 {
     font-size: 43px;
   }
+
+  .jackpot-box {
+    margin: 20px;
+
+    padding: 35px 20px;
+  }
+
 }
+
+
+/* =========================================
+   SPECIAL EASTER EGG EFFECTS
+========================================= */
+
+.julius-mode {
+  animation:
+    juliusShake .08s infinite;
+}
+
+@keyframes juliusShake {
+
+  0% {
+    transform: translate(0,0);
+  }
+
+  25% {
+    transform: translate(3px,-2px);
+  }
+
+  50% {
+    transform: translate(-3px,2px);
+  }
+
+  75% {
+    transform: translate(2px,3px);
+  }
+
+  100% {
+    transform: translate(0,0);
+  }
+
+}
+
+.dream-mode {
+  animation:
+    dreamFloat 4s ease-in-out infinite;
+}
+
+@keyframes dreamFloat {
+
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- ======================================
+     HEADER
+====================================== -->
 
 <header>
 
@@ -399,22 +881,42 @@ button:disabled {
   </div>
 
   <div class="balance">
+
     <span class="coin">◉</span>
-    <span id="balance">1000</span>
-    <span>Curios</span>
+
+    <span id="balance">
+      1000
+    </span>
+
+    <span>
+      Curios
+    </span>
+
   </div>
 
 </header>
 
 
+<!-- ======================================
+     MAIN
+====================================== -->
+
 <main>
 
-  <h1>Don't be so curious.</h1>
 
-  <div class="subtitle">
+  <h1 id="title">
+    Don't be so curious.
+  </h1>
+
+
+  <div class="subtitle" id="subtitle">
     You probably shouldn't press this.
   </div>
 
+
+  <!-- ====================================
+       SLOT MACHINE
+  ===================================== -->
 
   <section class="casino">
 
@@ -425,77 +927,156 @@ button:disabled {
 
     <div class="slots">
 
-      <div class="slot" id="slot1">🍒</div>
-      <div class="slot" id="slot2">⭐</div>
-      <div class="slot" id="slot3">💎</div>
+      <div class="slot" id="slot1">
+        🍒
+      </div>
+
+      <div class="slot" id="slot2">
+        ⭐
+      </div>
+
+      <div class="slot" id="slot3">
+        💎
+      </div>
 
     </div>
 
 
     <div class="bet-area">
 
-      <button class="bet-button" onclick="changeBet(-10)">−</button>
+      <button
+        class="bet-button"
+        onclick="changeBet(-10)"
+      >
+        −
+      </button>
+
 
       <div class="bet">
+
         Einsatz:
-        <span id="bet">10</span> ◉
+
+        <span id="bet">
+          10
+        </span>
+
+        ◉
+
       </div>
 
-      <button class="bet-button" onclick="changeBet(10)">+</button>
+
+      <button
+        class="bet-button"
+        onclick="changeBet(10)"
+      >
+        +
+      </button>
 
     </div>
 
 
-    <button class="spin" id="spinButton" onclick="spin()">
+    <button
+      class="spin"
+      id="spinButton"
+      onclick="spin()"
+    >
       SPIN
     </button>
 
 
-    <div class="result" id="result">
+    <div
+      class="result"
+      id="result"
+    >
       Let's see what happens...
     </div>
 
   </section>
 
 
+  <!-- ====================================
+       STATISTICS
+  ===================================== -->
+
   <div class="info-grid">
 
-    <div class="info">
-      <small>Spins</small>
-      <strong id="spins">0</strong>
-    </div>
 
     <div class="info">
-      <small>Größter Gewinn</small>
-      <strong id="biggestWin">0 ◉</strong>
+
+      <small>
+        Spins
+      </small>
+
+      <strong id="spins">
+        0
+      </strong>
+
     </div>
 
+
     <div class="info">
-      <small>Jackpots</small>
-      <strong id="jackpots">0</strong>
+
+      <small>
+        Größter Gewinn
+      </small>
+
+      <strong id="biggestWin">
+        0 ◉
+      </strong>
+
     </div>
+
+
+    <div class="info">
+
+      <small>
+        Jackpots
+      </small>
+
+      <strong id="jackpots">
+        0
+      </strong>
+
+    </div>
+
 
   </div>
 
 
+  <!-- ====================================
+       DAILY BONUS
+  ===================================== -->
+
   <div class="bonus">
 
-    🎁 <strong>Daily Curiosity</strong>
+    🎁
+
+    <strong>
+      Daily Curiosity
+    </strong>
 
     <br>
 
     <small>
-      Komm morgen wieder und du bekommst kostenlose Curios.
+      Komm morgen wieder und du bekommst
+      kostenlose Curios.
     </small>
 
     <br>
 
-    <button id="bonusButton" onclick="dailyBonus()">
+    <button
+      id="bonusButton"
+      onclick="dailyBonus()"
+    >
       Bonus abholen
     </button>
 
   </div>
 
+
+  <!-- ====================================
+       SECRET AREA
+  ===================================== -->
 
   <div class="secret">
 
@@ -504,29 +1085,46 @@ button:disabled {
     <br>
 
     <input
+      type="text"
       id="secretInput"
       placeholder="enter a secret..."
       autocomplete="off"
+      spellcheck="false"
     >
 
   </div>
 
+
 </main>
 
 
-<div class="jackpot-screen" id="jackpotScreen">
+<!-- ======================================
+     JACKPOT OVERLAY
+====================================== -->
+
+<div
+  class="jackpot-screen"
+  id="jackpotScreen"
+>
 
   <div class="jackpot-box">
 
-    <h2>JACKPOT</h2>
+    <h2>
+      JACKPOT
+    </h2>
 
     <p>
       Curiosity really did pay off.
     </p>
 
-    <h3 id="jackpotAmount"></h3>
+    <h3 id="jackpotAmount">
+      +0 Curios
+    </h3>
 
-    <button class="close" onclick="closeJackpot()">
+    <button
+      class="close"
+      onclick="closeJackpot()"
+    >
       Continue
     </button>
 
@@ -537,22 +1135,69 @@ button:disabled {
 
 <script>
 
+
 /* =========================================
-   GAME STATE
+   GAME DATA
 ========================================= */
 
-let game = JSON.parse(
-  localStorage.getItem("curiosityCasino")
-) || {
+let game =
+  JSON.parse(
+    localStorage.getItem(
+      "curiosityCasino"
+    )
+  ) ||
+  {
 
-  balance: 1000,
-  bet: 10,
-  spins: 0,
-  biggestWin: 0,
-  jackpots: 0,
-  lastBonus: null
+    balance: 1000,
 
-};
+    bet: 10,
+
+    spins: 0,
+
+    biggestWin: 0,
+
+    jackpots: 0,
+
+    lastBonus: null
+
+  };
+
+
+/* =========================================
+   DOM
+========================================= */
+
+const title =
+  document.getElementById("title");
+
+const subtitle =
+  document.getElementById("subtitle");
+
+const balance =
+  document.getElementById("balance");
+
+const betDisplay =
+  document.getElementById("bet");
+
+const result =
+  document.getElementById("result");
+
+const spinButton =
+  document.getElementById("spinButton");
+
+const secretInput =
+  document.getElementById("secretInput");
+
+
+const slots = [
+
+  document.getElementById("slot1"),
+
+  document.getElementById("slot2"),
+
+  document.getElementById("slot3")
+
+];
 
 
 /* =========================================
@@ -594,7 +1239,11 @@ const symbols = [
 ];
 
 
-function save() {
+/* =========================================
+   SAVE
+========================================= */
+
+function saveGame() {
 
   localStorage.setItem(
     "curiosityCasino",
@@ -610,20 +1259,26 @@ function save() {
 
 function updateUI() {
 
-  document.getElementById("balance")
-    .textContent = game.balance;
+  balance.textContent =
+    game.balance;
 
-  document.getElementById("bet")
-    .textContent = game.bet;
+  betDisplay.textContent =
+    game.bet;
 
-  document.getElementById("spins")
-    .textContent = game.spins;
+  document.getElementById(
+    "spins"
+  ).textContent =
+    game.spins;
 
-  document.getElementById("biggestWin")
-    .textContent = game.biggestWin + " ◉";
+  document.getElementById(
+    "biggestWin"
+  ).textContent =
+    game.biggestWin + " ◉";
 
-  document.getElementById("jackpots")
-    .textContent = game.jackpots;
+  document.getElementById(
+    "jackpots"
+  ).textContent =
+    game.jackpots;
 
 }
 
@@ -639,11 +1294,13 @@ function changeBet(amount) {
 
   game.bet += amount;
 
-  if (game.bet < 10)
+  if (game.bet < 10) {
     game.bet = 10;
+  }
 
-  if (game.bet > 100)
+  if (game.bet > 100) {
     game.bet = 100;
+  }
 
   updateUI();
 
@@ -657,14 +1314,17 @@ function changeBet(amount) {
 function randomSymbol() {
 
   return symbols[
-    Math.floor(Math.random() * symbols.length)
+    Math.floor(
+      Math.random() *
+      symbols.length
+    )
   ];
 
 }
 
 
 /* =========================================
-   SLOT MACHINE
+   SPIN
 ========================================= */
 
 function spin() {
@@ -672,7 +1332,7 @@ function spin() {
   if (game.balance < game.bet) {
 
     showResult(
-      "Nicht genug Curios. Vielleicht bist du zu neugierig geworden.",
+      "Nicht genug Curios. 👀",
       "lose"
     );
 
@@ -680,76 +1340,83 @@ function spin() {
   }
 
 
-  const button =
-    document.getElementById("spinButton");
-
-  const slots = [
-    document.getElementById("slot1"),
-    document.getElementById("slot2"),
-    document.getElementById("slot3")
-  ];
-
-
   game.balance -= game.bet;
 
   game.spins++;
 
-  button.disabled = true;
+
+  spinButton.disabled = true;
 
 
   slots.forEach(slot => {
 
-    slot.classList.remove("win");
-    slot.classList.add("spinning");
+    slot.classList.remove(
+      "win"
+    );
+
+    slot.classList.add(
+      "spinning"
+    );
 
   });
 
 
-  let finalSymbols = [];
+  const animation =
+    setInterval(() => {
 
+      slots.forEach(slot => {
 
-  /* spinning animation */
+        slot.textContent =
+          randomSymbol().icon;
 
-  const animation = setInterval(() => {
+      });
 
-    slots.forEach(slot => {
-
-      slot.textContent =
-        randomSymbol().icon;
-
-    });
-
-  }, 80);
+    }, 70);
 
 
   setTimeout(() => {
 
-    clearInterval(animation);
+    clearInterval(
+      animation
+    );
 
 
-    finalSymbols = [
+    const finalSymbols = [
+
       randomSymbol(),
+
       randomSymbol(),
+
       randomSymbol()
+
     ];
 
 
-    slots.forEach((slot, i) => {
+    finalSymbols.forEach(
+      (symbol, index) => {
 
-      slot.textContent =
-        finalSymbols[i].icon;
+        slots[index]
+          .textContent =
+          symbol.icon;
 
-      slot.classList.remove("spinning");
+        slots[index]
+          .classList.remove(
+            "spinning"
+          );
 
-    });
+      }
+    );
 
 
-    calculateWin(finalSymbols);
+    calculateWin(
+      finalSymbols
+    );
 
 
-    button.disabled = false;
+    spinButton.disabled = false;
 
-    save();
+
+    saveGame();
 
     updateUI();
 
@@ -762,18 +1429,20 @@ function spin() {
    WIN CALCULATION
 ========================================= */
 
-function calculateWin(result) {
+function calculateWin(resultSymbols) {
 
   const icons =
-    result.map(x => x.icon);
+    resultSymbols.map(
+      x => x.icon
+    );
 
 
   let win = 0;
 
 
-  /* JACKPOT
-     Three eyes
-  */
+  /* ================================
+     JACKPOT
+  ================================= */
 
   if (
     icons[0] === "👁️" &&
@@ -781,21 +1450,29 @@ function calculateWin(result) {
     icons[2] === "👁️"
   ) {
 
-    win = game.bet * 100;
+    win =
+      game.bet * 100;
 
-    game.jackpots++;
 
     game.balance += win;
 
+    game.jackpots++;
+
+
     game.biggestWin =
-      Math.max(game.biggestWin, win);
-
-
-    document
-      .querySelectorAll(".slot")
-      .forEach(slot =>
-        slot.classList.add("win")
+      Math.max(
+        game.biggestWin,
+        win
       );
+
+
+    slots.forEach(slot => {
+
+      slot.classList.add(
+        "win"
+      );
+
+    });
 
 
     document.getElementById(
@@ -806,7 +1483,13 @@ function calculateWin(result) {
 
     document.getElementById(
       "jackpotScreen"
-    ).style.display = "flex";
+    ).style.display =
+      "flex";
+
+
+    createParticles(
+      "💎"
+    );
 
 
     return;
@@ -814,7 +1497,9 @@ function calculateWin(result) {
   }
 
 
-  /* THREE EQUAL */
+  /* ================================
+     THREE EQUAL
+  ================================= */
 
   if (
     icons[0] === icons[1] &&
@@ -822,21 +1507,32 @@ function calculateWin(result) {
   ) {
 
     const multiplier =
-      result[0].multiplier;
+      resultSymbols[0]
+        .multiplier;
 
-    win = game.bet * multiplier;
+
+    win =
+      game.bet *
+      multiplier;
+
 
     game.balance += win;
 
+
     game.biggestWin =
-      Math.max(game.biggestWin, win);
-
-
-    document
-      .querySelectorAll(".slot")
-      .forEach(slot =>
-        slot.classList.add("win")
+      Math.max(
+        game.biggestWin,
+        win
       );
+
+
+    slots.forEach(slot => {
+
+      slot.classList.add(
+        "win"
+      );
+
+    });
 
 
     showResult(
@@ -846,12 +1542,20 @@ function calculateWin(result) {
       "win"
     );
 
+
+    createParticles(
+      resultSymbols[0].icon
+    );
+
+
     return;
 
   }
 
 
-  /* TWO EQUAL */
+  /* ================================
+     TWO EQUAL
+  ================================= */
 
   if (
     icons[0] === icons[1] ||
@@ -859,12 +1563,18 @@ function calculateWin(result) {
     icons[0] === icons[2]
   ) {
 
-    win = game.bet * 2;
+    win =
+      game.bet * 2;
+
 
     game.balance += win;
 
+
     game.biggestWin =
-      Math.max(game.biggestWin, win);
+      Math.max(
+        game.biggestWin,
+        win
+      );
 
 
     showResult(
@@ -874,10 +1584,15 @@ function calculateWin(result) {
       "win"
     );
 
+
     return;
 
   }
 
+
+  /* ================================
+     NOTHING
+  ================================= */
 
   showResult(
     "Nichts diesmal... 👀",
@@ -888,15 +1603,16 @@ function calculateWin(result) {
 
 
 /* =========================================
-   RESULT MESSAGE
+   RESULT
 ========================================= */
 
-function showResult(message, type) {
+function showResult(
+  message,
+  type = ""
+) {
 
-  const result =
-    document.getElementById("result");
-
-  result.textContent = message;
+  result.textContent =
+    message;
 
   result.className =
     "result " + type;
@@ -911,10 +1627,15 @@ function showResult(message, type) {
 function dailyBonus() {
 
   const today =
-    new Date().toISOString().slice(0,10);
+    new Date()
+      .toISOString()
+      .slice(0,10);
 
 
-  if (game.lastBonus === today) {
+  if (
+    game.lastBonus ===
+    today
+  ) {
 
     showResult(
       "Der Bonus wurde heute schon abgeholt.",
@@ -927,52 +1648,63 @@ function dailyBonus() {
 
 
   const amount =
-    250 + Math.floor(Math.random() * 251);
+    250 +
+    Math.floor(
+      Math.random() * 251
+    );
 
 
   game.balance += amount;
 
-  game.lastBonus = today;
-
-
-  document.getElementById(
-    "bonusButton"
-  ).disabled = true;
+  game.lastBonus =
+    today;
 
 
   showResult(
-    "🎁 +" + amount +
+    "🎁 +" +
+    amount +
     " kostenlose Curios!",
     "win"
   );
 
 
-  save();
-
   updateUI();
+
+  saveGame();
+
+  checkBonus();
 
 }
 
 
 /* =========================================
-   BONUS BUTTON STATUS
+   CHECK BONUS
 ========================================= */
 
 function checkBonus() {
 
   const today =
-    new Date().toISOString().slice(0,10);
+    new Date()
+      .toISOString()
+      .slice(0,10);
 
 
-  if (game.lastBonus === today) {
+  if (
+    game.lastBonus ===
+    today
+  ) {
 
-    document.getElementById(
-      "bonusButton"
-    ).disabled = true;
+    const button =
+      document.getElementById(
+        "bonusButton"
+      );
 
-    document.getElementById(
-      "bonusButton"
-    ).textContent =
+
+    button.disabled =
+      true;
+
+
+    button.textContent =
       "Morgen wieder";
 
   }
@@ -984,131 +1716,1203 @@ checkBonus();
 
 
 /* =========================================
-   SECRET CODES
+   PARTICLES
 ========================================= */
 
-document
-  .getElementById("secretInput")
-  .addEventListener("keydown", function(e) {
+function createParticles(
+  emoji
+) {
 
-    if (e.key !== "Enter")
-      return;
+  for (
+    let i = 0;
+    i < 35;
+    i++
+  ) {
 
-
-    const code =
-      this.value.toLowerCase().trim();
-
-
-    if (code === "curious") {
-
-      game.balance += 500;
-
-      showResult(
-        "👁️ Curiosity rewarded. +500 Curios",
-        "win"
+    const element =
+      document.createElement(
+        "div"
       );
 
-    }
+
+    element.className =
+      "falling";
 
 
-    else if (code === "joline") {
-
-      game.balance += 1000;
-
-      showResult(
-        "❤️ Eine besondere Neugier... +1000 Curios",
-        "win"
-      );
-
-    }
+    element.textContent =
+      emoji;
 
 
-    else if (code === "404") {
-
-      game.balance += 404;
-
-      showResult(
-        "⚠️ Reality.exe has stopped working. +404 Curios",
-        "win"
-      );
-
-    }
+    element.style.left =
+      Math.random() * 100 +
+      "vw";
 
 
-    else if (code === "reset") {
-
-      game = {
-
-        balance: 1000,
-        bet: 10,
-        spins: 0,
-        biggestWin: 0,
-        jackpots: 0,
-        lastBonus: null
-
-      };
-
-      showResult(
-        "♻️ Casino reset.",
-        "win"
-      );
-
-    }
+    element.style.fontSize =
+      18 +
+      Math.random() * 30 +
+      "px";
 
 
-    else {
-
-      showResult(
-        "Nothing happened. Or did it?",
-        ""
-      );
-
-    }
+    element.style.animationDuration =
+      2 +
+      Math.random() * 3 +
+      "s";
 
 
-    this.value = "";
+    document.body.appendChild(
+      element
+    );
 
-    save();
 
-    updateUI();
+    setTimeout(() => {
 
-    checkBonus();
+      element.remove();
 
-  });
+    }, 5500);
+
+  }
+
+}
 
 
 /* =========================================
-   JACKPOT
+   JACKPOT CLOSE
 ========================================= */
 
 function closeJackpot() {
 
   document.getElementById(
     "jackpotScreen"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 }
 
 
 /* =========================================
-   EASTER EGG: TITLE
+   EASTER EGG SYSTEM
 ========================================= */
 
-document
-  .querySelector("h1")
-  .addEventListener("click", function() {
+/*
+   Die Codes funktionieren auf zwei Wegen:
 
-    this.textContent =
-      "Too curious...";
+   1. Unten im geheimen Eingabefeld
+   2. Einfach irgendwo auf der Seite tippen
+
+   Dadurch bleiben die alten Easter Eggs erhalten.
+*/
+
+
+let secret =
+  "";
+
+let secretTimer;
+
+
+/* =========================================
+   NORMAL KEYBOARD
+========================================= */
+
+window.addEventListener(
+  "keydown",
+  function(e) {
+
+    /*
+      Wenn man gerade im
+      Secret Input schreibt,
+      übernimmt dieser die Eingabe.
+    */
+
+    if (
+      document.activeElement ===
+      secretInput
+    ) {
+      return;
+    }
+
+
+    /*
+      Nur Buchstaben,
+      Zahlen und Sonderzeichen
+      aufnehmen.
+    */
+
+    secret +=
+      e.key.toLowerCase();
+
+
+    clearTimeout(
+      secretTimer
+    );
+
+
+    secretTimer =
+      setTimeout(() => {
+
+        secret = "";
+
+      }, 5000);
+
+
+    checkSecret(
+      secret
+    );
+
+  }
+);
+
+
+/* =========================================
+   SECRET INPUT
+========================================= */
+
+secretInput.addEventListener(
+  "keydown",
+  function(e) {
+
+    if (
+      e.key !== "Enter"
+    ) {
+      return;
+    }
+
+
+    const code =
+      this.value
+        .toLowerCase()
+        .trim();
+
+
+    if (code) {
+
+      checkSecret(
+        code
+      );
+
+    }
+
+
+    this.value =
+      "";
+
+  }
+);
+
+
+/* =========================================
+   SECRET HANDLER
+========================================= */
+
+function checkSecret(code) {
+
+
+  /* =======================================
+     JULIUS
+  ======================================= */
+
+  if (
+    code.includes("julius")
+  ) {
+
+    juliusEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     SOPHIE
+  ======================================= */
+
+  if (
+    code.includes("sophie")
+  ) {
+
+    sophieEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     LOVE
+  ======================================= */
+
+  if (
+    code.includes("love")
+  ) {
+
+    sophieEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     CURIOUS
+  ======================================= */
+
+  if (
+    code.includes("curious")
+  ) {
+
+    curiousEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     CAT
+  ======================================= */
+
+  if (
+    code.includes("cat") ||
+    code.includes("katze")
+  ) {
+
+    catEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     MIRROR
+  ======================================= */
+
+  if (
+    code.includes("mirror")
+  ) {
+
+    mirrorEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     DREAM
+  ======================================= */
+
+  if (
+    code.includes("dream")
+  ) {
+
+    dreamEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     404
+  ======================================= */
+
+  if (
+    code.includes("404")
+  ) {
+
+    error404Egg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     NIGHT
+  ======================================= */
+
+  if (
+    code.includes("night")
+  ) {
+
+    nightEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     GLOWUP
+  ======================================= */
+
+  if (
+    code.includes("glowup")
+  ) {
+
+    glowEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     ERROR
+  ======================================= */
+
+  if (
+    code.includes("error")
+  ) {
+
+    systemErrorEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     QWE
+  ======================================= */
+
+  if (
+    code.includes("qwe")
+  ) {
+
+    surpriseEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+  /* =======================================
+     SPOTIFY
+  ======================================= */
+
+  if (
+    code.includes("spotify")
+  ) {
+
+    spotifyEgg();
+
+    secret = "";
+
+    return;
+
+  }
+
+
+}
+
+
+/* =========================================
+   JULIUS EASTER EGG
+========================================= */
+
+function juliusEgg() {
+
+  title.textContent =
+    "JULIUS DETECTED.";
+
+  subtitle.textContent =
+    "You weren't supposed to find this. 👀";
+
+
+  document.body
+    .classList.add(
+      "julius-mode"
+    );
+
+
+  document.body
+    .classList.add(
+      "theme-red"
+    );
+
+
+  slots.forEach(
+    slot => {
+
+      slot.textContent =
+        "🤨";
+
+    }
+  );
+
+
+  createParticles(
+    "🤨"
+  );
+
+
+  /*
+     Kleiner Bonus,
+     aber der Effekt steht
+     im Vordergrund.
+  */
+
+  game.balance += 100;
+
+
+  updateUI();
+
+  saveGame();
+
+
+  setTimeout(() => {
+
+    document.body
+      .classList.remove(
+        "julius-mode"
+      );
+
+    document.body
+      .classList.remove(
+        "theme-red"
+      );
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "Julius was here.";
+
+
+    slots[0].textContent =
+      "🍒";
+
+    slots[1].textContent =
+      "⭐";
+
+    slots[2].textContent =
+      "💎";
+
+
+    showResult(
+      "🤨 Julius schenkt dir 100 Curios.",
+      "win"
+    );
+
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   SOPHIE EASTER EGG
+========================================= */
+
+function sophieEgg() {
+
+  title.textContent =
+    "Ich liebe dich Sophie ❤️";
+
+
+  subtitle.textContent =
+    "💖 A special message just for you.";
+
+
+  document.body.style.background =
+    "radial-gradient(circle, #521b45, #160914)";
+
+
+  createParticles(
+    "❤️"
+  );
+
+
+  createParticles(
+    "💕"
+  );
+
+
+  game.balance += 250;
+
+
+  updateUI();
+
+  saveGame();
+
+
+  setTimeout(() => {
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "Some secrets are worth finding.";
+
+
+    document.body.style.background =
+      "";
+
+
+    showResult(
+      "❤️ Sophie hat dir 250 Curios dagelassen.",
+      "win"
+    );
+
+
+  }, 5000);
+
+}
+
+
+/* =========================================
+   CURIOUS EASTER EGG
+========================================= */
+
+function curiousEgg() {
+
+  title.textContent =
+    "Too curious...";
+
+
+  subtitle.textContent =
+    "👁️ Curiosity unlocked.";
+
+
+  document.body
+    .classList.add(
+      "theme-purple"
+    );
+
+
+  title.classList.add(
+    "pulse"
+  );
+
+
+  game.balance += 500;
+
+
+  updateUI();
+
+  saveGame();
+
+
+  createParticles(
+    "👁️"
+  );
+
+
+  setTimeout(() => {
+
+    document.body
+      .classList.remove(
+        "theme-purple"
+      );
+
+
+    title.classList.remove(
+      "pulse"
+    );
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "🔍 You really are curious.";
+
+    showResult(
+      "👁️ +500 Curios",
+      "win"
+    );
+
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   CAT
+========================================= */
+
+function catEgg() {
+
+  title.textContent =
+    "Meow! 🐱";
+
+
+  subtitle.textContent =
+    "🐾 Cats love surprises.";
+
+
+  createParticles(
+    "🐱"
+  );
+
+
+  createParticles(
+    "🐾"
+  );
+
+
+  game.balance += 150;
+
+
+  updateUI();
+
+  saveGame();
+
+
+  setTimeout(() => {
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "The cat has left the casino.";
+
+
+    showResult(
+      "🐱 +150 Curios",
+      "win"
+    );
+
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   MIRROR
+========================================= */
+
+function mirrorEgg() {
+
+  document.body.style.transform =
+    "scaleX(-1)";
+
+
+  title.textContent =
+    "Reflections of curiosity...";
+
+
+  subtitle.textContent =
+    "🪞 Everything is backwards.";
+
+
+  setTimeout(() => {
+
+    document.body.style.transform =
+      "scaleX(1)";
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "Back to normal.";
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   DREAM
+========================================= */
+
+function dreamEgg() {
+
+  document.body
+    .classList.add(
+      "dream-mode"
+    );
+
+
+  title.textContent =
+    "You're dreaming...";
+
+
+  subtitle.textContent =
+    "✨ Feels unreal, doesn't it?";
+
+
+  document.body.style.background =
+    "linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d)";
+
+
+  createParticles(
+    "✨"
+  );
+
+
+  setTimeout(() => {
+
+    document.body
+      .classList.remove(
+        "dream-mode"
+      );
+
+
+    document.body.style.background =
+      "";
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "🔍 The dream fades.";
+
+  }, 6000);
+
+}
+
+
+/* =========================================
+   404
+========================================= */
+
+function error404Egg() {
+
+  title.classList.add(
+    "glitch"
+  );
+
+
+  document.body.style.filter =
+    "contrast(2) saturate(.4)";
+
+
+  document.body.style.background =
+    "#300000";
+
+
+  title.textContent =
+    "404";
+
+
+  subtitle.textContent =
+    "⚠️ You broke reality.";
+
+
+  setTimeout(() => {
+
+    title.classList.remove(
+      "glitch"
+    );
+
+
+    document.body.style.filter =
+      "";
+
+
+    document.body.style.background =
+      "";
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "Reality restored.";
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   NIGHT
+========================================= */
+
+function nightEgg() {
+
+  document.body.style.background =
+    "#000";
+
+
+  title.textContent =
+    "Good night... 🌙";
+
+
+  subtitle.textContent =
+    "Shhh...";
+
+
+  title.style.textShadow =
+    "0 0 50px #7dd3fc";
+
+
+  setTimeout(() => {
+
+    document.body.style.background =
+      "";
+
+
+    title.style.textShadow =
+      "";
+
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "The night fades.";
+
+  }, 6000);
+
+}
+
+
+/* =========================================
+   GLOWUP
+========================================= */
+
+function glowEgg() {
+
+  title.classList.add(
+    "pulse"
+  );
+
+
+  subtitle.textContent =
+    "⚡ Glow activated!";
+
+
+  createParticles(
+    "⚡"
+  );
+
+
+  setTimeout(() => {
+
+    title.classList.remove(
+      "pulse"
+    );
+
+
+    subtitle.textContent =
+      "🔍 Glow faded...";
+
+  }, 5000);
+
+}
+
+
+/* =========================================
+   SYSTEM ERROR
+========================================= */
+
+function systemErrorEgg() {
+
+  const oldTitle =
+    title.textContent;
+
+
+  title.textContent =
+    "❌ SYSTEM ERROR";
+
+
+  title.classList.add(
+    "glitch"
+  );
+
+
+  title.style.color =
+    "#ff4d4d";
+
+
+  document.body.style.background =
+    "#330000";
+
+
+  subtitle.textContent =
+    "💀 Something went wrong...";
+
+
+  setTimeout(() => {
+
+    title.classList.remove(
+      "glitch"
+    );
+
+
+    title.style.color =
+      "";
+
+
+    document.body.style.background =
+      "";
+
+
+    title.textContent =
+      oldTitle;
+
+
+    subtitle.textContent =
+      "Or did it?";
+
+  }, 4500);
+
+}
+
+
+/* =========================================
+   SURPRISE
+========================================= */
+
+function surpriseEgg() {
+
+  title.textContent =
+    "SURPRISE! 🎉";
+
+
+  subtitle.textContent =
+    "Well, that was unexpected.";
+
+
+  createParticles(
+    "🎉"
+  );
+
+
+  createParticles(
+    "🎊"
+  );
+
+
+  game.balance += 300;
+
+
+  updateUI();
+
+  saveGame();
+
+
+  setTimeout(() => {
+
+    title.textContent =
+      "Don't be so curious.";
+
+
+    subtitle.textContent =
+      "Try again!";
+
+
+    showResult(
+      "🎉 Surprise! +300 Curios",
+      "win"
+    );
+
+  }, 4000);
+
+}
+
+
+/* =========================================
+   SPOTIFY
+========================================= */
+
+function spotifyEgg() {
+
+  title.textContent =
+    "🎵 Music unlocked";
+
+
+  subtitle.textContent =
+    "Opening the secret playlist...";
+
+
+  /*
+    Dein bisheriges Spotify-Profil.
+  */
+
+  setTimeout(() => {
+
+    window.location.href =
+      "https://open.spotify.com/user/31lkhiohnznx3fyeuyueyroxwbty";
+
+  }, 1200);
+
+}
+
+
+/* =========================================
+   TITLE EASTER EGG
+========================================= */
+
+let titleClicks = 0;
+
+
+title.addEventListener(
+  "click",
+  () => {
+
+    titleClicks++;
+
+
+    if (
+      titleClicks === 3
+    ) {
+
+      title.classList.add(
+        "glitch"
+      );
+
+
+      subtitle.textContent =
+        "👀 Something feels... off?";
+
+
+      setTimeout(() => {
+
+        title.classList.remove(
+          "glitch"
+        );
+
+
+        subtitle.textContent =
+          "🔍 Keep trying.";
+
+      }, 2000);
+
+
+      titleClicks = 0;
+
+    }
+
+
+    else if (
+      titleClicks === 7
+    ) {
+
+      title.style.transform =
+        "rotate(360deg)";
+
+
+      subtitle.textContent =
+        "💫 You found another one!";
+
+
+      setTimeout(() => {
+
+        title.style.transform =
+          "";
+
+
+        subtitle.textContent =
+          "Try typing something.";
+
+      }, 1800);
+
+
+      titleClicks = 0;
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   RANDOM CASINO EVENT
+========================================= */
+
+/*
+   Sehr selten passiert einfach
+   etwas, wenn man spielt.
+*/
+
+function randomEvent() {
+
+  const chance =
+    Math.random();
+
+
+  if (
+    chance < 0.025
+  ) {
+
+    title.textContent =
+      "👁️ Someone is watching.";
+
+
+    subtitle.textContent =
+      "You shouldn't have looked.";
+
+
+    createParticles(
+      "👁️"
+    );
+
 
     setTimeout(() => {
 
-      this.textContent =
+      title.textContent =
         "Don't be so curious.";
 
-    }, 1800);
 
-  });
+      subtitle.textContent =
+        "Probably nothing...";
+
+    }, 3500);
+
+  }
+
+}
+
+
+setInterval(
+  randomEvent,
+  15000
+);
+
+
+/* =========================================
+   INITIAL MESSAGE
+========================================= */
+
+setTimeout(() => {
+
+  subtitle.textContent =
+    "🔍 Sometimes curiosity pays off.";
+
+}, 1800);
+
 
 </script>
 
