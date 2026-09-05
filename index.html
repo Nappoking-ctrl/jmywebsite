@@ -239,50 +239,48 @@ h1:hover {
 
 
 /* =========================================
-   CURIOUS ARCADE GRID
+   SLOT MACHINE
 ========================================= */
 
 .slots {
-  width: min(760px, 100%);
-  margin: 20px auto 26px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  padding: 14px;
-  border-radius: 24px;
-  background: rgba(0,0,0,.22);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: inset 0 0 40px rgba(0,0,0,.35);
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 15px auto 25px;
 }
 
 .slot {
-  aspect-ratio: 1 / 1;
-  min-width: 0;
+  width: 115px;
+  height: 135px;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
-  background: linear-gradient(145deg, #151a2b, #080b14);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #151a2b,
+      #080b14
+    );
+
   border: 2px solid rgba(255,255,255,.09);
-  box-shadow: inset 0 0 20px rgba(0,0,0,.65), 0 8px 18px rgba(0,0,0,.22);
-  font-size: clamp(30px, 5vw, 52px);
+
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,.7),
+    0 10px 30px rgba(0,0,0,.25);
+
+  font-size: 66px;
+
   user-select: none;
+
   transition: .2s ease;
-}
-
-.slot.wild {
-  border-color: #c084fc;
-  box-shadow: 0 0 22px rgba(192,132,252,.25), inset 0 0 20px rgba(192,132,252,.08);
-}
-
-.slot.scatter {
-  border-color: #67e8f9;
-  box-shadow: 0 0 22px rgba(103,232,249,.25), inset 0 0 20px rgba(103,232,249,.08);
-}
-
-.slot.bonus {
-  border-color: #fbbf24;
-  box-shadow: 0 0 30px rgba(251,191,36,.35), inset 0 0 24px rgba(251,191,36,.1);
 }
 
 .slot.spinning {
@@ -290,52 +288,48 @@ h1:hover {
 }
 
 @keyframes shake {
-  0% { transform: translateY(-3px); }
-  50% { transform: translateY(3px); }
-  100% { transform: translateY(-3px); }
+
+  0% {
+    transform: translateY(-3px);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+
+  100% {
+    transform: translateY(-3px);
+  }
+
 }
 
 .slot.win {
   border-color: var(--gold);
-  box-shadow: 0 0 30px rgba(250,204,21,.3), inset 0 0 30px rgba(250,204,21,.08);
-  animation: winPulse .7s ease infinite alternate;
+
+  box-shadow:
+    0 0 30px rgba(250,204,21,.3),
+    inset 0 0 30px rgba(250,204,21,.08);
+
+  animation:
+    winPulse .7s ease infinite alternate;
 }
 
 @keyframes winPulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.06); }
+
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+
 }
 
-.arcade-help {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px 18px;
-  margin: 0 auto 18px;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.arcade-help span {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.arcade-status {
-  margin: 8px auto 0;
-  max-width: 760px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.04);
-  color: var(--muted);
-  font-size: 12px;
-}
 
 /* =========================================
    CONTROLS
 ========================================= */
-
 
 .bet-area {
   display: flex;
@@ -778,57 +772,6 @@ button:disabled {
 
 
 /* =========================================
-   CURIOS SHOP
-========================================= */
-
-.curios-shop {
-  margin-top: 20px;
-}
-
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.shop-item {
-  min-height: 92px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  font-size: 24px;
-}
-
-.shop-item strong {
-  font-size: 13px;
-}
-
-.shop-item small {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.shop-item.owned {
-  border-color: var(--accent);
-  opacity: .75;
-}
-
-body.sparkles-owned .slots {
-  box-shadow: 0 0 35px rgba(255,255,255,.08), inset 0 0 40px rgba(0,0,0,.35);
-}
-
-body.neon-owned .slots {
-  border: 1px solid var(--accent);
-}
-
-body.gold-owned .slots {
-  border: 2px solid var(--gold);
-}
-
-/* =========================================
    RESPONSIVE
 ========================================= */
 
@@ -839,21 +782,18 @@ body.gold-owned .slots {
   }
 
   .slots {
-    gap: 6px;
-    padding: 8px;
+    gap: 7px;
   }
 
   .slot {
-    border-radius: 10px;
-    font-size: clamp(24px, 8vw, 40px);
+    width: 90px;
+    height: 110px;
+
+    font-size: 50px;
   }
 
   .casino {
     padding: 20px 12px;
-  }
-
-  .shop-grid {
-    grid-template-columns: 1fr;
   }
 
   .info-grid {
@@ -981,77 +921,78 @@ body.gold-owned .slots {
   <section class="casino">
 
     <div class="machine-title">
-      The Curious Machine · Arcade Mode
+      The Curious Machine
     </div>
 
-    <div class="slots" id="slotGrid" aria-label="5 mal 5 Curious Arcade">
-      <div class="slot" id="slot1">🍒</div>
-      <div class="slot" id="slot2">⭐</div>
-      <div class="slot" id="slot3">💎</div>
-      <div class="slot">🍋</div>
-      <div class="slot">🔔</div>
-      <div class="slot">⭐</div>
-      <div class="slot">🍒</div>
-      <div class="slot">👁️</div>
-      <div class="slot">💎</div>
-      <div class="slot">🍋</div>
-      <div class="slot">🔔</div>
-      <div class="slot">💎</div>
-      <div class="slot">🍒</div>
-      <div class="slot">⭐</div>
-      <div class="slot">🍋</div>
-      <div class="slot">💎</div>
-      <div class="slot">🔔</div>
-      <div class="slot">⭐</div>
-      <div class="slot">🍒</div>
-      <div class="slot">👁️</div>
-      <div class="slot">🍋</div>
-      <div class="slot">🍒</div>
-      <div class="slot">💎</div>
-      <div class="slot">🔔</div>
-      <div class="slot">⭐</div>
+
+    <div class="slots">
+
+      <div class="slot" id="slot1">
+        🍒
+      </div>
+
+      <div class="slot" id="slot2">
+        ⭐
+      </div>
+
+      <div class="slot" id="slot3">
+        💎
+      </div>
+
     </div>
 
-    <div class="arcade-help">
-      <span>🟣 Wild = ersetzt ein Symbol</span>
-      <span>🔵 Scatter = 3+ starten den Bonus</span>
-      <span>✨ Reihen bringen Curios</span>
-    </div>
 
     <div class="bet-area">
+
+      <button
+        class="bet-button"
+        onclick="changeBet(-10)"
+      >
+        −
+      </button>
+
+
       <div class="bet">
-        Jeder Spin ist kostenlos · <span id="spinCost">0</span> ◉
+
+        Einsatz:
+
+        <span id="bet">
+          10
+        </span>
+
+        ◉
+
       </div>
+
+
+      <button
+        class="bet-button"
+        onclick="changeBet(10)"
+      >
+        +
+      </button>
+
     </div>
 
-    <button class="spin" id="spinButton" onclick="spin()">
+
+    <button
+      class="spin"
+      id="spinButton"
+      onclick="spin()"
+    >
       SPIN
     </button>
 
-    <div class="arcade-status" id="arcadeStatus">
-      Sammle Reihen, Wilds und 3+ Scatter. Keine Einsätze – Curios sind reine Spielpunkte.
-    </div>
 
-    <div class="result" id="result">
+    <div
+      class="result"
+      id="result"
+    >
       Let's see what happens...
     </div>
 
   </section>
 
-
-  <!-- ====================================
-       CURIOS SHOP
-  ===================================== -->
-
-  <section class="casino curios-shop">
-    <div class="machine-title">Curios Shop</div>
-    <div class="arcade-status">Gib deine erspielten Curios für rein kosmetische Upgrades aus. Nichts kostet echtes Geld.</div>
-    <div class="shop-grid">
-      <button class="shop-item" onclick="buyCosmetic('sparkles', 250)">✨ <strong>Sparkle Trail</strong><small>250 ◉</small></button>
-      <button class="shop-item" onclick="buyCosmetic('neon', 500)">🌈 <strong>Neon Frame</strong><small>500 ◉</small></button>
-      <button class="shop-item" onclick="buyCosmetic('gold', 750)">👑 <strong>Golden Machine</strong><small>750 ◉</small></button>
-    </div>
-  </section>
 
   <!-- ====================================
        STATISTICS
@@ -1200,250 +1141,466 @@ body.gold-owned .slots {
 ========================================= */
 
 let game =
-  JSON.parse(localStorage.getItem("curiosityCasino")) ||
+  JSON.parse(
+    localStorage.getItem(
+      "curiosityCasino"
+    )
+  ) ||
   {
+
     balance: 1000,
-    bet: 0,
+
+    bet: 10,
+
     spins: 0,
+
     biggestWin: 0,
+
     jackpots: 0,
-    lastBonus: null,
-    ownedCosmetics: []
+
+    lastBonus: null
+
   };
 
-// Compatibility with older saved versions.
-game.ownedCosmetics = Array.isArray(game.ownedCosmetics) ? game.ownedCosmetics : [];
-game.bet = 0;
 
 /* =========================================
    DOM
 ========================================= */
 
-const title = document.getElementById("title");
-const subtitle = document.getElementById("subtitle");
-const balance = document.getElementById("balance");
-const betDisplay = document.getElementById("bet");
-const result = document.getElementById("result");
-const spinButton = document.getElementById("spinButton");
-const secretInput = document.getElementById("secretInput");
-const arcadeStatus = document.getElementById("arcadeStatus");
-const slots = Array.from(document.querySelectorAll(".slot"));
+const title =
+  document.getElementById("title");
+
+const subtitle =
+  document.getElementById("subtitle");
+
+const balance =
+  document.getElementById("balance");
+
+const betDisplay =
+  document.getElementById("bet");
+
+const result =
+  document.getElementById("result");
+
+const spinButton =
+  document.getElementById("spinButton");
+
+const secretInput =
+  document.getElementById("secretInput");
+
+
+const slots = [
+
+  document.getElementById("slot1"),
+
+  document.getElementById("slot2"),
+
+  document.getElementById("slot3")
+
+];
+
 
 /* =========================================
    SYMBOLS
 ========================================= */
 
 const symbols = [
-  { icon: "🍒", points: 10 },
-  { icon: "🍋", points: 14 },
-  { icon: "🔔", points: 18 },
-  { icon: "⭐", points: 24 },
-  { icon: "💎", points: 35 },
-  { icon: "👁️", points: 60 },
-  { icon: "🟣", points: 0, wild: true },
-  { icon: "🔵", points: 0, scatter: true }
+
+  {
+    icon: "🍒",
+    multiplier: 3
+  },
+
+  {
+    icon: "🍋",
+    multiplier: 4
+  },
+
+  {
+    icon: "🔔",
+    multiplier: 6
+  },
+
+  {
+    icon: "⭐",
+    multiplier: 10
+  },
+
+  {
+    icon: "💎",
+    multiplier: 20
+  },
+
+  {
+    icon: "👁️",
+    multiplier: 50
+  }
+
 ];
 
-function randomSymbol() {
-  return symbols[Math.floor(Math.random() * symbols.length)];
-}
-
-function symbolByIcon(icon) {
-  return symbols.find(s => s.icon === icon) || symbols[0];
-}
 
 /* =========================================
-   SAVE / UI
+   SAVE
 ========================================= */
 
 function saveGame() {
-  localStorage.setItem("curiosityCasino", JSON.stringify(game));
+
+  localStorage.setItem(
+    "curiosityCasino",
+    JSON.stringify(game)
+  );
+
 }
+
+
+/* =========================================
+   UI
+========================================= */
 
 function updateUI() {
-  balance.textContent = game.balance;
-  betDisplay.textContent = "0";
-  document.getElementById("spins").textContent = game.spins;
-  document.getElementById("biggestWin").textContent = game.biggestWin + " ◉";
-  document.getElementById("jackpots").textContent = game.jackpots;
 
-  document.querySelectorAll(".shop-item").forEach(button => {
-    const match = button.getAttribute("onclick")?.match(/'([^']+)'/);
-    if (!match) return;
-    const owned = game.ownedCosmetics.includes(match[1]);
-    button.classList.toggle("owned", owned);
-    if (owned) button.querySelector("small").textContent = "BESITZT ✓";
-  });
+  balance.textContent =
+    game.balance;
 
-  game.ownedCosmetics.forEach(item => document.body.classList.add(item + "-owned"));
+  betDisplay.textContent =
+    game.bet;
+
+  document.getElementById(
+    "spins"
+  ).textContent =
+    game.spins;
+
+  document.getElementById(
+    "biggestWin"
+  ).textContent =
+    game.biggestWin + " ◉";
+
+  document.getElementById(
+    "jackpots"
+  ).textContent =
+    game.jackpots;
+
 }
+
 
 updateUI();
 
-/* =========================================
-   LEGACY BET API — NO WAGERING
-========================================= */
-
-function changeBet() {
-  game.bet = 0;
-  updateUI();
-}
 
 /* =========================================
-   GRID HELPERS
+   BET
 ========================================= */
 
-const paylines = [
-  [0,1,2,3,4], [5,6,7,8,9], [10,11,12,13,14], [15,16,17,18,19], [20,21,22,23,24],
-  [0,6,12,18,24], [4,8,12,16,20], [0,5,10,15,20], [4,9,14,19,24], [0,6,11,18,24]
-];
+function changeBet(amount) {
 
-function setCell(cell, symbol) {
-  cell.textContent = symbol.icon;
-  cell.classList.toggle("wild", !!symbol.wild);
-  cell.classList.toggle("scatter", !!symbol.scatter);
-}
+  game.bet += amount;
 
-function clearHighlights() {
-  slots.forEach(slot => slot.classList.remove("win", "bonus", "wild", "scatter"));
-}
-
-function lineMatchLength(line, grid) {
-  let target = null;
-  let length = 0;
-
-  for (const index of line) {
-    const s = grid[index];
-    if (s.scatter) break;
-    if (s.wild) {
-      length++;
-      continue;
-    }
-    if (!target) target = s.icon;
-    if (s.icon === target) length++;
-    else break;
+  if (game.bet < 10) {
+    game.bet = 10;
   }
-  return { length, target };
+
+  if (game.bet > 100) {
+    game.bet = 100;
+  }
+
+  updateUI();
+
 }
 
+
 /* =========================================
-   SPIN — FREE ARCADE PLAY
+   RANDOM SYMBOL
+========================================= */
+
+function randomSymbol() {
+
+  return symbols[
+    Math.floor(
+      Math.random() *
+      symbols.length
+    )
+  ];
+
+}
+
+
+/* =========================================
+   SPIN
 ========================================= */
 
 function spin() {
-  if (spinButton.disabled) return;
+
+  if (game.balance < game.bet) {
+
+    showResult(
+      "Nicht genug Curios. 👀",
+      "lose"
+    );
+
+    return;
+  }
+
+
+  game.balance -= game.bet;
 
   game.spins++;
+
+
   spinButton.disabled = true;
-  clearHighlights();
 
-  slots.forEach(slot => slot.classList.add("spinning"));
 
-  const animation = setInterval(() => {
-    slots.forEach(slot => setCell(slot, randomSymbol()));
-  }, 70);
+  slots.forEach(slot => {
 
-  setTimeout(() => {
-    clearInterval(animation);
+    slot.classList.remove(
+      "win"
+    );
 
-    const finalSymbols = slots.map(() => randomSymbol());
-    finalSymbols.forEach((symbol, index) => {
-      setCell(slots[index], symbol);
-      slots[index].classList.remove("spinning");
-    });
+    slot.classList.add(
+      "spinning"
+    );
 
-    calculateWin(finalSymbols);
-    spinButton.disabled = false;
-    saveGame();
-    updateUI();
-  }, 950);
-}
-
-/* =========================================
-   SCORE / BONUS
-========================================= */
-
-function calculateWin(grid) {
-  const scatterCount = grid.filter(s => s.scatter).length;
-  let points = 0;
-  let matchedCells = new Set();
-  let bestLine = 0;
-
-  paylines.forEach(line => {
-    const match = lineMatchLength(line, grid);
-    if (match.length >= 3) {
-      bestLine = Math.max(bestLine, match.length);
-      const base = match.target ? symbolByIcon(match.target).points : 10;
-      points += base * (match.length - 2);
-      line.slice(0, match.length).forEach(i => matchedCells.add(i));
-    }
   });
 
-  matchedCells.forEach(i => slots[i].classList.add("win"));
 
-  if (bestLine >= 5) {
-    points += 250;
-    game.jackpots++;
-    slots.forEach(slot => slot.classList.add("win"));
-    document.getElementById("jackpotAmount").textContent = "+" + points + " Curios";
-    document.getElementById("jackpotScreen").style.display = "flex";
-    createParticles("💎");
-  }
+  const animation =
+    setInterval(() => {
 
-  if (scatterCount >= 3) {
-    slots.forEach((slot, i) => {
-      if (grid[i].scatter) slot.classList.add("bonus");
-    });
-    points += 75;
-    showResult("🔵 " + scatterCount + " Scatter! Bonus freigeschaltet! +" + points + " Curios", "win");
-    arcadeStatus.textContent = "Curiosity Bonus: Du hast 3+ Scatter gefunden. Bonus-Reward wird gestartet.";
-    setTimeout(() => startScatterBonus(scatterCount), 450);
-  } else if (points > 0) {
-    showResult("✨ " + bestLine + "er Match! +" + points + " Curios", "win");
-    arcadeStatus.textContent = "Gute Reihe! Wilds können Symbole innerhalb einer Reihe ersetzen.";
-    createParticles("✨");
-  } else {
-    showResult("Noch keine Reihe – weiterprobieren! 👀", "lose");
-    arcadeStatus.textContent = "Tipp: 3+ gleiche Symbole von links nach rechts bilden eine Reihe. Scatter zählen überall.";
-  }
+      slots.forEach(slot => {
 
-  game.balance += points;
-  game.biggestWin = Math.max(game.biggestWin, points);
+        slot.textContent =
+          randomSymbol().icon;
+
+      });
+
+    }, 70);
+
+
+  setTimeout(() => {
+
+    clearInterval(
+      animation
+    );
+
+
+    const finalSymbols = [
+
+      randomSymbol(),
+
+      randomSymbol(),
+
+      randomSymbol()
+
+    ];
+
+
+    finalSymbols.forEach(
+      (symbol, index) => {
+
+        slots[index]
+          .textContent =
+          symbol.icon;
+
+        slots[index]
+          .classList.remove(
+            "spinning"
+          );
+
+      }
+    );
+
+
+    calculateWin(
+      finalSymbols
+    );
+
+
+    spinButton.disabled = false;
+
+
+    saveGame();
+
+    updateUI();
+
+  }, 1100);
+
 }
 
-function startScatterBonus(scatterCount) {
-  const reward = 50 + scatterCount * 25;
-  game.balance += reward;
-  game.biggestWin = Math.max(game.biggestWin, reward);
-  showResult("🎁 Curiosity Bonus abgeschlossen! +" + reward + " Curios", "win");
-  arcadeStatus.textContent = "Bonus geschafft! Deine Curios wurden gutgeschrieben – keine Einsätze, nur Punkte.";
-  createParticles("🔵");
-  saveGame();
-  updateUI();
-}
 
 /* =========================================
-   CURIOS SHOP
+   WIN CALCULATION
 ========================================= */
 
-function buyCosmetic(item, price) {
-  if (game.ownedCosmetics.includes(item)) {
-    showResult("Schon freigeschaltet ✓", "win");
+function calculateWin(resultSymbols) {
+
+  const icons =
+    resultSymbols.map(
+      x => x.icon
+    );
+
+
+  let win = 0;
+
+
+  /* ================================
+     JACKPOT
+  ================================= */
+
+  if (
+    icons[0] === "👁️" &&
+    icons[1] === "👁️" &&
+    icons[2] === "👁️"
+  ) {
+
+    win =
+      game.bet * 100;
+
+
+    game.balance += win;
+
+    game.jackpots++;
+
+
+    game.biggestWin =
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
+
+    slots.forEach(slot => {
+
+      slot.classList.add(
+        "win"
+      );
+
+    });
+
+
+    document.getElementById(
+      "jackpotAmount"
+    ).textContent =
+      "+" + win + " Curios";
+
+
+    document.getElementById(
+      "jackpotScreen"
+    ).style.display =
+      "flex";
+
+
+    createParticles(
+      "💎"
+    );
+
+
     return;
+
   }
 
-  if (game.balance < price) {
-    showResult("Dafür fehlen dir noch Curios. 👀", "lose");
+
+  /* ================================
+     THREE EQUAL
+  ================================= */
+
+  if (
+    icons[0] === icons[1] &&
+    icons[1] === icons[2]
+  ) {
+
+    const multiplier =
+      resultSymbols[0]
+        .multiplier;
+
+
+    win =
+      game.bet *
+      multiplier;
+
+
+    game.balance += win;
+
+
+    game.biggestWin =
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
+
+    slots.forEach(slot => {
+
+      slot.classList.add(
+        "win"
+      );
+
+    });
+
+
+    showResult(
+      "✨ Drei gleiche! +" +
+      win +
+      " Curios",
+      "win"
+    );
+
+
+    createParticles(
+      resultSymbols[0].icon
+    );
+
+
     return;
+
   }
 
-  game.balance -= price;
-  game.ownedCosmetics.push(item);
-  document.body.classList.add(item + "-owned");
-  showResult("🛍️ Freigeschaltet! " + item + " gehört jetzt dir.", "win");
-  saveGame();
-  updateUI();
+
+  /* ================================
+     TWO EQUAL
+  ================================= */
+
+  if (
+    icons[0] === icons[1] ||
+    icons[1] === icons[2] ||
+    icons[0] === icons[2]
+  ) {
+
+    win =
+      game.bet * 2;
+
+
+    game.balance += win;
+
+
+    game.biggestWin =
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
+
+    showResult(
+      "Nicht schlecht. +" +
+      win +
+      " Curios",
+      "win"
+    );
+
+
+    return;
+
+  }
+
+
+  /* ================================
+     NOTHING
+  ================================= */
+
+  showResult(
+    "Nichts diesmal... 👀",
+    "lose"
+  );
+
 }
+
 
 /* =========================================
    RESULT
