@@ -2276,102 +2276,34 @@ button:disabled {
 
 /* Chicken Road */
 .chicken-road {
-  position:relative;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:8px;
-  padding:16px 10px;
-  border-radius:20px;
-  overflow:hidden;
-  background:linear-gradient(180deg,#08111c,#0a0d14);
+  position:relative; display:grid; grid-template-columns:1fr; gap:8px; padding:14px 10px;
+  border-radius:20px; overflow:hidden; background:linear-gradient(180deg,#08111c,#0a0d14);
   border:1px solid rgba(103,232,249,.10);
 }
-.chicken-road::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(90deg,transparent 0 34px,rgba(255,255,255,.055) 34px 39px,transparent 39px 78px);
-  opacity:.45;
-  pointer-events:none;
-}
-.chicken-lane {
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:6px;
-  min-height:74px;
-  align-items:center;
-}
-.chicken-lane {
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:8px;
-  min-height:360px;
-  padding:10px;
-  align-items:stretch;
-}
-.chicken-track {
-  position:relative;
-  min-height:338px;
-  border-radius:14px;
-  overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.055));
-  border:1px solid rgba(255,255,255,.07);
-  cursor:pointer;
-  transition:.18s ease;
-}
-.chicken-track:hover { border-color:rgba(103,232,249,.45); transform:translateY(-1px); }
-.chicken-track.selected { border-color:rgba(250,204,21,.8); box-shadow:0 0 22px rgba(250,204,21,.13); }
-.chicken-track::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:repeating-linear-gradient(180deg,transparent 0 38px,rgba(255,255,255,.055) 38px 41px,transparent 41px 78px);
-  pointer-events:none;
-}
-.chicken-track::after {
-  content:"";
-  position:absolute;
-  left:50%; top:0; bottom:0; width:2px;
-  transform:translateX(-50%);
-  background:repeating-linear-gradient(180deg,rgba(255,255,255,.16) 0 18px,transparent 18px 34px);
-  opacity:.45;
-  pointer-events:none;
-}
-.chicken-track-label {
-  position:absolute; top:8px; left:50%; transform:translateX(-50%);
-  z-index:5; font-size:10px; font-weight:950; color:#71809e; letter-spacing:.14em;
-}
-.chicken-car {
-  position:absolute; left:50%; top:0; z-index:3;
-  font-size:27px; transform:translate(-50%,-60px) rotate(90deg);
-  will-change:transform; pointer-events:none;
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
-}
-.chicken-player {
-  position:absolute; left:50%; bottom:12px; z-index:8;
-  font-size:34px; transform:translateX(-50%);
-  filter:drop-shadow(0 0 12px rgba(250,204,21,.35));
-  transition:left .22s ease,bottom .35s cubic-bezier(.2,.8,.2,1);
-  pointer-events:none;
-}
-.chicken-player.move { animation:chickenJump .38s cubic-bezier(.2,.8,.2,1); }
-@keyframes chickenJump { 0%{transform:translate(-50%,12px) scale(.88)} 55%{transform:translate(-50%,-18px) scale(1.08)} 100%{transform:translate(-50%,0) scale(1)} }
+.chicken-road::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(34,197,94,.04),transparent 18%,rgba(15,23,42,.18) 80%,rgba(250,204,21,.04)); pointer-events:none; }
+.chicken-lane { position:relative; z-index:1; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:7px; min-height:420px; padding:8px; align-items:stretch; }
+.chicken-track { position:relative; min-height:404px; border-radius:13px; overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.055)); border:1px solid rgba(255,255,255,.07); transition:.16s ease; }
+.chicken-track::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(180deg,transparent 0 35px,rgba(255,255,255,.055) 35px 38px,transparent 38px 75px); pointer-events:none; }
+.chicken-track::after { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%); background:repeating-linear-gradient(180deg,rgba(255,255,255,.15) 0 16px,transparent 16px 31px); opacity:.42; pointer-events:none; }
+.chicken-track.active { border-color:rgba(250,204,21,.72); box-shadow:0 0 22px rgba(250,204,21,.11); }
 .chicken-track.danger { animation:chickenDanger .34s ease; }
-@keyframes chickenDanger { 50%{box-shadow:0 0 30px rgba(248,113,113,.7); border-color:rgba(248,113,113,.95)} }
 .chicken-track.safe-flash { animation:chickenSafe .35s ease; }
+.chicken-track-label { position:absolute; top:7px; left:50%; transform:translateX(-50%); z-index:6; font-size:9px; font-weight:950; color:#71809e; letter-spacing:.14em; }
+.chicken-car { position:absolute; left:50%; z-index:3; font-size:27px; transform:translate(-50%,-60px) rotate(90deg); will-change:top; pointer-events:none; filter:drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
+.chicken-player { position:absolute; left:50%; bottom:12px; z-index:8; font-size:35px; transform:translate(-50%,0); filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); transition:left .22s ease,bottom .34s cubic-bezier(.2,.8,.2,1); pointer-events:none; }
+.chicken-player.move { animation:chickenHop .34s cubic-bezier(.2,.8,.2,1); }
+@keyframes chickenHop { 0%{transform:translate(-50%,8px) scale(.9)} 55%{transform:translate(-50%,-17px) scale(1.08)} 100%{transform:translate(-50%,0) scale(1)} }
+@keyframes chickenDanger { 50%{box-shadow:0 0 30px rgba(248,113,113,.72); border-color:rgba(248,113,113,.95)} }
 @keyframes chickenSafe { 50%{box-shadow:0 0 25px rgba(74,222,128,.45); border-color:rgba(74,222,128,.8)} }
-.chicken-finish { position:absolute; top:10px; right:10px; z-index:4; font-size:19px; opacity:.8; }
-.chicken-player { font-size:35px; filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); animation:chickenBob .65s ease-in-out infinite alternate; }
-@keyframes chickenBob { from{transform:translateY(2px)} to{transform:translateY(-4px)} }
-.chicken-player.move { animation:chickenMove .42s cubic-bezier(.2,.8,.2,1); }
-@keyframes chickenMove { 0%{transform:translateX(-20px) scale(.9)} 65%{transform:translateX(8px) scale(1.05)} 100%{transform:translateX(0) scale(1)} }
-.chicken-finish { font-size:29px; }
+.chicken-finish { position:absolute; top:7px; right:7px; z-index:5; font-size:21px; opacity:.85; }
+.chicken-startline { position:absolute; left:8px; right:8px; bottom:62px; height:2px; z-index:4; background:repeating-linear-gradient(90deg,#fff 0 14px,transparent 14px 28px); opacity:.22; pointer-events:none; }
+.chicken-controls { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; margin-top:10px; }
+.chicken-lane-buttons { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:8px; }
+.chicken-lane-btn { border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.035); color:#8f9bb2; border-radius:10px; padding:9px 4px; font-weight:950; cursor:pointer; }
+.chicken-lane-btn.active { color:#111827; background:#facc15; border-color:#facc15; }
+.chicken-lane-btn:disabled { opacity:.4; cursor:not-allowed; }
+.chicken-move-btn { min-width:150px; }
 .chicken-road-labels { display:flex; justify-content:space-between; color:#59657e; font-size:10px; text-transform:uppercase; letter-spacing:.16em; padding:0 5px; }
-
 /* Tower */
 .tower-wrap { display:grid; grid-template-columns:90px 1fr; gap:16px; align-items:end; }
 .tower-progress { display:flex; flex-direction:column-reverse; gap:5px; min-height:390px; justify-content:flex-start; }
@@ -2438,7 +2370,6 @@ button:disabled {
   .chicken-lane { min-height:300px; gap:5px; padding:6px; }
   .chicken-track { min-height:288px; }
   .chicken-car { font-size:21px; }
-  .chicken-player { font-size:28px; }
   .chicken-player { font-size:28px; }
   .chicken-finish { font-size:22px; }
   .tower-wrap { grid-template-columns:60px 1fr; gap:8px; }
@@ -3725,15 +3656,16 @@ button:disabled {
 
         <div class="chicken-road" id="chickenRoad">
           <div class="chicken-lane" id="chickenLane"></div>
-          <div class="chicken-road-labels"><span>START</span><span>FREIE SPUR WÄHLEN</span><span>FINISH</span></div>
+          <div class="chicken-road-labels"><span>START</span><span>5 SPUREN · AUTOS FAHREN DURCH</span><span>FINISH</span></div>
         </div>
 
-        <div class="arcade-status" id="chickenStatus">Bereit für eine Runde.</div>
-        <div class="arcade-actions">
+        <div class="chicken-lane-buttons" id="chickenLaneButtons" aria-label="Spur wählen"></div>
+        <div class="chicken-controls">
           <button class="arcade-action start" id="chickenStartButton" onclick="chickenStart()">🐔 START</button>
-          <button class="arcade-action continue" id="chickenContinueButton" onclick="chickenContinue()" disabled>CONTINUE</button>
+          <button class="arcade-action continue chicken-move-btn" id="chickenContinueButton" onclick="chickenContinue()" disabled>⬆️ VORWÄRTS</button>
           <button class="arcade-action cash" id="chickenCashButton" onclick="chickenCashOut()" disabled>CASH OUT</button>
         </div>
+        <div class="arcade-status" id="chickenStatus">Bereit. Wähle nach dem Start deine Spur und bring das Chicken Schritt für Schritt nach oben.</div>
       </div>
     </section>
 
@@ -9350,26 +9282,15 @@ let chickenLastFrame = 0;
 let chickenRoundId = 0;
 const chickenCarTypes = ["🚗","🚙","🚕","🚓","🏎️"];
 
-function chickenFormatMultiplier(value) {
-  return `×${Number(value).toFixed(2)}`;
-}
-
-function chickenSetStatus(text, type="") {
-  const el = document.getElementById("chickenStatus");
-  if (!el) return;
-  el.className = `arcade-status${type ? " "+type : ""}`;
-  el.textContent = text;
-}
-
 function chickenSpawnCars() {
   chickenCarsState = [];
   for (let lane=0; lane<chickenLaneCount; lane++) {
-    const count = lane === chickenLaneIndex ? 2 : 1 + (Math.random() < .38 ? 1 : 0);
+    const count = 2 + (Math.random() < .55 ? 1 : 0);
     for (let n=0; n<count; n++) {
       chickenCarsState.push({
         lane,
-        y: -70 - Math.random()*220 - n*125,
-        speed: 72 + Math.random()*72,
+        y: -80 - n*145 - Math.random()*160,
+        speed: 75 + Math.random()*95,
         type: chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)],
         phase: Math.random()*Math.PI*2
       });
@@ -9381,12 +9302,10 @@ function chickenRender() {
   const lane = document.getElementById("chickenLane");
   if (!lane) return;
   lane.innerHTML = "";
-
   for (let i=0;i<chickenLaneCount;i++) {
     const track = document.createElement("div");
-    track.className = "chicken-track" + (i === chickenLaneIndex ? " selected" : "");
+    track.className = "chicken-track" + (i === chickenLaneIndex ? " active" : "");
     track.dataset.lane = i;
-    track.onclick = () => chickenSelectLane(i);
 
     const label = document.createElement("span");
     label.className = "chicken-track-label";
@@ -9398,14 +9317,17 @@ function chickenRender() {
     finish.textContent = "🏁";
     track.appendChild(finish);
 
+    const startLine = document.createElement("span");
+    startLine.className = "chicken-startline";
+    track.appendChild(startLine);
+
     if (i === chickenLaneIndex) {
       const chicken = document.createElement("span");
       chicken.className = "chicken-player" + (chickenStep > 0 ? " move" : "");
       chicken.textContent = "🐔";
-      chicken.style.bottom = `${12 + chickenStep * 48}px`;
+      chicken.style.bottom = `${12 + chickenStep * 60}px`;
       track.appendChild(chicken);
     }
-
     lane.appendChild(track);
   }
 
@@ -9420,8 +9342,25 @@ function chickenRender() {
     track.appendChild(el);
   });
 
-  const mult = chickenStep > 0 ? chickenMultipliers[chickenStep-1] : 1;
-  document.getElementById("chickenMultiplier").textContent = chickenFormatMultiplier(mult);
+  const mult = chickenStep > 0 ? chickenMultipliers[Math.min(chickenStep-1,chickenMultipliers.length-1)] : 1;
+  const multEl = document.getElementById("chickenMultiplier");
+  if (multEl) multEl.textContent = chickenFormatMultiplier(mult);
+  chickenRenderLaneButtons();
+}
+
+function chickenRenderLaneButtons() {
+  const wrap = document.getElementById("chickenLaneButtons");
+  if (!wrap) return;
+  wrap.innerHTML = "";
+  for (let i=0;i<chickenLaneCount;i++) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chicken-lane-btn" + (i === chickenLaneIndex ? " active" : "");
+    btn.textContent = `SPUR ${String.fromCharCode(65+i)}`;
+    btn.disabled = !chickenInRound;
+    btn.onclick = () => chickenSelectLane(i);
+    wrap.appendChild(btn);
+  }
 }
 
 function chickenClampBet(input) {
@@ -9442,14 +9381,15 @@ function chickenSetButtons() {
   if (bet) bet.disabled = active;
   if (cont) cont.disabled = !active || chickenStep >= chickenMultipliers.length;
   if (cash) cash.disabled = !active || chickenStep <= 0;
+  chickenRenderLaneButtons();
 }
 
 function chickenSelectLane(index) {
-  if (!chickenInRound) return;
-  if (index < 0 || index >= chickenLaneCount) return;
+  if (!chickenInRound || index < 0 || index >= chickenLaneCount) return;
   chickenLaneIndex = index;
-  document.querySelectorAll(".chicken-track").forEach((el,i) => el.classList.toggle("selected",i===index));
-  chickenSetStatus(`Spur ${String.fromCharCode(65+index)} gewählt. Beobachte die Autos und drücke CONTINUE, wenn der Weg frei ist.`,"info");
+  document.querySelectorAll(".chicken-track").forEach((el,i) => el.classList.toggle("active",i===index));
+  chickenRender();
+  chickenSetStatus(`Spur ${String.fromCharCode(65+index)} gewählt. Jetzt den richtigen Moment abpassen und VORWÄRTS drücken.`,"info");
 }
 
 function chickenStartTraffic() {
@@ -9459,14 +9399,15 @@ function chickenStartTraffic() {
     if (!chickenInRound || chickenRoundId === 0) return;
     const dt = Math.min(.05,(now-chickenLastFrame)/1000);
     chickenLastFrame = now;
-    chickenCarsState.forEach(car => {
+    const lane = document.getElementById("chickenLane");
+    chickenCarsState.forEach((car,index) => {
       car.y += car.speed * dt;
-      if (car.y > 350) {
-        car.y = -55 - Math.random()*130;
-        car.speed = 68 + Math.random()*78;
+      if (car.y > 440) {
+        car.y = -60 - Math.random()*150;
+        car.speed = 75 + Math.random()*95;
         car.type = chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)];
       }
-      const el = document.querySelector(`.chicken-car[data-car-index="${chickenCarsState.indexOf(car)}"]`);
+      const el = lane?.querySelector(`.chicken-car[data-car-index="${index}"]`);
       if (el) el.style.top = `${car.y}px`;
     });
     chickenAnimationFrame = requestAnimationFrame(tick);
@@ -9480,8 +9421,9 @@ function chickenStopTraffic() {
 }
 
 function chickenIsLaneBlocked() {
-  const chickenY = 12 + chickenStep * 48;
-  return chickenCarsState.some(car => car.lane === chickenLaneIndex && car.y > chickenY-45 && car.y < chickenY+28);
+  // The chicken crosses the next 60px segment now. Cars in that segment cause a crash.
+  const chickenY = 12 + chickenStep * 60;
+  return chickenCarsState.some(car => car.lane === chickenLaneIndex && car.y > chickenY-42 && car.y < chickenY+34);
 }
 
 function chickenStart() {
@@ -9491,7 +9433,6 @@ function chickenStart() {
     chickenSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
     return;
   }
-
   game.balance -= chickenBetValue;
   game.chickenRounds += 1;
   chickenInRound = true;
@@ -9499,7 +9440,7 @@ function chickenStart() {
   chickenLaneIndex = 2;
   chickenRoundId += 1;
   chickenSpawnCars();
-  chickenSetStatus("🚦 Autos fahren! Wähle eine Spur und beobachte den Verkehr. CONTINUE bewegt das Chicken nach vorne.","info");
+  chickenSetStatus("🚦 RUN! Das Chicken steht unten und der Verkehr läuft permanent. Wähle A–E und drücke VORWÄRTS, um eine Straße nach oben zu überqueren.","info");
   chickenRender();
   chickenSetButtons();
   chickenStartTraffic();
@@ -9514,7 +9455,7 @@ function chickenContinue() {
     chickenInRound = false;
     const danger = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
     if (danger) danger.classList.add("danger");
-    chickenSetStatus("💥 CRASH! Ein Auto war genau auf deiner Spur. LOSS — Einsatz verloren.","lose");
+    chickenSetStatus("💥 CRASH! Das Chicken ist beim Überqueren von Spur " + String.fromCharCode(65+chickenLaneIndex) + " mit einem Auto kollidiert. Einsatz verloren.","lose");
     chickenStopTraffic();
     chickenSetButtons();
     chickenRender();
@@ -9523,27 +9464,22 @@ function chickenContinue() {
   }
 
   const safe = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
-  if (safe) {
-    safe.classList.remove("safe-flash");
-    void safe.offsetWidth;
-    safe.classList.add("safe-flash");
-  }
+  if (safe) { safe.classList.remove("safe-flash"); void safe.offsetWidth; safe.classList.add("safe-flash"); }
 
   chickenStep += 1;
   const mult = chickenMultipliers[chickenStep-1];
   game.chickenBestMultiplier = Math.max(game.chickenBestMultiplier, mult);
+  chickenRender();
 
   if (chickenStep >= chickenMultipliers.length) {
-    chickenSetStatus(`🏁 FINISH! Du hast alle Straßen überquert. ${chickenFormatMultiplier(mult)} sicher — CASH OUT möglich.`,"win");
+    chickenSetStatus(`🏁 FINISH! Das Chicken hat die Straße geschafft: ${chickenFormatMultiplier(mult)}. Du kannst auszahlen oder noch nichts mehr riskieren.`,"win");
     chickenSetButtons();
-    chickenRender();
+    chickenStopTraffic();
+    arcadeSaveAndRefresh();
     return;
   }
 
-  // Refresh traffic after every crossing so every next move has a visible, changing situation.
-  chickenSpawnCars();
-  chickenRender();
-  chickenSetStatus(`✅ Straße ${chickenStep} geschafft — ${chickenFormatMultiplier(mult)}. Welche Spur ist jetzt frei?`,"win");
+  chickenSetStatus(`🐔 Schritt ${chickenStep}/${chickenMultipliers.length} geschafft — ${chickenFormatMultiplier(mult)}. Wechsel jetzt bei Bedarf die Spur und warte auf eine echte Lücke.`,"win");
   chickenSetButtons();
   arcadeSaveAndRefresh();
 }
@@ -9962,6 +9898,44 @@ updateProfile();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
