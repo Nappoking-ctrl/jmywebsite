@@ -1103,6 +1103,218 @@ button:disabled {
 }
 
 
+
+/* =========================================
+   BLACKJACK
+========================================= */
+.blackjack-section {
+  margin: 26px auto 0;
+  padding: 24px;
+  max-width: 900px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: radial-gradient(circle at 50% 20%, rgba(34,197,94,.10), transparent 48%), rgba(255,255,255,.025);
+  box-shadow: 0 20px 70px rgba(0,0,0,.22);
+}
+
+.blackjack-title {
+  font-size: 22px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.blackjack-subtitle {
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.blackjack-table {
+  padding: 22px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(20,83,45,.48), rgba(5,35,22,.55));
+  border: 1px solid rgba(74,222,128,.15);
+}
+
+.blackjack-hand {
+  min-height: 145px;
+}
+
+.blackjack-hand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.blackjack-hand-header strong {
+  font-size: 15px;
+}
+
+.blackjack-score {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.blackjack-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 105px;
+  align-items: center;
+}
+
+.blackjack-card {
+  width: 64px;
+  height: 92px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #111827;
+  border: 2px solid rgba(255,255,255,.85);
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  user-select: none;
+  animation: blackjackCardIn .28s ease;
+}
+
+.blackjack-card.red {
+  color: #dc2626;
+}
+
+.blackjack-card .card-rank {
+  font-size: 25px;
+  line-height: 1;
+}
+
+.blackjack-card .card-suit {
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 5px;
+}
+
+.blackjack-card.back {
+  background: repeating-linear-gradient(45deg, #172554 0 8px, #1e3a8a 8px 16px);
+  color: white;
+  border-color: rgba(255,255,255,.25);
+  font-size: 28px;
+}
+
+@keyframes blackjackCardIn {
+  from { opacity: 0; transform: translateY(-10px) rotate(-2deg) scale(.94); }
+  to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+.blackjack-divider {
+  height: 1px;
+  background: rgba(255,255,255,.10);
+  margin: 14px 0;
+}
+
+.blackjack-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.blackjack-bet-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.blackjack-bet {
+  min-width: 135px;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.08);
+  font-weight: 900;
+}
+
+.blackjack-message {
+  min-height: 24px;
+  margin-top: 16px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.blackjack-note {
+  margin-top: 12px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.blackjack-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.blackjack-stat {
+  padding: 10px;
+  border-radius: 13px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.blackjack-stat small {
+  color: var(--muted);
+  display: block;
+}
+
+.blackjack-stat strong {
+  display: block;
+  margin-top: 3px;
+}
+
+.blackjack-action {
+  min-width: 100px;
+}
+
+.blackjack-action.primary {
+  border-color: rgba(74,222,128,.35);
+}
+
+.blackjack-action.danger {
+  border-color: rgba(248,113,113,.35);
+}
+
+.blackjack-action:disabled,
+.blackjack-bet-area button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media(max-width:600px) {
+  .blackjack-section { padding: 16px; }
+  .blackjack-table { padding: 14px; }
+  .blackjack-card { width: 54px; height: 78px; }
+  .blackjack-card .card-rank { font-size: 21px; }
+  .blackjack-card .card-suit { font-size: 20px; }
+  .blackjack-stats { grid-template-columns: 1fr; }
+}
+
+
 /* =========================================
    RESPONSIVE
 ========================================= */
@@ -1325,6 +1537,58 @@ button:disabled {
 
   </section>
 
+
+
+  <!-- ====================================
+       BLACKJACK
+  ===================================== -->
+
+  <section class="blackjack-section">
+    <div class="blackjack-title">🃏 Curious Blackjack</div>
+    <div class="blackjack-subtitle">21 ist das Ziel. Nur mit virtuellen Curios.</div>
+
+    <div class="blackjack-table">
+      <div class="blackjack-hand">
+        <div class="blackjack-hand-header">
+          <strong>🤖 Dealer</strong>
+          <span class="blackjack-score" id="dealerScore">?</span>
+        </div>
+        <div class="blackjack-cards" id="dealerCards"></div>
+      </div>
+
+      <div class="blackjack-divider"></div>
+
+      <div class="blackjack-hand">
+        <div class="blackjack-hand-header">
+          <strong>👤 Deine Hand</strong>
+          <span class="blackjack-score" id="playerScore">0</span>
+        </div>
+        <div class="blackjack-cards" id="playerCards"></div>
+      </div>
+
+      <div class="blackjack-bet-area">
+        <button class="bet-button" id="blackjackBetDown" onclick="changeBlackjackBet(-10)">−</button>
+        <div class="blackjack-bet">Einsatz: <span id="blackjackBet">10</span> ◉</div>
+        <button class="bet-button" id="blackjackBetUp" onclick="changeBlackjackBet(10)">+</button>
+      </div>
+
+      <div class="blackjack-controls">
+        <button class="blackjack-action primary" id="blackjackDealButton" onclick="blackjackDeal()">DEAL</button>
+        <button class="blackjack-action" id="blackjackHitButton" onclick="blackjackHit()" disabled>HIT</button>
+        <button class="blackjack-action" id="blackjackStandButton" onclick="blackjackStand()" disabled>STAND</button>
+        <button class="blackjack-action" id="blackjackDoubleButton" onclick="blackjackDoubleDown()" disabled>DOUBLE</button>
+      </div>
+
+      <div class="blackjack-message" id="blackjackMessage">Bereit für eine Runde Blackjack.</div>
+      <div class="blackjack-note">Dealer steht bei 17. Blackjack mit zwei Karten zahlt 3:2 in Curios.</div>
+    </div>
+
+    <div class="blackjack-stats">
+      <div class="blackjack-stat"><small>Siege</small><strong id="blackjackWins">0</strong></div>
+      <div class="blackjack-stat"><small>Blackjacks</small><strong id="blackjackBlackjacks">0</strong></div>
+      <div class="blackjack-stat"><small>Runden</small><strong id="blackjackRounds">0</strong></div>
+    </div>
+  </section>
 
   <!-- ====================================
        STATISTICS
@@ -3495,6 +3759,27 @@ const achievements = [
     check:() => !!game.equippedTheme
   },
   {
+    id:"blackjack_first",
+    icon:"🃏",
+    name:"First Hand",
+    description:"Spiele deine erste Blackjack-Runde.",
+    check:() => game.blackjackRounds >= 1
+  },
+  {
+    id:"blackjack_win",
+    icon:"♠️",
+    name:"21!",
+    description:"Gewinne eine Blackjack-Runde.",
+    check:() => game.blackjackWins >= 1
+  },
+  {
+    id:"blackjack_natural",
+    icon:"🂡",
+    name:"Natural Blackjack",
+    description:"Bekomme einen Blackjack.",
+    check:() => game.blackjackBlackjacks >= 1
+  },
+  {
     id:"easter_hunter",
     icon:"👁️",
     name:"Easter Egg Hunter",
@@ -3510,6 +3795,10 @@ function initShopData() {
   if (typeof game.equippedTheme !== "string") game.equippedTheme = "default";
   if (typeof game.equippedTitle !== "string") game.equippedTitle = "Neugieriger";
   if (typeof game.easterEggsFound !== "number") game.easterEggsFound = 0;
+  if (typeof game.blackjackBet !== "number") game.blackjackBet = 10;
+  if (typeof game.blackjackWins !== "number") game.blackjackWins = 0;
+  if (typeof game.blackjackBlackjacks !== "number") game.blackjackBlackjacks = 0;
+  if (typeof game.blackjackRounds !== "number") game.blackjackRounds = 0;
 }
 
 initShopData();
@@ -3816,6 +4105,320 @@ checkSecret = function(code) {
     }
   }
 };
+
+
+
+/* =========================================
+   CURIOUS BLACKJACK
+   Uses the existing virtual Curios balance.
+   The original slot mechanics remain unchanged.
+========================================= */
+
+let blackjackDeck = [];
+let blackjackPlayerHand = [];
+let blackjackDealerHand = [];
+let blackjackInRound = false;
+let blackjackDealerHidden = true;
+let blackjackBetValue = game.blackjackBet || 10;
+let blackjackDoubleUsed = false;
+
+const blackjackSuits = [
+  { symbol:"♠", name:"spades", red:false },
+  { symbol:"♥", name:"hearts", red:true },
+  { symbol:"♦", name:"diamonds", red:true },
+  { symbol:"♣", name:"clubs", red:false }
+];
+
+const blackjackRanks = [
+  { rank:"A", value:11 },
+  { rank:"2", value:2 },
+  { rank:"3", value:3 },
+  { rank:"4", value:4 },
+  { rank:"5", value:5 },
+  { rank:"6", value:6 },
+  { rank:"7", value:7 },
+  { rank:"8", value:8 },
+  { rank:"9", value:9 },
+  { rank:"10", value:10 },
+  { rank:"J", value:10 },
+  { rank:"Q", value:10 },
+  { rank:"K", value:10 }
+];
+
+function createBlackjackDeck() {
+  const deck = [];
+  blackjackSuits.forEach(suit => {
+    blackjackRanks.forEach(card => {
+      deck.push({
+        rank: card.rank,
+        value: card.value,
+        suit: suit.symbol,
+        red: suit.red
+      });
+    });
+  });
+
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
+}
+
+function blackjackDraw() {
+  if (!blackjackDeck.length) blackjackDeck = createBlackjackDeck();
+  return blackjackDeck.pop();
+}
+
+function blackjackHandValue(hand) {
+  let total = hand.reduce((sum, card) => sum + card.value, 0);
+  let aces = hand.filter(card => card.rank === "A").length;
+
+  while (total > 21 && aces > 0) {
+    total -= 10;
+    aces--;
+  }
+
+  return total;
+}
+
+function blackjackIsSoft(hand) {
+  let total = hand.reduce((sum, card) => sum + card.value, 0);
+  let aces = hand.filter(card => card.rank === "A").length;
+  while (total > 21 && aces > 0) {
+    total -= 10;
+    aces--;
+  }
+  return hand.some(card => card.rank === "A") && total <= 21 &&
+    hand.reduce((sum, card) => sum + card.value, 0) === total;
+}
+
+function blackjackIsNatural(hand) {
+  return hand.length === 2 && blackjackHandValue(hand) === 21;
+}
+
+function blackjackRenderCard(card, hidden = false) {
+  if (hidden) {
+    return '<div class="blackjack-card back">🂠</div>';
+  }
+
+  return `<div class="blackjack-card ${card.red ? "red" : ""}">
+    <span class="card-rank">${card.rank}</span>
+    <span class="card-suit">${card.suit}</span>
+  </div>`;
+}
+
+function blackjackRender() {
+  const dealerCards = document.getElementById("dealerCards");
+  const playerCards = document.getElementById("playerCards");
+  const dealerScore = document.getElementById("dealerScore");
+  const playerScore = document.getElementById("playerScore");
+
+  if (!dealerCards || !playerCards) return;
+
+  dealerCards.innerHTML = blackjackDealerHand.map((card, index) =>
+    blackjackRenderCard(card, blackjackDealerHidden && index === 1)
+  ).join("");
+
+  playerCards.innerHTML = blackjackPlayerHand.length
+    ? blackjackPlayerHand.map(card => blackjackRenderCard(card)).join("")
+    : '<span style="color:var(--muted);font-size:12px">Noch keine Karten</span>';
+
+  dealerScore.textContent = blackjackDealerHidden
+    ? (blackjackDealerHand[0] ? blackjackHandValue([blackjackDealerHand[0]]) : "?")
+    : blackjackHandValue(blackjackDealerHand);
+
+  playerScore.textContent = blackjackPlayerHand.length
+    ? blackjackHandValue(blackjackPlayerHand)
+    : "0";
+}
+
+function blackjackSetMessage(message) {
+  const el = document.getElementById("blackjackMessage");
+  if (el) el.textContent = message;
+}
+
+function updateBlackjackUI() {
+  const betEl = document.getElementById("blackjackBet");
+  const winsEl = document.getElementById("blackjackWins");
+  const bjEl = document.getElementById("blackjackBlackjacks");
+  const roundsEl = document.getElementById("blackjackRounds");
+  if (betEl) betEl.textContent = blackjackBetValue;
+  if (winsEl) winsEl.textContent = game.blackjackWins || 0;
+  if (bjEl) bjEl.textContent = game.blackjackBlackjacks || 0;
+  if (roundsEl) roundsEl.textContent = game.blackjackRounds || 0;
+
+  const active = blackjackInRound;
+  const deal = document.getElementById("blackjackDealButton");
+  const hit = document.getElementById("blackjackHitButton");
+  const stand = document.getElementById("blackjackStandButton");
+  const double = document.getElementById("blackjackDoubleButton");
+  const down = document.getElementById("blackjackBetDown");
+  const up = document.getElementById("blackjackBetUp");
+
+  if (deal) deal.disabled = active;
+  if (hit) hit.disabled = !active;
+  if (stand) stand.disabled = !active;
+  if (double) double.disabled = !active || blackjackDoubleUsed || blackjackPlayerHand.length !== 2;
+  if (down) down.disabled = active || blackjackBetValue <= 10;
+  if (up) up.disabled = active || blackjackBetValue >= 100;
+}
+
+function changeBlackjackBet(amount) {
+  if (blackjackInRound) return;
+  blackjackBetValue = Math.max(10, Math.min(100, blackjackBetValue + amount));
+  game.blackjackBet = blackjackBetValue;
+  saveGame();
+  updateBlackjackUI();
+}
+
+function blackjackDeal() {
+  if (blackjackInRound) return;
+
+  if (game.balance < blackjackBetValue) {
+    blackjackSetMessage("Nicht genug Curios für diesen Einsatz.");
+    return;
+  }
+
+  game.balance -= blackjackBetValue;
+  game.blackjackRounds = (game.blackjackRounds || 0) + 1;
+
+  blackjackDeck = createBlackjackDeck();
+  blackjackPlayerHand = [blackjackDraw(), blackjackDraw()];
+  blackjackDealerHand = [blackjackDraw(), blackjackDraw()];
+  blackjackInRound = true;
+  blackjackDealerHidden = true;
+  blackjackDoubleUsed = false;
+
+  saveGame();
+  updateUI();
+  blackjackRender();
+  updateBlackjackUI();
+
+  const playerBJ = blackjackIsNatural(blackjackPlayerHand);
+  const dealerBJ = blackjackIsNatural(blackjackDealerHand);
+
+  if (playerBJ || dealerBJ) {
+    blackjackDealerHidden = false;
+    blackjackRender();
+
+    if (playerBJ && dealerBJ) {
+      game.balance += blackjackBetValue;
+      blackjackSetMessage("🤝 Beide haben Blackjack — Einsatz zurück.");
+    } else if (playerBJ) {
+      const win = Math.floor(blackjackBetValue * 2.5);
+      game.balance += win;
+      game.blackjackWins = (game.blackjackWins || 0) + 1;
+      game.blackjackBlackjacks = (game.blackjackBlackjacks || 0) + 1;
+      if (win > game.biggestWin) game.biggestWin = win;
+      blackjackSetMessage(`🃏 BLACKJACK! +${win} Curios`);
+      createParticles("🃏");
+    } else {
+      blackjackSetMessage("Dealer hat Blackjack. Diese Runde geht an den Dealer.");
+    }
+
+    blackjackInRound = false;
+    saveGame();
+    updateUI();
+    updateBlackjackUI();
+    return;
+  }
+
+  blackjackSetMessage("Dein Zug — HIT, STAND oder DOUBLE.");
+}
+
+function blackjackHit() {
+  if (!blackjackInRound) return;
+
+  blackjackPlayerHand.push(blackjackDraw());
+  blackjackRender();
+
+  const value = blackjackHandValue(blackjackPlayerHand);
+  if (value > 21) {
+    blackjackFinish("lose", "💥 Über 21 — Bust!", 0);
+  } else if (value === 21) {
+    blackjackSetMessage("21! Der Dealer ist dran.");
+    blackjackStand();
+  } else {
+    blackjackSetMessage("Noch nicht 21 — dein Zug.");
+  }
+}
+
+function blackjackStand() {
+  if (!blackjackInRound) return;
+
+  blackjackDealerHidden = false;
+
+  while (blackjackHandValue(blackjackDealerHand) < 17) {
+    blackjackDealerHand.push(blackjackDraw());
+  }
+
+  blackjackRender();
+
+  const player = blackjackHandValue(blackjackPlayerHand);
+  const dealer = blackjackHandValue(blackjackDealerHand);
+
+  if (dealer > 21) {
+    blackjackFinish("win", `🎉 Dealer bustet mit ${dealer}!`, blackjackBetValue * 2);
+  } else if (player > dealer) {
+    blackjackFinish("win", `🎉 Du gewinnst ${player} zu ${dealer}!`, blackjackBetValue * 2);
+  } else if (player === dealer) {
+    blackjackFinish("push", `🤝 Unentschieden bei ${player}.`, blackjackBetValue);
+  } else {
+    blackjackFinish("lose", `Dealer gewinnt mit ${dealer} zu ${player}.`, 0);
+  }
+}
+
+function blackjackDoubleDown() {
+  if (!blackjackInRound || blackjackDoubleUsed || blackjackPlayerHand.length !== 2) return;
+
+  if (game.balance < blackjackBetValue) {
+    blackjackSetMessage("Nicht genug Curios zum Verdoppeln.");
+    return;
+  }
+
+  game.balance -= blackjackBetValue;
+  blackjackDoubleUsed = true;
+  blackjackPlayerHand.push(blackjackDraw());
+  blackjackRender();
+  updateUI();
+  updateBlackjackUI();
+
+  const value = blackjackHandValue(blackjackPlayerHand);
+  if (value > 21) {
+    blackjackFinish("lose", "💥 DOUBLE und Bust!", 0);
+  } else {
+    blackjackStand();
+  }
+}
+
+function blackjackFinish(type, message, payout) {
+  blackjackDealerHidden = false;
+  blackjackInRound = false;
+
+  if (payout > 0) {
+    game.balance += payout;
+    if (payout > game.biggestWin) game.biggestWin = payout;
+  }
+
+  if (type === "win") {
+    game.blackjackWins = (game.blackjackWins || 0) + 1;
+  }
+
+  blackjackSetMessage(message + (payout > 0 ? ` +${payout} Curios` : ""));
+  saveGame();
+  updateUI();
+  blackjackRender();
+  updateBlackjackUI();
+  checkAchievements();
+
+  if (type === "win") createParticles("♠️");
+}
+
+/* Initial Blackjack UI. */
+blackjackRender();
+updateBlackjackUI();
+
 
 /* Render initial shop/profile state. */
 applyShopTheme();
