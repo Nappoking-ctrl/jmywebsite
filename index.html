@@ -2083,6 +2083,314 @@ button:disabled {
 
 }
 
+
+
+/* =========================================
+   THE ARCADE — ADDITIVE FEATURE
+========================================= */
+.arcade-button {
+  border-color:rgba(56,189,248,.38);
+  background:linear-gradient(135deg,rgba(56,189,248,.10),rgba(168,85,247,.10));
+  box-shadow:0 0 25px rgba(56,189,248,.08);
+}
+
+.arcade-modal {
+  background:
+    radial-gradient(circle at 50% 0%,rgba(56,189,248,.11),transparent 34%),
+    radial-gradient(circle at 85% 85%,rgba(192,132,252,.10),transparent 30%),
+    rgba(2,4,12,.90);
+  backdrop-filter:blur(16px);
+}
+
+.arcade-box {
+  width:min(1080px,100%);
+  max-height:94vh;
+  overflow:auto;
+  padding:28px;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 50% -15%,rgba(56,189,248,.10),transparent 35%),
+    linear-gradient(145deg,#0c1222,#070a13 65%,#0d0a1b);
+  border:1px solid rgba(56,189,248,.22);
+  box-shadow:0 0 100px rgba(56,189,248,.08),0 30px 100px rgba(0,0,0,.75),inset 0 1px rgba(255,255,255,.06);
+  text-align:left;
+  animation:arcadeAppear .35s ease;
+}
+
+@keyframes arcadeAppear {
+  from { opacity:0; transform:translateY(18px) scale(.98); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.arcade-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:18px;
+}
+
+.arcade-kicker {
+  color:#67e8f9;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+}
+
+.arcade-title {
+  margin:3px 0 0;
+  font-size:clamp(30px,5vw,48px);
+  letter-spacing:-.04em;
+  text-shadow:0 0 30px rgba(56,189,248,.24);
+}
+
+.arcade-subtitle {
+  margin:5px 0 0;
+  color:#7f8ba7;
+  font-size:12px;
+}
+
+.arcade-close {
+  flex:0 0 auto;
+  width:42px;
+  height:42px;
+  padding:0;
+  border-radius:50%;
+}
+
+.arcade-nav {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:18px 0;
+}
+
+.arcade-nav button {
+  min-height:58px;
+  padding:10px 12px;
+  border-color:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.035);
+  text-align:left;
+}
+
+.arcade-nav button.active {
+  border-color:rgba(103,232,249,.55);
+  background:linear-gradient(135deg,rgba(34,211,238,.13),rgba(168,85,247,.10));
+  box-shadow:0 0 24px rgba(56,189,248,.08),inset 0 0 25px rgba(56,189,248,.04);
+}
+
+.arcade-nav strong { display:block; font-size:14px; }
+.arcade-nav small { display:block; margin-top:4px; color:#7f8ba7; }
+
+.arcade-panel {
+  display:none;
+  animation:arcadePanelIn .28s ease;
+}
+.arcade-panel.active { display:block; }
+
+@keyframes arcadePanelIn {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.arcade-card {
+  padding:20px;
+  border-radius:24px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:inset 0 1px rgba(255,255,255,.035);
+}
+
+.arcade-topline {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.arcade-game-name { font-size:23px; font-weight:950; }
+.arcade-game-desc { color:#7f8ba7; font-size:12px; line-height:1.5; margin-top:4px; }
+
+.arcade-multiplier {
+  min-width:120px;
+  padding:10px 12px;
+  border-radius:15px;
+  text-align:center;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(103,232,249,.22);
+}
+.arcade-multiplier small { display:block; color:#7f8ba7; font-size:10px; text-transform:uppercase; letter-spacing:.15em; }
+.arcade-multiplier strong { display:block; margin-top:3px; font-size:25px; color:#67e8f9; text-shadow:0 0 18px rgba(103,232,249,.3); }
+
+.arcade-betbar {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:9px;
+  margin:12px 0 16px;
+}
+.arcade-betbar label { color:#7f8ba7; font-size:11px; font-weight:800; }
+.arcade-bet-input,
+.arcade-select {
+  width:110px;
+  padding:11px 12px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.10);
+  background:#0a1020;
+  color:#fff;
+  outline:none;
+  font:inherit;
+}
+.arcade-bet-input:focus,
+.arcade-select:focus { border-color:rgba(103,232,249,.45); box-shadow:0 0 18px rgba(56,189,248,.08); }
+
+.arcade-actions {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  margin-top:16px;
+}
+.arcade-action {
+  min-width:145px;
+  min-height:48px;
+  font-weight:900;
+}
+.arcade-action.start { border-color:rgba(103,232,249,.35); background:linear-gradient(135deg,rgba(34,211,238,.14),rgba(129,140,248,.12)); }
+.arcade-action.cash { border-color:rgba(74,222,128,.35); color:#86efac; }
+.arcade-action.continue { border-color:rgba(192,132,252,.35); color:#d8b4fe; }
+.arcade-action.danger { border-color:rgba(251,113,133,.35); color:#fda4af; }
+
+.arcade-status {
+  min-height:28px;
+  margin-top:14px;
+  text-align:center;
+  font-weight:900;
+  color:#a5b0c7;
+}
+.arcade-status.win { color:#86efac; }
+.arcade-status.lose { color:#fda4af; }
+.arcade-status.info { color:#67e8f9; }
+
+/* Chicken Road */
+.chicken-road {
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  padding:16px 10px;
+  border-radius:20px;
+  overflow:hidden;
+  background:linear-gradient(180deg,#08111c,#0a0d14);
+  border:1px solid rgba(103,232,249,.10);
+}
+.chicken-road::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 34px,rgba(255,255,255,.055) 34px 39px,transparent 39px 78px);
+  opacity:.45;
+  pointer-events:none;
+}
+.chicken-lane {
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:6px;
+  min-height:74px;
+  align-items:center;
+}
+.chicken-cell {
+  position:relative;
+  min-height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.chicken-cell::after {
+  content:"";
+  position:absolute;
+  left:10%; right:10%; bottom:9px;
+  height:2px;
+  background:rgba(255,255,255,.08);
+}
+.chicken-car { font-size:30px; animation:chickenCarDrive 1.8s ease-in-out infinite alternate; }
+.chicken-car.slow { animation-duration:2.5s; }
+.chicken-car.fast { animation-duration:1.35s; }
+@keyframes chickenCarDrive { from{transform:translateX(-5px)} to{transform:translateX(5px)} }
+.chicken-player { font-size:35px; filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); animation:chickenBob .65s ease-in-out infinite alternate; }
+@keyframes chickenBob { from{transform:translateY(2px)} to{transform:translateY(-4px)} }
+.chicken-player.move { animation:chickenMove .42s cubic-bezier(.2,.8,.2,1); }
+@keyframes chickenMove { 0%{transform:translateX(-20px) scale(.9)} 65%{transform:translateX(8px) scale(1.05)} 100%{transform:translateX(0) scale(1)} }
+.chicken-finish { font-size:29px; }
+.chicken-road-labels { display:flex; justify-content:space-between; color:#59657e; font-size:10px; text-transform:uppercase; letter-spacing:.16em; padding:0 5px; }
+
+/* Tower */
+.tower-wrap { display:grid; grid-template-columns:90px 1fr; gap:16px; align-items:end; }
+.tower-progress { display:flex; flex-direction:column-reverse; gap:5px; min-height:390px; justify-content:flex-start; }
+.tower-floor { height:31px; border-radius:8px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.035); color:#647089; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; transition:.25s ease; }
+.tower-floor.done { background:rgba(192,132,252,.13); border-color:rgba(192,132,252,.4); color:#e9d5ff; box-shadow:0 0 15px rgba(192,132,252,.08); }
+.tower-floor.current { border-color:rgba(103,232,249,.45); color:#67e8f9; box-shadow:0 0 20px rgba(56,189,248,.08); }
+.tower-main { min-height:390px; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; border-radius:20px; background:linear-gradient(180deg,rgba(30,41,59,.24),rgba(7,10,20,.65)); border:1px solid rgba(255,255,255,.07); overflow:hidden; }
+.tower-sky { flex:1; display:flex; align-items:center; justify-content:center; font-size:54px; filter:drop-shadow(0 0 22px rgba(192,132,252,.18)); }
+.tower-sky.climb { animation:towerClimb .55s cubic-bezier(.2,.8,.2,1); }
+@keyframes towerClimb { 0%{transform:translateY(35px);opacity:.35} 60%{transform:translateY(-8px);opacity:1} 100%{transform:translateY(0)} }
+.tower-paths { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:14px; }
+.tower-path { min-height:58px; font-weight:950; font-size:17px; }
+.tower-path span { display:block; color:#7f8ba7; font-size:10px; margin-top:3px; }
+.tower-floor-caption { text-align:center; color:#7f8ba7; font-size:11px; margin-top:10px; }
+
+/* Mines */
+.mines-layout { display:grid; grid-template-columns:1fr 260px; gap:18px; align-items:start; }
+.mines-board { width:min(100%,520px); margin:auto; display:grid; grid-template-columns:repeat(5,1fr); gap:7px; }
+.mine-cell { aspect-ratio:1; min-width:0; padding:0; border-radius:12px; background:linear-gradient(145deg,#111a2e,#090e1b); border:1px solid rgba(255,255,255,.08); box-shadow:inset 0 0 18px rgba(0,0,0,.28); font-size:24px; font-weight:900; transition:transform .16s ease,border-color .16s ease,background .16s ease; }
+.mine-cell:hover:not(:disabled) { transform:translateY(-2px); border-color:rgba(103,232,249,.35); }
+.mine-cell.revealed { background:linear-gradient(145deg,rgba(34,197,94,.14),rgba(8,20,17,.7)); border-color:rgba(74,222,128,.35); animation:mineReveal .28s ease; }
+.mine-cell.mine { background:linear-gradient(145deg,rgba(244,63,94,.18),rgba(32,8,15,.78)); border-color:rgba(251,113,133,.45); animation:mineExplode .34s ease; }
+@keyframes mineReveal { from{transform:scale(.75);opacity:.3} to{transform:scale(1);opacity:1} }
+@keyframes mineExplode { 0%{transform:scale(.75) rotate(-5deg)} 55%{transform:scale(1.08) rotate(4deg)} 100%{transform:scale(1)} }
+.mines-side { padding:16px; border-radius:18px; background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.07); }
+.mines-stat { display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; }
+.mines-stat:last-child { border-bottom:0; }
+.mines-stat span { color:#7f8ba7; }
+.mines-stat strong { color:#e5e7eb; }
+
+.arcade-footer { margin-top:16px; text-align:center; color:#59657e; font-size:10px; line-height:1.5; }
+.arcade-progress-chip { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border-radius:999px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.07); color:#7f8ba7; font-size:11px; font-weight:800; }
+
+@media(max-width:760px) {
+  .arcade-box { padding:18px; border-radius:24px; }
+  .arcade-nav { grid-template-columns:1fr; }
+  .mines-layout { grid-template-columns:1fr; }
+  .mines-side { order:-1; }
+}
+
+@media(max-width:520px) {
+  .arcade-topline { flex-direction:column; }
+  .arcade-multiplier { width:100%; }
+  .arcade-card { padding:14px; }
+  .chicken-lane { gap:3px; }
+  .chicken-cell { min-height:50px; }
+  .chicken-car { font-size:23px; }
+  .chicken-player { font-size:28px; }
+  .chicken-finish { font-size:22px; }
+  .tower-wrap { grid-template-columns:60px 1fr; gap:8px; }
+  .tower-progress { min-height:340px; }
+  .tower-main { min-height:340px; padding:11px; }
+  .tower-sky { font-size:42px; }
+  .tower-paths { gap:5px; }
+  .tower-path { min-height:54px; padding:8px 5px; }
+  .mines-board { gap:5px; }
+  .mine-cell { border-radius:9px; font-size:20px; }
+  .arcade-action { width:100%; min-width:0; }
+}
 </style>
 </head>
 
@@ -2494,6 +2802,19 @@ button:disabled {
     >
       🔓 Secret Room
     </button>
+
+  <!-- ====================================
+       THE ARCADE BUTTON
+  ===================================== -->
+  <button
+    class="utility-button arcade-button"
+    id="arcadeButton"
+    onclick="openArcade()"
+    disabled
+  >
+    🔒 Arcade <span id="arcadeButtonProgress">0/10</span>
+  </button>
+
 
   </div>
 
@@ -3285,6 +3606,169 @@ button:disabled {
 
 </div>
 
+
+
+
+<!-- ======================================
+     THE ARCADE
+====================================== -->
+<div
+  class="modal arcade-modal"
+  id="arcadeModal"
+  onclick="closeModalOutside(event,'arcadeModal')"
+>
+  <div class="arcade-box">
+
+    <div class="arcade-header">
+      <div>
+        <div class="arcade-kicker">CURIOUSITY // GAMING DISTRICT</div>
+        <h2 class="arcade-title">🎮 THE ARCADE</h2>
+        <p class="arcade-subtitle">Three virtual Coin games. No real money. Just Curios.</p>
+      </div>
+      <button class="arcade-close" onclick="closeModal('arcadeModal')">×</button>
+    </div>
+
+    <div class="arcade-nav">
+      <button id="arcadeTabChicken" class="active" onclick="arcadeSelectGame('chicken')">
+        <strong>🐔 Chicken Road</strong>
+        <small>Cross the traffic. Cash out before the hit.</small>
+      </button>
+      <button id="arcadeTabTower" onclick="arcadeSelectGame('tower')">
+        <strong>🪜 Tower</strong>
+        <small>Choose the safe path and climb higher.</small>
+      </button>
+      <button id="arcadeTabMines" onclick="arcadeSelectGame('mines')">
+        <strong>💣 Mines</strong>
+        <small>Reveal diamonds. Avoid the mines.</small>
+      </button>
+    </div>
+
+    <!-- CHICKEN -->
+    <section class="arcade-panel active" id="arcadePanelChicken">
+      <div class="arcade-card">
+        <div class="arcade-topline">
+          <div>
+            <div class="arcade-game-name">🐔 Chicken Road</div>
+            <div class="arcade-game-desc">Jeder erfolgreiche Schritt erhöht deinen Multiplikator. Du entscheidest nach jedem sicheren Schritt: weiter oder auszahlen.</div>
+          </div>
+          <div class="arcade-multiplier">
+            <small>Multiplier</small>
+            <strong id="chickenMultiplier">×1.00</strong>
+          </div>
+        </div>
+
+        <div class="arcade-betbar">
+          <label for="chickenBet">Einsatz</label>
+          <input id="chickenBet" class="arcade-bet-input" type="number" min="10" max="1000" step="10" value="10">
+          <span class="coin">◉</span>
+        </div>
+
+        <div class="chicken-road" id="chickenRoad">
+          <div class="chicken-lane" id="chickenLane"></div>
+          <div class="chicken-road-labels"><span>START</span><span>ROAD</span><span>FINISH</span></div>
+        </div>
+
+        <div class="arcade-status" id="chickenStatus">Bereit für eine Runde.</div>
+        <div class="arcade-actions">
+          <button class="arcade-action start" id="chickenStartButton" onclick="chickenStart()">🐔 START</button>
+          <button class="arcade-action continue" id="chickenContinueButton" onclick="chickenContinue()" disabled>CONTINUE</button>
+          <button class="arcade-action cash" id="chickenCashButton" onclick="chickenCashOut()" disabled>CASH OUT</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOWER -->
+    <section class="arcade-panel" id="arcadePanelTower">
+      <div class="arcade-card">
+        <div class="arcade-topline">
+          <div>
+            <div class="arcade-game-name">🪜 Tower</div>
+            <div class="arcade-game-desc">Auf jeder Ebene wartet ein sicherer Weg. Ein falscher Schritt beendet die Runde und kostet den Einsatz.</div>
+          </div>
+          <div class="arcade-multiplier">
+            <small>Multiplier</small>
+            <strong id="towerMultiplier">×1.00</strong>
+          </div>
+        </div>
+
+        <div class="arcade-betbar">
+          <label for="towerBet">Einsatz</label>
+          <input id="towerBet" class="arcade-bet-input" type="number" min="10" max="1000" step="10" value="10">
+          <span class="coin">◉</span>
+        </div>
+
+        <div class="tower-wrap">
+          <div class="tower-progress" id="towerProgress"></div>
+          <div class="tower-main">
+            <div class="tower-sky" id="towerSky">🏰</div>
+            <div class="tower-floor-caption" id="towerFloorCaption">Floor 0 / 10</div>
+            <div class="tower-paths">
+              <button class="tower-path" id="towerPathA" onclick="towerChoose(0)" disabled>⬅️ A<span>PATH</span></button>
+              <button class="tower-path" id="towerPathB" onclick="towerChoose(1)" disabled>⬆️ B<span>PATH</span></button>
+              <button class="tower-path" id="towerPathC" onclick="towerChoose(2)" disabled>➡️ C<span>PATH</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="arcade-status" id="towerStatus">Bereit für den Aufstieg.</div>
+        <div class="arcade-actions">
+          <button class="arcade-action start" id="towerStartButton" onclick="towerStart()">🪜 START CLIMB</button>
+          <button class="arcade-action continue" id="towerContinueButton" onclick="towerContinue()" disabled>CONTINUE</button>
+          <button class="arcade-action cash" id="towerCashButton" onclick="towerCashOut()" disabled>CASH OUT</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINES -->
+    <section class="arcade-panel" id="arcadePanelMines">
+      <div class="arcade-card">
+        <div class="arcade-topline">
+          <div>
+            <div class="arcade-game-name">💣 Mines</div>
+            <div class="arcade-game-desc">Wähle die Minenanzahl, setze deinen Einsatz und decke Felder auf. Sichere Felder erhöhen den Multiplikator.</div>
+          </div>
+          <div class="arcade-multiplier">
+            <small>Multiplier</small>
+            <strong id="minesMultiplier">×1.00</strong>
+          </div>
+        </div>
+
+        <div class="arcade-betbar">
+          <label for="minesBet">Einsatz</label>
+          <input id="minesBet" class="arcade-bet-input" type="number" min="10" max="1000" step="10" value="10">
+          <label for="minesCount">Minen</label>
+          <select id="minesCount" class="arcade-select">
+            <option value="1">1 Mine</option>
+            <option value="3">3 Minen</option>
+            <option value="5" selected>5 Minen</option>
+            <option value="10">10 Minen</option>
+            <option value="15">15 Minen</option>
+          </select>
+        </div>
+
+        <div class="mines-layout">
+          <div class="mines-board" id="minesBoard"></div>
+          <div class="mines-side">
+            <div class="mines-stat"><span>Minen</span><strong id="minesCountDisplay">5</strong></div>
+            <div class="mines-stat"><span>Sicher</span><strong id="minesSafeDisplay">0</strong></div>
+            <div class="mines-stat"><span>Gewinn</span><strong id="minesPayoutDisplay">0 ◉</strong></div>
+            <div class="arcade-actions">
+              <button class="arcade-action start" id="minesStartButton" onclick="minesStart()">💣 START</button>
+              <button class="arcade-action cash" id="minesCashButton" onclick="minesCashOut()" disabled>CASH OUT</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="arcade-status" id="minesStatus">Bereit für das Minenfeld.</div>
+      </div>
+    </section>
+
+    <div class="arcade-footer">
+      Alle Einsätze und Gewinne sind ausschließlich virtuelle Curios und werden im bestehenden Kontostand gespeichert.
+      <br><span class="arcade-progress-chip">🎮 Arcade-Spiele gespielt: <strong id="arcadePlayedDisplay">0</strong></span>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -8656,10 +9140,677 @@ window.addEventListener(
   }
 );
 
+
+
+/* =========================================
+   THE ARCADE — ADDITIVE SYSTEM
+========================================= */
+
+function arcadeInitData() {
+  if (typeof game.gamesPlayed !== "number" || !Number.isFinite(game.gamesPlayed) || game.gamesPlayed < 0) {
+    game.gamesPlayed = 0;
+  }
+  game.gamesPlayed = Math.floor(game.gamesPlayed);
+
+  if (typeof game.arcadeUnlocked !== "boolean") game.arcadeUnlocked = game.gamesPlayed >= 10;
+  if (typeof game.arcadeVisits !== "number") game.arcadeVisits = 0;
+  if (typeof game.arcadeBet !== "number") game.arcadeBet = 10;
+  if (typeof game.chickenRounds !== "number") game.chickenRounds = 0;
+  if (typeof game.chickenBestMultiplier !== "number") game.chickenBestMultiplier = 0;
+  if (typeof game.towerRounds !== "number") game.towerRounds = 0;
+  if (typeof game.towerBestFloor !== "number") game.towerBestFloor = 0;
+  if (typeof game.minesRounds !== "number") game.minesRounds = 0;
+  if (typeof game.minesBestSafe !== "number") game.minesBestSafe = 0;
+}
+
+arcadeInitData();
+
+function arcadeSaveAndRefresh() {
+  saveGame();
+  updateUI();
+  if (typeof updateProfile === "function") updateProfile();
+  if (typeof updateSecretRoomUI === "function") updateSecretRoomUI();
+  if (typeof checkAchievements === "function") checkAchievements();
+  arcadeUpdateAccess();
+}
+
+function arcadeRegisterPlayedRound(source) {
+  arcadeInitData();
+  game.gamesPlayed += 1;
+
+  if (game.gamesPlayed >= 10 && !game.arcadeUnlocked) {
+    game.arcadeUnlocked = true;
+    showToast("🎉 THE ARCADE IS NOW OPEN!");
+    createParticles("🎮");
+  }
+
+  saveGame();
+  arcadeUpdateAccess();
+
+  const display = document.getElementById("arcadePlayedDisplay");
+  if (display) display.textContent = game.gamesPlayed;
+}
+
+function arcadeUpdateAccess() {
+  const button = document.getElementById("arcadeButton");
+  const progress = document.getElementById("arcadeButtonProgress");
+  const display = document.getElementById("arcadePlayedDisplay");
+  if (!button) return;
+
+  const played = Math.max(0, Math.floor(game.gamesPlayed || 0));
+  if (progress) progress.textContent = game.arcadeUnlocked ? "OPEN" : `${Math.min(played,10)}/10`;
+  if (display) display.textContent = played;
+
+  button.disabled = !game.arcadeUnlocked;
+  button.textContent = game.arcadeUnlocked ? "🎮 THE ARCADE" : `🔒 Arcade ${Math.min(played,10)}/10`;
+}
+
+function openArcade() {
+  if (!game.arcadeUnlocked) {
+    const remaining = Math.max(0,10 - (game.gamesPlayed || 0));
+    showToast(`🎮 Noch ${remaining} Spiel${remaining === 1 ? "" : "e"} bis THE ARCADE.`);
+    return;
+  }
+
+  arcadeInitData();
+  game.arcadeVisits += 1;
+  arcadeSaveAndRefresh();
+  openModal("arcadeModal");
+  arcadeSelectGame("chicken");
+}
+
+function arcadeSelectGame(gameName) {
+  const names = ["chicken","tower","mines"];
+  if (!names.includes(gameName)) gameName = "chicken";
+
+  names.forEach(name => {
+    const panel = document.getElementById(`arcadePanel${name[0].toUpperCase()+name.slice(1)}`);
+    const tab = document.getElementById(`arcadeTab${name[0].toUpperCase()+name.slice(1)}`);
+    if (panel) panel.classList.toggle("active", name === gameName);
+    if (tab) tab.classList.toggle("active", name === gameName);
+  });
+}
+
+/* Count completed/started rounds in existing games without altering their mechanics. */
+const arcadeOriginalSpin = spin;
+spin = function() {
+  const before = game.spins || 0;
+  arcadeOriginalSpin();
+  if ((game.spins || 0) > before) arcadeRegisterPlayedRound("slot");
+};
+
+const arcadeOriginalBlackjackDeal = blackjackDeal;
+blackjackDeal = function() {
+  const before = game.blackjackRounds || 0;
+  arcadeOriginalBlackjackDeal();
+  if ((game.blackjackRounds || 0) > before) arcadeRegisterPlayedRound("blackjack");
+};
+
+const arcadeOriginalRouletteSpin = spinRoulette;
+spinRoulette = function() {
+  const before = game.rouletteRounds || 0;
+  arcadeOriginalRouletteSpin();
+  if ((game.rouletteRounds || 0) > before) arcadeRegisterPlayedRound("roulette");
+};
+
+/* =========================================
+   CHICKEN ROAD
+========================================= */
+const chickenMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00];
+let chickenInRound = false;
+let chickenStep = 0;
+let chickenBetValue = 10;
+let chickenCars = ["🚗","🚙","🚕","🚓","🚗"];
+
+function chickenFormatMultiplier(value) {
+  return `×${Number(value).toFixed(2)}`;
+}
+
+function chickenSetStatus(text, type="") {
+  const el = document.getElementById("chickenStatus");
+  if (!el) return;
+  el.className = `arcade-status${type ? " "+type : ""}`;
+  el.textContent = text;
+}
+
+function chickenRender() {
+  const lane = document.getElementById("chickenLane");
+  if (!lane) return;
+  lane.innerHTML = "";
+
+  for (let i=0;i<6;i++) {
+    const cell = document.createElement("div");
+    cell.className = "chicken-cell";
+    if (i === chickenStep) {
+      const chicken = document.createElement("span");
+      chicken.className = "chicken-player" + (chickenStep > 0 ? " move" : "");
+      chicken.textContent = "🐔";
+      cell.appendChild(chicken);
+    } else if (i < 5) {
+      const car = document.createElement("span");
+      car.className = `chicken-car ${i % 2 ? "slow" : "fast"}`;
+      car.textContent = chickenCars[i];
+      cell.appendChild(car);
+    } else {
+      const finish = document.createElement("span");
+      finish.className = "chicken-finish";
+      finish.textContent = "🏁";
+      cell.appendChild(finish);
+    }
+    lane.appendChild(cell);
+  }
+
+  const mult = chickenStep > 0 ? chickenMultipliers[chickenStep-1] : 1;
+  document.getElementById("chickenMultiplier").textContent = chickenFormatMultiplier(mult);
+}
+
+function chickenClampBet(input) {
+  let value = parseInt(input?.value,10);
+  if (!Number.isFinite(value)) value = 10;
+  value = Math.max(10, Math.min(1000, Math.floor(value/10)*10));
+  if (input) input.value = value;
+  return value;
+}
+
+function chickenSetButtons() {
+  const active = chickenInRound;
+  const start = document.getElementById("chickenStartButton");
+  const cont = document.getElementById("chickenContinueButton");
+  const cash = document.getElementById("chickenCashButton");
+  const bet = document.getElementById("chickenBet");
+  if (start) start.disabled = active;
+  if (bet) bet.disabled = active;
+  if (cont) cont.disabled = !active || chickenStep >= chickenMultipliers.length;
+  if (cash) cash.disabled = !active || chickenStep <= 0;
+}
+
+function chickenStart() {
+  if (chickenInRound) return;
+  chickenBetValue = chickenClampBet(document.getElementById("chickenBet"));
+  if (game.balance < chickenBetValue) {
+    chickenSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
+    return;
+  }
+
+  game.balance -= chickenBetValue;
+  game.chickenRounds += 1;
+  chickenInRound = true;
+  chickenStep = 0;
+  chickenSetStatus("Das Chicken ist unterwegs. CONTINUE oder später CASH OUT.","info");
+  chickenRender();
+  chickenSetButtons();
+  arcadeRegisterPlayedRound("chicken");
+  arcadeSaveAndRefresh();
+}
+
+function chickenContinue() {
+  if (!chickenInRound || chickenStep <= 0 || chickenStep >= chickenMultipliers.length) return;
+
+  const stepIndex = chickenStep;
+  const hitChance = Math.min(0.52, 0.14 + stepIndex * 0.065);
+  const hit = Math.random() < hitChance;
+
+  if (hit) {
+    chickenInRound = false;
+    chickenSetStatus("💥 Das Chicken wurde getroffen. LOSS — Einsatz verloren.","lose");
+    chickenSetButtons();
+    chickenRender();
+    arcadeSaveAndRefresh();
+    return;
+  }
+
+  chickenStep += 1;
+  const mult = chickenMultipliers[chickenStep-1];
+  game.chickenBestMultiplier = Math.max(game.chickenBestMultiplier, mult);
+  chickenRender();
+
+  if (chickenStep >= chickenMultipliers.length) {
+    chickenSetStatus(`🏁 Alle Straßen geschafft! ${chickenFormatMultiplier(mult)} sicher. CASH OUT empfohlen.`,"win");
+  } else {
+    chickenSetStatus(`✅ Schritt ${chickenStep} geschafft — ${chickenFormatMultiplier(mult)}. Weiterfahren?`,"win");
+  }
+
+  chickenSetButtons();
+  arcadeSaveAndRefresh();
+}
+
+function chickenCashOut() {
+  if (!chickenInRound || chickenStep <= 0) return;
+  const multiplier = chickenMultipliers[chickenStep-1];
+  const payout = Math.floor(chickenBetValue * multiplier);
+  game.balance += payout;
+  game.biggestWin = Math.max(game.biggestWin || 0, payout);
+  chickenInRound = false;
+  chickenSetStatus(`💰 CASH OUT: +${payout} Curios bei ${chickenFormatMultiplier(multiplier)}.`,"win");
+  chickenSetButtons();
+  chickenRender();
+  createParticles("🐔");
+  arcadeSaveAndRefresh();
+}
+
+/* =========================================
+   TOWER
+========================================= */
+const towerMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00,12.00,20.00,35.00,50.00];
+let towerInRound = false;
+let towerFloor = 0;
+let towerSafePath = 0;
+let towerBetValue = 10;
+
+function towerSetStatus(text,type="") {
+  const el = document.getElementById("towerStatus");
+  if (!el) return;
+  el.className = `arcade-status${type ? " "+type : ""}`;
+  el.textContent = text;
+}
+
+function towerRender() {
+  const progress = document.getElementById("towerProgress");
+  if (progress) {
+    progress.innerHTML = "";
+    for (let i=1;i<=10;i++) {
+      const floor = document.createElement("div");
+      floor.className = "tower-floor" + (i <= towerFloor ? " done" : "") + (i === towerFloor+1 && towerInRound ? " current" : "");
+      floor.textContent = `F${i}`;
+      progress.appendChild(floor);
+    }
+  }
+
+  const mult = towerFloor > 0 ? towerMultipliers[towerFloor-1] : 1;
+  document.getElementById("towerMultiplier").textContent = towerFormatMultiplier(mult);
+  document.getElementById("towerFloorCaption").textContent = `Floor ${towerFloor} / 10`;
+  const sky = document.getElementById("towerSky");
+  if (sky) sky.textContent = towerFloor >= 10 ? "👑" : towerFloor >= 6 ? "🏯" : "🏰";
+}
+
+function towerFormatMultiplier(value) {
+  return `×${Number(value).toFixed(2)}`;
+}
+
+function towerSetPaths(enabled) {
+  ["towerPathA","towerPathB","towerPathC"].forEach(id => {
+    const button = document.getElementById(id);
+    if (button) button.disabled = !enabled;
+  });
+}
+
+function towerSetButtons() {
+  const start = document.getElementById("towerStartButton");
+  const cont = document.getElementById("towerContinueButton");
+  const cash = document.getElementById("towerCashButton");
+  const bet = document.getElementById("towerBet");
+  if (start) start.disabled = towerInRound;
+  if (bet) bet.disabled = towerInRound;
+  if (cont) cont.disabled = !towerInRound || towerFloor <= 0 || towerFloor >= 10 || towerSafePath !== -1;
+  if (cash) cash.disabled = !towerInRound || towerFloor <= 0;
+}
+
+function towerClampBet(input) {
+  let value = parseInt(input?.value,10);
+  if (!Number.isFinite(value)) value = 10;
+  value = Math.max(10, Math.min(1000, Math.floor(value/10)*10));
+  if (input) input.value = value;
+  return value;
+}
+
+function towerStart() {
+  if (towerInRound) return;
+  towerBetValue = towerClampBet(document.getElementById("towerBet"));
+  if (game.balance < towerBetValue) {
+    towerSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
+    return;
+  }
+
+  game.balance -= towerBetValue;
+  game.towerRounds += 1;
+  towerInRound = true;
+  towerFloor = 0;
+  towerSafePath = Math.floor(Math.random()*3);
+  towerSetStatus("Wähle deinen Weg auf Floor 1.","info");
+  towerRender();
+  towerSetPaths(true);
+  towerSetButtons();
+  arcadeRegisterPlayedRound("tower");
+  arcadeSaveAndRefresh();
+}
+
+function towerChoose(pathIndex) {
+  if (!towerInRound || towerSafePath === -1 || towerFloor >= 10) return;
+
+  if (pathIndex !== towerSafePath) {
+    towerInRound = false;
+    towerSetPaths(false);
+    towerSetStatus(`💥 Falscher Weg. Floor ${towerFloor+1} war nicht sicher. LOSS.`,"lose");
+    towerSetButtons();
+    arcadeSaveAndRefresh();
+    return;
+  }
+
+  towerFloor += 1;
+  towerSafePath = -1;
+  game.towerBestFloor = Math.max(game.towerBestFloor, towerFloor);
+  towerRender();
+  const sky = document.getElementById("towerSky");
+  if (sky) {
+    sky.classList.remove("climb");
+    void sky.offsetWidth;
+    sky.classList.add("climb");
+  }
+
+  if (towerFloor >= 10) {
+    towerSetStatus("👑 Summit erreicht! ×50.00 — CASH OUT.","win");
+  } else {
+    towerSetStatus(`✅ Floor ${towerFloor} geschafft — ${towerFormatMultiplier(towerMultipliers[towerFloor-1])}. CONTINUE oder CASH OUT.`,"win");
+  }
+  towerSetPaths(false);
+  towerSetButtons();
+  arcadeSaveAndRefresh();
+}
+
+function towerContinue() {
+  if (!towerInRound || towerFloor <= 0 || towerFloor >= 10 || towerSafePath !== -1) return;
+  towerSafePath = Math.floor(Math.random()*3);
+  towerSetStatus(`Floor ${towerFloor+1}: Wähle A, B oder C.`,"info");
+  towerSetPaths(true);
+  towerSetButtons();
+}
+
+function towerCashOut() {
+  if (!towerInRound || towerFloor <= 0) return;
+  const multiplier = towerMultipliers[towerFloor-1];
+  const payout = Math.floor(towerBetValue * multiplier);
+  game.balance += payout;
+  game.biggestWin = Math.max(game.biggestWin || 0, payout);
+  towerInRound = false;
+  towerSafePath = 0;
+  towerSetPaths(false);
+  towerSetStatus(`💰 CASH OUT: +${payout} Curios bei ${towerFormatMultiplier(multiplier)}.`,"win");
+  towerSetButtons();
+  towerRender();
+  createParticles("🪜");
+  arcadeSaveAndRefresh();
+}
+
+/* =========================================
+   MINES
+========================================= */
+let minesInRound = false;
+let minesBetValue = 10;
+let minesCountValue = 5;
+let minesSet = new Set();
+let minesRevealed = new Set();
+
+function minesSetStatus(text,type="") {
+  const el = document.getElementById("minesStatus");
+  if (!el) return;
+  el.className = `arcade-status${type ? " "+type : ""}`;
+  el.textContent = text;
+}
+
+function minesClampBet(input) {
+  let value = parseInt(input?.value,10);
+  if (!Number.isFinite(value)) value = 10;
+  value = Math.max(10, Math.min(1000, Math.floor(value/10)*10));
+  if (input) input.value = value;
+  return value;
+}
+
+function minesMultiplierForSafe(safe, mineCount) {
+  if (safe <= 0) return 1;
+  const mineFactor = 0.105 + mineCount * 0.018;
+  const value = 1 + safe * mineFactor + safe * safe * 0.008;
+  return Math.min(50, Number(value.toFixed(2)));
+}
+
+function minesRenderBoard(revealAll=false) {
+  const board = document.getElementById("minesBoard");
+  if (!board) return;
+  board.innerHTML = "";
+  for (let i=0;i<25;i++) {
+    const button = document.createElement("button");
+    button.className = "mine-cell";
+    button.type = "button";
+    const isMine = minesSet.has(i);
+    const revealed = minesRevealed.has(i);
+
+    if (revealed || revealAll) {
+      button.disabled = true;
+      if (isMine) {
+        button.classList.add("mine");
+        button.textContent = "💣";
+      } else {
+        button.classList.add("revealed");
+        button.textContent = "💎";
+      }
+    } else if (!minesInRound) {
+      button.disabled = true;
+      button.textContent = "?";
+    } else {
+      button.textContent = "";
+      button.setAttribute("aria-label",`Mines-Feld ${i+1}`);
+      button.onclick = () => minesReveal(i);
+    }
+    board.appendChild(button);
+  }
+
+  const safe = minesRevealed.size;
+  const mult = minesMultiplierForSafe(safe,minesCountValue);
+  document.getElementById("minesMultiplier").textContent = `×${mult.toFixed(2)}`;
+  document.getElementById("minesSafeDisplay").textContent = safe;
+  document.getElementById("minesCountDisplay").textContent = minesCountValue;
+  document.getElementById("minesPayoutDisplay").textContent = `${safe ? Math.floor(minesBetValue*mult) : 0} ◉`;
+}
+
+function minesPlaceMines() {
+  minesSet = new Set();
+  while (minesSet.size < minesCountValue) {
+    minesSet.add(Math.floor(Math.random()*25));
+  }
+}
+
+function minesSetButtons() {
+  const start = document.getElementById("minesStartButton");
+  const cash = document.getElementById("minesCashButton");
+  const bet = document.getElementById("minesBet");
+  const count = document.getElementById("minesCount");
+  if (start) start.disabled = minesInRound;
+  if (cash) cash.disabled = !minesInRound || minesRevealed.size <= 0;
+  if (bet) bet.disabled = minesInRound;
+  if (count) count.disabled = minesInRound;
+}
+
+function minesStart() {
+  if (minesInRound) return;
+  minesBetValue = minesClampBet(document.getElementById("minesBet"));
+  minesCountValue = parseInt(document.getElementById("minesCount")?.value,10) || 5;
+  minesCountValue = [1,3,5,10,15].includes(minesCountValue) ? minesCountValue : 5;
+
+  if (game.balance < minesBetValue) {
+    minesSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
+    return;
+  }
+
+  game.balance -= minesBetValue;
+  game.minesRounds += 1;
+  minesInRound = true;
+  minesRevealed = new Set();
+  minesPlaceMines();
+  minesSetStatus("Das Feld ist aktiv. Wähle ein Feld.","info");
+  minesRenderBoard();
+  minesSetButtons();
+  arcadeRegisterPlayedRound("mines");
+  arcadeSaveAndRefresh();
+}
+
+function minesReveal(index) {
+  if (!minesInRound || minesRevealed.has(index)) return;
+
+  if (minesSet.has(index)) {
+    minesInRound = false;
+    minesRevealed.add(index);
+    minesRenderBoard(true);
+    minesSetStatus("💣 MINE! LOSS — Einsatz verloren.","lose");
+    minesSetButtons();
+    arcadeSaveAndRefresh();
+    return;
+  }
+
+  minesRevealed.add(index);
+  const safe = minesRevealed.size;
+  const multiplier = minesMultiplierForSafe(safe,minesCountValue);
+  game.minesBestSafe = Math.max(game.minesBestSafe, safe);
+  minesRenderBoard();
+
+  const safeTotal = 25 - minesCountValue;
+  if (safe >= safeTotal) {
+    const payout = Math.floor(minesBetValue * multiplier);
+    game.balance += payout;
+    game.biggestWin = Math.max(game.biggestWin || 0,payout);
+    minesInRound = false;
+    minesRenderBoard(true);
+    minesSetStatus(`💎 ALLE sicheren Felder! +${payout} Curios bei ×${multiplier.toFixed(2)}.`,"win");
+    minesSetButtons();
+    createParticles("💎");
+    arcadeSaveAndRefresh();
+    return;
+  }
+
+  minesSetStatus(`💎 Sicher! ${safe} Feld${safe === 1 ? "" : "er"} aufgedeckt — ×${multiplier.toFixed(2)}.`,"win");
+  minesSetButtons();
+  arcadeSaveAndRefresh();
+}
+
+function minesCashOut() {
+  if (!minesInRound || minesRevealed.size <= 0) return;
+  const multiplier = minesMultiplierForSafe(minesRevealed.size,minesCountValue);
+  const payout = Math.floor(minesBetValue * multiplier);
+  game.balance += payout;
+  game.biggestWin = Math.max(game.biggestWin || 0,payout);
+  minesInRound = false;
+  minesRenderBoard();
+  minesSetStatus(`💰 CASH OUT: +${payout} Curios bei ×${multiplier.toFixed(2)}.`,"win");
+  minesSetButtons();
+  createParticles("💎");
+  arcadeSaveAndRefresh();
+}
+
+/* =========================================
+   ARCADE ACHIEVEMENTS
+========================================= */
+achievements.push(
+  {
+    id:"arcade_rookie",
+    icon:"🎮",
+    name:"Arcade Rookie",
+    description:"Betritt THE ARCADE zum ersten Mal.",
+    check:() => (game.arcadeVisits || 0) >= 1
+  },
+  {
+    id:"chicken_survivor",
+    icon:"🐔",
+    name:"Chicken Survivor",
+    description:"Erreiche bei Chicken Road mindestens ×5.00.",
+    check:() => (game.chickenBestMultiplier || 0) >= 5
+  },
+  {
+    id:"tower_climber",
+    icon:"🪜",
+    name:"Tower Climber",
+    description:"Erreiche Floor 7 im Tower.",
+    check:() => (game.towerBestFloor || 0) >= 7
+  },
+  {
+    id:"minefield_survivor",
+    icon:"💣",
+    name:"Minefield Survivor",
+    description:"Decke mindestens 10 sichere Mines-Felder in einer Runde auf.",
+    check:() => (game.minesBestSafe || 0) >= 10
+  },
+  {
+    id:"arcade_master",
+    icon:"🏆",
+    name:"Arcade Master",
+    description:"Spiele Chicken Road, Tower und Mines mindestens einmal.",
+    check:() => (game.chickenRounds || 0) >= 1 && (game.towerRounds || 0) >= 1 && (game.minesRounds || 0) >= 1
+  }
+);
+
+/* =========================================
+   ARCADE INITIAL STATE / CLEANUP
+========================================= */
+arcadeUpdateAccess();
+chickenRender();
+towerRender();
+minesRenderBoard();
+chickenSetButtons();
+towerSetButtons();
+minesSetButtons();
+
+/* Keep the existing modal system intact; only add Arcade-specific cleanup. */
+const arcadeOriginalCloseModal = closeModal;
+closeModal = function(id) {
+  if (id === "arcadeModal") {
+    document.querySelectorAll(".tower-sky.climb").forEach(el => el.classList.remove("climb"));
+  }
+  return arcadeOriginalCloseModal(id);
+};
+
+window.addEventListener("keydown",function(e) {
+  if (e.key === "Escape") {
+    const modal = document.getElementById("arcadeModal");
+    if (modal && !modal.classList.contains("open")) {
+      document.querySelectorAll(".tower-sky.climb").forEach(el => el.classList.remove("climb"));
+    }
+  }
+});
+
+saveGame();
+arcadeUpdateAccess();
+renderAchievements();
+updateProfile();
+
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
