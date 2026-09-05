@@ -2303,28 +2303,68 @@ button:disabled {
   min-height:74px;
   align-items:center;
 }
-.chicken-cell {
+.chicken-lane {
   position:relative;
-  min-height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:12px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.06);
-  overflow:hidden;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  min-height:360px;
+  padding:10px;
+  align-items:stretch;
 }
-.chicken-cell::after {
+.chicken-track {
+  position:relative;
+  min-height:338px;
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.055));
+  border:1px solid rgba(255,255,255,.07);
+  cursor:pointer;
+  transition:.18s ease;
+}
+.chicken-track:hover { border-color:rgba(103,232,249,.45); transform:translateY(-1px); }
+.chicken-track.selected { border-color:rgba(250,204,21,.8); box-shadow:0 0 22px rgba(250,204,21,.13); }
+.chicken-track::before {
   content:"";
   position:absolute;
-  left:10%; right:10%; bottom:9px;
-  height:2px;
-  background:rgba(255,255,255,.08);
+  inset:0;
+  background:repeating-linear-gradient(180deg,transparent 0 38px,rgba(255,255,255,.055) 38px 41px,transparent 41px 78px);
+  pointer-events:none;
 }
-.chicken-car { font-size:30px; animation:chickenCarDrive 1.8s ease-in-out infinite alternate; }
-.chicken-car.slow { animation-duration:2.5s; }
-.chicken-car.fast { animation-duration:1.35s; }
-@keyframes chickenCarDrive { from{transform:translateX(-5px)} to{transform:translateX(5px)} }
+.chicken-track::after {
+  content:"";
+  position:absolute;
+  left:50%; top:0; bottom:0; width:2px;
+  transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.16) 0 18px,transparent 18px 34px);
+  opacity:.45;
+  pointer-events:none;
+}
+.chicken-track-label {
+  position:absolute; top:8px; left:50%; transform:translateX(-50%);
+  z-index:5; font-size:10px; font-weight:950; color:#71809e; letter-spacing:.14em;
+}
+.chicken-car {
+  position:absolute; left:50%; top:0; z-index:3;
+  font-size:27px; transform:translate(-50%,-60px) rotate(90deg);
+  will-change:transform; pointer-events:none;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
+}
+.chicken-player {
+  position:absolute; left:50%; bottom:12px; z-index:8;
+  font-size:34px; transform:translateX(-50%);
+  filter:drop-shadow(0 0 12px rgba(250,204,21,.35));
+  transition:left .22s ease,bottom .35s cubic-bezier(.2,.8,.2,1);
+  pointer-events:none;
+}
+.chicken-player.move { animation:chickenJump .38s cubic-bezier(.2,.8,.2,1); }
+@keyframes chickenJump { 0%{transform:translate(-50%,12px) scale(.88)} 55%{transform:translate(-50%,-18px) scale(1.08)} 100%{transform:translate(-50%,0) scale(1)} }
+.chicken-track.danger { animation:chickenDanger .34s ease; }
+@keyframes chickenDanger { 50%{box-shadow:0 0 30px rgba(248,113,113,.7); border-color:rgba(248,113,113,.95)} }
+.chicken-track.safe-flash { animation:chickenSafe .35s ease; }
+@keyframes chickenSafe { 50%{box-shadow:0 0 25px rgba(74,222,128,.45); border-color:rgba(74,222,128,.8)} }
+.chicken-finish { position:absolute; top:10px; right:10px; z-index:4; font-size:19px; opacity:.8; }
 .chicken-player { font-size:35px; filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); animation:chickenBob .65s ease-in-out infinite alternate; }
 @keyframes chickenBob { from{transform:translateY(2px)} to{transform:translateY(-4px)} }
 .chicken-player.move { animation:chickenMove .42s cubic-bezier(.2,.8,.2,1); }
@@ -2395,8 +2435,10 @@ button:disabled {
   .arcade-multiplier { width:100%; }
   .arcade-card { padding:14px; }
   .chicken-lane { gap:3px; }
-  .chicken-cell { min-height:50px; }
-  .chicken-car { font-size:23px; }
+  .chicken-lane { min-height:300px; gap:5px; padding:6px; }
+  .chicken-track { min-height:288px; }
+  .chicken-car { font-size:21px; }
+  .chicken-player { font-size:28px; }
   .chicken-player { font-size:28px; }
   .chicken-finish { font-size:22px; }
   .tower-wrap { grid-template-columns:60px 1fr; gap:8px; }
@@ -3683,7 +3725,7 @@ button:disabled {
 
         <div class="chicken-road" id="chickenRoad">
           <div class="chicken-lane" id="chickenLane"></div>
-          <div class="chicken-road-labels"><span>START</span><span>ROAD</span><span>FINISH</span></div>
+          <div class="chicken-road-labels"><span>START</span><span>FREIE SPUR WÄHLEN</span><span>FINISH</span></div>
         </div>
 
         <div class="arcade-status" id="chickenStatus">Bereit für eine Runde.</div>
@@ -9296,10 +9338,17 @@ spinRoulette = function() {
    CHICKEN ROAD
 ========================================= */
 const chickenMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00];
+const chickenLaneCount = 5;
+const chickenRows = 6;
 let chickenInRound = false;
 let chickenStep = 0;
 let chickenBetValue = 10;
-let chickenCars = ["🚗","🚙","🚕","🚓","🚗"];
+let chickenLaneIndex = 2;
+let chickenCarsState = [];
+let chickenAnimationFrame = null;
+let chickenLastFrame = 0;
+let chickenRoundId = 0;
+const chickenCarTypes = ["🚗","🚙","🚕","🚓","🏎️"];
 
 function chickenFormatMultiplier(value) {
   return `×${Number(value).toFixed(2)}`;
@@ -9312,32 +9361,64 @@ function chickenSetStatus(text, type="") {
   el.textContent = text;
 }
 
+function chickenSpawnCars() {
+  chickenCarsState = [];
+  for (let lane=0; lane<chickenLaneCount; lane++) {
+    const count = lane === chickenLaneIndex ? 2 : 1 + (Math.random() < .38 ? 1 : 0);
+    for (let n=0; n<count; n++) {
+      chickenCarsState.push({
+        lane,
+        y: -70 - Math.random()*220 - n*125,
+        speed: 72 + Math.random()*72,
+        type: chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)],
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+}
+
 function chickenRender() {
   const lane = document.getElementById("chickenLane");
   if (!lane) return;
   lane.innerHTML = "";
 
-  for (let i=0;i<6;i++) {
-    const cell = document.createElement("div");
-    cell.className = "chicken-cell";
-    if (i === chickenStep) {
+  for (let i=0;i<chickenLaneCount;i++) {
+    const track = document.createElement("div");
+    track.className = "chicken-track" + (i === chickenLaneIndex ? " selected" : "");
+    track.dataset.lane = i;
+    track.onclick = () => chickenSelectLane(i);
+
+    const label = document.createElement("span");
+    label.className = "chicken-track-label";
+    label.textContent = String.fromCharCode(65+i);
+    track.appendChild(label);
+
+    const finish = document.createElement("span");
+    finish.className = "chicken-finish";
+    finish.textContent = "🏁";
+    track.appendChild(finish);
+
+    if (i === chickenLaneIndex) {
       const chicken = document.createElement("span");
       chicken.className = "chicken-player" + (chickenStep > 0 ? " move" : "");
       chicken.textContent = "🐔";
-      cell.appendChild(chicken);
-    } else if (i < 5) {
-      const car = document.createElement("span");
-      car.className = `chicken-car ${i % 2 ? "slow" : "fast"}`;
-      car.textContent = chickenCars[i];
-      cell.appendChild(car);
-    } else {
-      const finish = document.createElement("span");
-      finish.className = "chicken-finish";
-      finish.textContent = "🏁";
-      cell.appendChild(finish);
+      chicken.style.bottom = `${12 + chickenStep * 48}px`;
+      track.appendChild(chicken);
     }
-    lane.appendChild(cell);
+
+    lane.appendChild(track);
   }
+
+  chickenCarsState.forEach((car,index) => {
+    const track = lane.children[car.lane];
+    if (!track) return;
+    const el = document.createElement("span");
+    el.className = "chicken-car";
+    el.dataset.carIndex = index;
+    el.textContent = car.type;
+    el.style.top = `${car.y}px`;
+    track.appendChild(el);
+  });
 
   const mult = chickenStep > 0 ? chickenMultipliers[chickenStep-1] : 1;
   document.getElementById("chickenMultiplier").textContent = chickenFormatMultiplier(mult);
@@ -9363,6 +9444,46 @@ function chickenSetButtons() {
   if (cash) cash.disabled = !active || chickenStep <= 0;
 }
 
+function chickenSelectLane(index) {
+  if (!chickenInRound) return;
+  if (index < 0 || index >= chickenLaneCount) return;
+  chickenLaneIndex = index;
+  document.querySelectorAll(".chicken-track").forEach((el,i) => el.classList.toggle("selected",i===index));
+  chickenSetStatus(`Spur ${String.fromCharCode(65+index)} gewählt. Beobachte die Autos und drücke CONTINUE, wenn der Weg frei ist.`,"info");
+}
+
+function chickenStartTraffic() {
+  if (chickenAnimationFrame) cancelAnimationFrame(chickenAnimationFrame);
+  chickenLastFrame = performance.now();
+  const tick = (now) => {
+    if (!chickenInRound || chickenRoundId === 0) return;
+    const dt = Math.min(.05,(now-chickenLastFrame)/1000);
+    chickenLastFrame = now;
+    chickenCarsState.forEach(car => {
+      car.y += car.speed * dt;
+      if (car.y > 350) {
+        car.y = -55 - Math.random()*130;
+        car.speed = 68 + Math.random()*78;
+        car.type = chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)];
+      }
+      const el = document.querySelector(`.chicken-car[data-car-index="${chickenCarsState.indexOf(car)}"]`);
+      if (el) el.style.top = `${car.y}px`;
+    });
+    chickenAnimationFrame = requestAnimationFrame(tick);
+  };
+  chickenAnimationFrame = requestAnimationFrame(tick);
+}
+
+function chickenStopTraffic() {
+  if (chickenAnimationFrame) cancelAnimationFrame(chickenAnimationFrame);
+  chickenAnimationFrame = null;
+}
+
+function chickenIsLaneBlocked() {
+  const chickenY = 12 + chickenStep * 48;
+  return chickenCarsState.some(car => car.lane === chickenLaneIndex && car.y > chickenY-45 && car.y < chickenY+28);
+}
+
 function chickenStart() {
   if (chickenInRound) return;
   chickenBetValue = chickenClampBet(document.getElementById("chickenBet"));
@@ -9375,9 +9496,13 @@ function chickenStart() {
   game.chickenRounds += 1;
   chickenInRound = true;
   chickenStep = 0;
-  chickenSetStatus("Das Chicken ist unterwegs. CONTINUE oder später CASH OUT.","info");
+  chickenLaneIndex = 2;
+  chickenRoundId += 1;
+  chickenSpawnCars();
+  chickenSetStatus("🚦 Autos fahren! Wähle eine Spur und beobachte den Verkehr. CONTINUE bewegt das Chicken nach vorne.","info");
   chickenRender();
   chickenSetButtons();
+  chickenStartTraffic();
   arcadeRegisterPlayedRound("chicken");
   arcadeSaveAndRefresh();
 }
@@ -9385,30 +9510,40 @@ function chickenStart() {
 function chickenContinue() {
   if (!chickenInRound || chickenStep >= chickenMultipliers.length) return;
 
-  const stepIndex = chickenStep;
-  const hitChance = Math.min(0.52, 0.14 + stepIndex * 0.065);
-  const hit = Math.random() < hitChance;
-
-  if (hit) {
+  if (chickenIsLaneBlocked()) {
     chickenInRound = false;
-    chickenSetStatus("💥 Das Chicken wurde getroffen. LOSS — Einsatz verloren.","lose");
+    const danger = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
+    if (danger) danger.classList.add("danger");
+    chickenSetStatus("💥 CRASH! Ein Auto war genau auf deiner Spur. LOSS — Einsatz verloren.","lose");
+    chickenStopTraffic();
     chickenSetButtons();
     chickenRender();
     arcadeSaveAndRefresh();
     return;
   }
 
+  const safe = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
+  if (safe) {
+    safe.classList.remove("safe-flash");
+    void safe.offsetWidth;
+    safe.classList.add("safe-flash");
+  }
+
   chickenStep += 1;
   const mult = chickenMultipliers[chickenStep-1];
   game.chickenBestMultiplier = Math.max(game.chickenBestMultiplier, mult);
-  chickenRender();
 
   if (chickenStep >= chickenMultipliers.length) {
-    chickenSetStatus(`🏁 Alle Straßen geschafft! ${chickenFormatMultiplier(mult)} sicher. CASH OUT empfohlen.`,"win");
-  } else {
-    chickenSetStatus(`✅ Schritt ${chickenStep} geschafft — ${chickenFormatMultiplier(mult)}. Weiterfahren?`,"win");
+    chickenSetStatus(`🏁 FINISH! Du hast alle Straßen überquert. ${chickenFormatMultiplier(mult)} sicher — CASH OUT möglich.`,"win");
+    chickenSetButtons();
+    chickenRender();
+    return;
   }
 
+  // Refresh traffic after every crossing so every next move has a visible, changing situation.
+  chickenSpawnCars();
+  chickenRender();
+  chickenSetStatus(`✅ Straße ${chickenStep} geschafft — ${chickenFormatMultiplier(mult)}. Welche Spur ist jetzt frei?`,"win");
   chickenSetButtons();
   arcadeSaveAndRefresh();
 }
@@ -9420,6 +9555,7 @@ function chickenCashOut() {
   game.balance += payout;
   game.biggestWin = Math.max(game.biggestWin || 0, payout);
   chickenInRound = false;
+  chickenStopTraffic();
   chickenSetStatus(`💰 CASH OUT: +${payout} Curios bei ${chickenFormatMultiplier(multiplier)}.`,"win");
   chickenSetButtons();
   chickenRender();
@@ -9826,6 +9962,44 @@ updateProfile();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
