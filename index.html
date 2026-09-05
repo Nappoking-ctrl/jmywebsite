@@ -771,6 +771,321 @@ button:disabled {
 }
 
 
+
+/* =========================================
+   CURIOUS SHOP / PROFILE / ACHIEVEMENTS
+   Added without changing the original casino mechanics
+========================================= */
+
+.utility-bar {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:20px auto 0;
+}
+
+.utility-button {
+  min-width:120px;
+  font-weight:800;
+}
+
+.utility-button.shop-btn { border-color:rgba(250,204,21,.25); }
+.utility-button.profile-btn { border-color:rgba(125,211,252,.25); }
+.utility-button.ach-btn { border-color:rgba(192,132,252,.25); }
+
+.modal {
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(14px);
+  z-index:300;
+}
+
+.modal.open { display:flex; }
+
+.modal-box {
+  width:min(760px,100%);
+  max-height:88vh;
+  overflow:auto;
+  padding:28px;
+  border-radius:26px;
+  background:#101522;
+  border:1px solid var(--border);
+  box-shadow:0 25px 100px rgba(0,0,0,.5);
+  text-align:left;
+  animation:modalAppear .3s ease;
+}
+
+@keyframes modalAppear {
+  from { opacity:0; transform:translateY(15px) scale(.97); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.modal-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.modal-header h2 {
+  margin:0;
+  font-size:28px;
+}
+
+.modal-close {
+  width:40px;
+  height:40px;
+  padding:0;
+  border-radius:50%;
+  font-size:20px;
+}
+
+.shop-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.shop-item {
+  position:relative;
+  padding:18px;
+  min-height:190px;
+  border-radius:18px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  transition:.25s ease;
+  display:flex;
+  flex-direction:column;
+}
+
+.shop-item:hover {
+  transform:translateY(-3px);
+  background:rgba(255,255,255,.06);
+}
+
+.shop-icon {
+  font-size:42px;
+  line-height:1;
+  margin-bottom:12px;
+}
+
+.shop-item h3 {
+  margin:0 0 5px;
+  font-size:16px;
+}
+
+.shop-item p {
+  color:var(--muted);
+  font-size:12px;
+  margin:0 0 12px;
+  line-height:1.5;
+}
+
+.shop-price {
+  margin-top:auto;
+  color:var(--gold);
+  font-weight:900;
+  margin-bottom:9px;
+}
+
+.shop-item button {
+  width:100%;
+}
+
+.shop-item.owned {
+  border-color:rgba(74,222,128,.35);
+}
+
+.owned-label {
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+}
+
+.profile-card {
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:22px;
+  align-items:center;
+  padding:22px;
+  border-radius:20px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+}
+
+.profile-avatar {
+  width:110px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:28px;
+  font-size:58px;
+  background:linear-gradient(145deg,#1b2238,#080b14);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.35);
+}
+
+.profile-name {
+  font-size:26px;
+  font-weight:900;
+}
+
+.profile-title {
+  color:var(--accent);
+  font-weight:800;
+  margin-top:4px;
+}
+
+.profile-stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+
+.profile-stat {
+  padding:13px;
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+}
+
+.profile-stat small {
+  color:var(--muted);
+  display:block;
+}
+
+.profile-stat strong {
+  display:block;
+  margin-top:5px;
+}
+
+.inventory-section {
+  margin-top:22px;
+}
+
+.inventory-section h3 {
+  margin:0 0 10px;
+}
+
+.inventory-list {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.inventory-chip {
+  padding:8px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  font-size:12px;
+}
+
+.inventory-chip.equipped {
+  border-color:var(--accent);
+  box-shadow:0 0 14px rgba(125,211,252,.12);
+}
+
+.achievement-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.achievement {
+  padding:16px;
+  border-radius:17px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.035);
+  opacity:.45;
+  transition:.25s ease;
+}
+
+.achievement.unlocked {
+  opacity:1;
+  border-color:rgba(250,204,21,.3);
+}
+
+.achievement-icon {
+  font-size:30px;
+  float:left;
+  margin-right:12px;
+}
+
+.achievement h3 {
+  margin:2px 0 5px;
+  font-size:15px;
+}
+
+.achievement p {
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.45;
+}
+
+.shop-note {
+  color:var(--muted);
+  font-size:12px;
+  margin:-8px 0 18px;
+}
+
+.purchase-toast {
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  z-index:500;
+  padding:13px 18px;
+  border-radius:999px;
+  background:#111827;
+  border:1px solid rgba(74,222,128,.3);
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+  font-weight:800;
+  transition:.3s ease;
+}
+
+.purchase-toast.show {
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+.shop-filter {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.shop-filter button {
+  font-size:12px;
+  padding:8px 12px;
+}
+
+@media(max-width:700px) {
+  .shop-grid { grid-template-columns:repeat(2,1fr); }
+  .achievement-grid { grid-template-columns:1fr; }
+}
+
+@media(max-width:480px) {
+  .shop-grid { grid-template-columns:1fr; }
+  .profile-card { grid-template-columns:1fr; text-align:center; }
+  .profile-avatar { margin:auto; }
+  .profile-stats { grid-template-columns:1fr; }
+}
+
+
 /* =========================================
    RESPONSIVE
 ========================================= */
@@ -1071,6 +1386,90 @@ button:disabled {
       Bonus abholen
     </button>
 
+  </div>
+
+
+
+  <!-- ====================================
+       CURIOUS SHOP / PROFILE
+  ===================================== -->
+
+  <div class="utility-bar">
+    <button class="utility-button shop-btn" onclick="openModal('shopModal')">🛒 Shop</button>
+    <button class="utility-button profile-btn" onclick="openProfile()">👤 Profil</button>
+    <button class="utility-button ach-btn" onclick="openAchievements()">🏆 Erfolge</button>
+  </div>
+
+  <div class="purchase-toast" id="purchaseToast"></div>
+
+  <div class="modal" id="shopModal" onclick="closeModalOutside(event,'shopModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>🛒 Curiosity Shop</h2>
+        <button class="modal-close" onclick="closeModal('shopModal')">×</button>
+      </div>
+
+      <div class="shop-note">
+        Deine Curios sind nur für diese Website. Gekaufte Cosmetics werden lokal in deinem Browser gespeichert.
+      </div>
+
+      <div class="shop-filter">
+        <button onclick="renderShop('all')">Alles</button>
+        <button onclick="renderShop('avatar')">👤 Avatare</button>
+        <button onclick="renderShop('theme')">🎨 Themes</button>
+        <button onclick="renderShop('title')">🏷️ Titel</button>
+      </div>
+
+      <div class="shop-grid" id="shopGrid"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="profileModal" onclick="closeModalOutside(event,'profileModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>👤 Dein Profil</h2>
+        <button class="modal-close" onclick="closeModal('profileModal')">×</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar" id="profileAvatar">🗿</div>
+        <div>
+          <div class="profile-name">Julius Caesar</div>
+          <div class="profile-title" id="profileTitle">Neugieriger</div>
+
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <small>Curios</small>
+              <strong id="profileBalance">0</strong>
+            </div>
+            <div class="profile-stat">
+              <small>Spins</small>
+              <strong id="profileSpins">0</strong>
+            </div>
+            <div class="profile-stat">
+              <small>Erfolge</small>
+              <strong id="profileAchievements">0/0</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inventory-section">
+        <h3>🎒 Inventar</h3>
+        <div class="inventory-list" id="inventoryList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="achievementsModal" onclick="closeModalOutside(event,'achievementsModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>🏆 Erfolge</h2>
+        <button class="modal-close" onclick="closeModal('achievementsModal')">×</button>
+      </div>
+
+      <div class="achievement-grid" id="achievementGrid"></div>
+    </div>
   </div>
 
 
@@ -2912,6 +3311,511 @@ setTimeout(() => {
     "🔍 Sometimes curiosity pays off.";
 
 }, 1800);
+
+
+
+/* =========================================
+   CURIOUS SHOP SYSTEM
+   This section is additive. The original
+   casino/easter-egg functions remain intact.
+========================================= */
+
+const shopItems = [
+  {
+    id:"avatar_caesar",
+    type:"avatar",
+    icon:"👑",
+    name:"Caesar",
+    description:"Ein Avatar für wahre Herrscher.",
+    price:2500
+  },
+  {
+    id:"avatar_skull",
+    type:"avatar",
+    icon:"💀",
+    name:"Skull",
+    description:"Ein bisschen ominöser als nötig.",
+    price:1200
+  },
+  {
+    id:"avatar_alien",
+    type:"avatar",
+    icon:"👽",
+    name:"Alien",
+    description:"Nicht von dieser Welt.",
+    price:1800
+  },
+  {
+    id:"avatar_cat",
+    type:"avatar",
+    icon:"🐱",
+    name:"Lucky Cat",
+    description:"Vielleicht bringt er beim Spin Glück.",
+    price:900
+  },
+  {
+    id:"avatar_diamond",
+    type:"avatar",
+    icon:"💎",
+    name:"Diamond",
+    description:"Für Leute mit teurem Geschmack.",
+    price:3500
+  },
+  {
+    id:"theme_matrix",
+    type:"theme",
+    icon:"🟢",
+    name:"Matrix",
+    description:"Ein grünes digitales Theme.",
+    price:1800
+  },
+  {
+    id:"theme_purple",
+    type:"theme",
+    icon:"🟣",
+    name:"Void Purple",
+    description:"Mystisch und leicht verdächtig.",
+    price:1500
+  },
+  {
+    id:"theme_red",
+    type:"theme",
+    icon:"🔴",
+    name:"Crimson",
+    description:"Rot. Sehr rot.",
+    price:2000
+  },
+  {
+    id:"theme_gold",
+    type:"theme",
+    icon:"✨",
+    name:"Golden Caesar",
+    description:"Goldenes Theme für die Elite.",
+    price:5000
+  },
+  {
+    id:"title_gambler",
+    type:"title",
+    icon:"🎰",
+    name:"Gambler",
+    description:"Du hast eindeutig zu viele Spins.",
+    price:700
+  },
+  {
+    id:"title_lucky",
+    type:"title",
+    icon:"🍀",
+    name:"Glückspilz",
+    description:"Vielleicht stimmt es ja.",
+    price:1400
+  },
+  {
+    id:"title_highroller",
+    type:"title",
+    icon:"💎",
+    name:"High Roller",
+    description:"Du spielst nicht klein.",
+    price:3000
+  },
+  {
+    id:"title_casino",
+    type:"title",
+    icon:"👑",
+    name:"Casino Boss",
+    description:"Der Chef ist da.",
+    price:7500
+  }
+];
+
+const achievements = [
+  {
+    id:"first_spin",
+    icon:"🎰",
+    name:"First Spin",
+    description:"Mach deinen ersten Spin.",
+    check:() => game.spins >= 1
+  },
+  {
+    id:"ten_spins",
+    icon:"🔟",
+    name:"Warmgelaufen",
+    description:"Erreiche 10 Spins.",
+    check:() => game.spins >= 10
+  },
+  {
+    id:"hundred_spins",
+    icon:"💯",
+    name:"Hundertdreher",
+    description:"Erreiche 100 Spins.",
+    check:() => game.spins >= 100
+  },
+  {
+    id:"jackpot",
+    icon:"💰",
+    name:"Jackpot!",
+    description:"Triff einen Jackpot.",
+    check:() => game.jackpots >= 1
+  },
+  {
+    id:"rich",
+    icon:"🤑",
+    name:"Curious Millionaire",
+    description:"Halte mindestens 10.000 Curios.",
+    check:() => game.balance >= 10000
+  },
+  {
+    id:"collector",
+    icon:"🎒",
+    name:"Collector",
+    description:"Besitze mindestens 3 Shop-Items.",
+    check:() => (game.inventory || []).length >= 3
+  },
+  {
+    id:"fashion",
+    icon:"✨",
+    name:"Fashionable",
+    description:"Rüste ein Theme aus.",
+    check:() => !!game.equippedTheme
+  },
+  {
+    id:"easter_hunter",
+    icon:"👁️",
+    name:"Easter Egg Hunter",
+    description:"Entdecke mindestens ein geheimes Easter Egg.",
+    check:() => (game.easterEggsFound || 0) >= 1
+  }
+];
+
+function initShopData() {
+  if (!Array.isArray(game.inventory)) game.inventory = [];
+  if (!Array.isArray(game.achievements)) game.achievements = [];
+  if (typeof game.equippedAvatar !== "string") game.equippedAvatar = "default";
+  if (typeof game.equippedTheme !== "string") game.equippedTheme = "default";
+  if (typeof game.equippedTitle !== "string") game.equippedTitle = "Neugieriger";
+  if (typeof game.easterEggsFound !== "number") game.easterEggsFound = 0;
+}
+
+initShopData();
+saveGame();
+
+function openModal(id) {
+  document.getElementById(id).classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+  if (!document.querySelector(".modal.open")) {
+    document.body.style.overflow = "";
+  }
+}
+
+function closeModalOutside(event,id) {
+  if (event.target.id === id) closeModal(id);
+}
+
+function getShopItem(id) {
+  return shopItems.find(item => item.id === id);
+}
+
+function ownsItem(id) {
+  return (game.inventory || []).includes(id);
+}
+
+function renderShop(filter="all") {
+  const grid = document.getElementById("shopGrid");
+  if (!grid) return;
+
+  const items = filter === "all"
+    ? shopItems
+    : shopItems.filter(item => item.type === filter);
+
+  grid.innerHTML = items.map(item => {
+    const owned = ownsItem(item.id);
+    let action = "";
+
+    if (owned) {
+      const equipped =
+        (item.type === "avatar" && game.equippedAvatar === item.id) ||
+        (item.type === "theme" && game.equippedTheme === item.id) ||
+        (item.type === "title" && game.equippedTitle === item.name);
+
+      action = equipped
+        ? '<div class="owned-label">✓ Ausgerüstet</div>'
+        : `<button onclick="equipItem('${item.id}')">Ausrüsten</button>`;
+    } else {
+      action = `<button onclick="buyItem('${item.id}')">Kaufen</button>`;
+    }
+
+    return `
+      <div class="shop-item ${owned ? "owned" : ""}">
+        <div class="shop-icon">${item.icon}</div>
+        <h3>${item.name}</h3>
+        <p>${item.description}</p>
+        <div class="shop-price">${owned ? "Besitzt du bereits" : item.price + " ◉"}</div>
+        ${action}
+      </div>
+    `;
+  }).join("");
+}
+
+function buyItem(id) {
+  const item = getShopItem(id);
+  if (!item || ownsItem(id)) return;
+
+  if (game.balance < item.price) {
+    showResult("Nicht genug Curios für diesen Kauf. 👀", "lose");
+    showToast("❌ Nicht genug Curios.");
+    return;
+  }
+
+  game.balance -= item.price;
+  game.inventory.push(item.id);
+
+  if (item.type === "avatar" && game.equippedAvatar === "default") {
+    game.equippedAvatar = item.id;
+  }
+
+  if (item.type === "theme" && game.equippedTheme === "default") {
+    game.equippedTheme = item.id;
+    applyShopTheme();
+  }
+
+  if (item.type === "title" && game.equippedTitle === "Neugieriger") {
+    game.equippedTitle = item.name;
+  }
+
+  updateUI();
+  saveGame();
+  checkAchievements();
+
+  showResult("🛒 " + item.name + " freigeschaltet!", "win");
+  showToast("✓ " + item.name + " gekauft!");
+
+  renderShop();
+  updateProfile();
+}
+
+function equipItem(id) {
+  const item = getShopItem(id);
+  if (!item || !ownsItem(id)) return;
+
+  if (item.type === "avatar") {
+    game.equippedAvatar = id;
+  }
+
+  if (item.type === "theme") {
+    game.equippedTheme = id;
+    applyShopTheme();
+  }
+
+  if (item.type === "title") {
+    game.equippedTitle = item.name;
+  }
+
+  saveGame();
+  checkAchievements();
+  renderShop();
+  updateProfile();
+  showToast("✓ " + item.name + " ausgerüstet.");
+}
+
+function applyShopTheme() {
+  document.body.classList.remove("shop-theme-matrix","shop-theme-purple","shop-theme-red","shop-theme-gold");
+
+  const themeMap = {
+    theme_matrix:"shop-theme-matrix",
+    theme_purple:"shop-theme-purple",
+    theme_red:"shop-theme-red",
+    theme_gold:"shop-theme-gold"
+  };
+
+  if (themeMap[game.equippedTheme]) {
+    document.body.classList.add(themeMap[game.equippedTheme]);
+  }
+}
+
+function getCurrentAvatar() {
+  if (game.equippedAvatar === "default") return "🗿";
+  const item = getShopItem(game.equippedAvatar);
+  return item ? item.icon : "🗿";
+}
+
+function getCurrentTitle() {
+  return game.equippedTitle || "Neugieriger";
+}
+
+function openProfile() {
+  updateProfile();
+  openModal("profileModal");
+}
+
+function updateProfile() {
+  const avatar = document.getElementById("profileAvatar");
+  const profileBalance = document.getElementById("profileBalance");
+  const profileSpins = document.getElementById("profileSpins");
+  const profileTitle = document.getElementById("profileTitle");
+  const profileAchievements = document.getElementById("profileAchievements");
+  const inventory = document.getElementById("inventoryList");
+
+  if (!avatar) return;
+
+  avatar.textContent = getCurrentAvatar();
+  profileBalance.textContent = game.balance;
+  profileSpins.textContent = game.spins;
+  profileTitle.textContent = getCurrentTitle();
+
+  const unlocked = achievements.filter(a => game.achievements.includes(a.id)).length;
+  profileAchievements.textContent = unlocked + "/" + achievements.length;
+
+  if (!game.inventory.length) {
+    inventory.innerHTML = '<span class="inventory-chip">Noch keine Shop-Items</span>';
+  } else {
+    inventory.innerHTML = game.inventory.map(id => {
+      const item = getShopItem(id);
+      if (!item) return "";
+      const equipped =
+        (item.type === "avatar" && game.equippedAvatar === id) ||
+        (item.type === "theme" && game.equippedTheme === id) ||
+        (item.type === "title" && game.equippedTitle === item.name);
+
+      return `<span class="inventory-chip ${equipped ? "equipped" : ""}">
+        ${item.icon} ${item.name}${equipped ? " ✓" : ""}
+      </span>`;
+    }).join("");
+  }
+}
+
+function openAchievements() {
+  renderAchievements();
+  openModal("achievementsModal");
+}
+
+function renderAchievements() {
+  const grid = document.getElementById("achievementGrid");
+  if (!grid) return;
+
+  grid.innerHTML = achievements.map(a => {
+    const unlocked = game.achievements.includes(a.id);
+
+    return `
+      <div class="achievement ${unlocked ? "unlocked" : ""}">
+        <div class="achievement-icon">${unlocked ? a.icon : "🔒"}</div>
+        <h3>${unlocked ? a.name : "Geheimnisvoller Erfolg"}</h3>
+        <p>${a.description}</p>
+      </div>
+    `;
+  }).join("");
+}
+
+function checkAchievements() {
+  let changed = false;
+
+  achievements.forEach(a => {
+    if (!game.achievements.includes(a.id) && a.check()) {
+      game.achievements.push(a.id);
+      changed = true;
+
+      showToast("🏆 Erfolg freigeschaltet: " + a.name);
+      createParticles(a.icon);
+    }
+  });
+
+  if (changed) {
+    saveGame();
+    updateProfile();
+    renderAchievements();
+  }
+}
+
+function showToast(message) {
+  const toast = document.getElementById("purchaseToast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.__curiousToastTimer);
+  window.__curiousToastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+}
+
+/* Additive styling for shop themes. Original themes and Easter eggs remain untouched. */
+const shopThemeStyle = document.createElement("style");
+shopThemeStyle.textContent = `
+  body.shop-theme-matrix {
+    --bg:#03130b;
+    --accent:#4ade80;
+  }
+
+  body.shop-theme-purple {
+    --bg:#211132;
+    --accent:#c084fc;
+  }
+
+  body.shop-theme-red {
+    --bg:#250808;
+    --accent:#f87171;
+  }
+
+  body.shop-theme-gold {
+    --bg:#191205;
+    --accent:#facc15;
+  }
+`;
+document.head.appendChild(shopThemeStyle);
+
+/* Keep the original updateUI behavior and add the new UI updates after it. */
+const originalUpdateUI = updateUI;
+
+updateUI = function() {
+  originalUpdateUI();
+  updateProfile();
+  checkAchievements();
+};
+
+/* Count old Easter Eggs as discoveries without changing their effects. */
+const originalCheckSecret = checkSecret;
+
+checkSecret = function(code) {
+  const before = game.easterEggsFound || 0;
+  originalCheckSecret(code);
+
+  /*
+    We only count a code as discovered if it matches one of the
+    existing Easter Egg keywords. No original behavior is replaced.
+  */
+  const known = [
+    "julius","sophie","love","curious","cat","katze",
+    "mirror","dream","404","night","glowup","error","qwe","spotify"
+  ];
+
+  if (known.some(key => code.includes(key))) {
+    if ((game.easterEggsFound || 0) === before) {
+      game.easterEggsFound = before + 1;
+      saveGame();
+      checkAchievements();
+    }
+  }
+};
+
+/* Render initial shop/profile state. */
+applyShopTheme();
+renderShop();
+updateProfile();
+renderAchievements();
+checkAchievements();
+
+/* Close shop modals with Escape. */
+window.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".modal.open").forEach(modal => {
+      modal.classList.remove("open");
+    });
+    document.body.style.overflow = "";
+  }
+});
 
 
 </script>
