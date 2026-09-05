@@ -2275,24 +2275,23 @@ button:disabled {
 .arcade-status.info { color:#67e8f9; }
 
 /* Chicken Road */
-.chicken-road {
-  position:relative; display:grid; grid-template-columns:1fr; gap:8px; padding:14px 10px;
-  border-radius:20px; overflow:hidden; background:linear-gradient(180deg,#08111c,#0a0d14);
-  border:1px solid rgba(103,232,249,.10);
-}
-.chicken-road::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(34,197,94,.04),transparent 18%,rgba(15,23,42,.18) 80%,rgba(250,204,21,.04)); pointer-events:none; }
-.chicken-lane { position:relative; z-index:1; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:7px; min-height:420px; padding:8px; align-items:stretch; }
-.chicken-track { position:relative; min-height:404px; border-radius:13px; overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.055)); border:1px solid rgba(255,255,255,.07); transition:.16s ease; }
-.chicken-track::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(180deg,transparent 0 35px,rgba(255,255,255,.055) 35px 38px,transparent 38px 75px); pointer-events:none; }
-.chicken-track::after { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%); background:repeating-linear-gradient(180deg,rgba(255,255,255,.15) 0 16px,transparent 16px 31px); opacity:.42; pointer-events:none; }
-.chicken-track.active { border-color:rgba(250,204,21,.72); box-shadow:0 0 22px rgba(250,204,21,.11); }
+/* CHICKEN ROAD — chicken crosses from left to right; traffic moves down */
+.chicken-road { position:relative; overflow:hidden; padding:10px; border-radius:18px; background:linear-gradient(180deg,rgba(34,197,94,.035),rgba(15,23,42,.18)); border:1px solid rgba(255,255,255,.07); }
+.chicken-lane { position:relative; z-index:1; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; min-height:420px; padding:8px 0; }
+.chicken-track { position:relative; min-height:420px; overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.055)); border-left:1px solid rgba(255,255,255,.07); border-right:1px solid rgba(255,255,255,.035); }
+.chicken-track::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(180deg,transparent 0 34px,rgba(255,255,255,.045) 34px 37px,transparent 37px 74px); pointer-events:none; }
+.chicken-track::after { content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%); background:repeating-linear-gradient(180deg,rgba(255,255,255,.17) 0 16px,transparent 16px 31px); opacity:.5; pointer-events:none; }
+.chicken-track.active { box-shadow:inset 0 0 0 2px rgba(250,204,21,.3); }
 .chicken-track.danger { animation:chickenDanger .34s ease; }
 .chicken-track.safe-flash { animation:chickenSafe .35s ease; }
-.chicken-track-label { position:absolute; top:7px; left:50%; transform:translateX(-50%); z-index:6; font-size:9px; font-weight:950; color:#71809e; letter-spacing:.14em; }
-.chicken-car { position:absolute; left:50%; z-index:3; font-size:27px; transform:translate(-50%,-60px) rotate(90deg); will-change:top; pointer-events:none; filter:drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
-.chicken-player { position:absolute; left:50%; bottom:12px; z-index:8; font-size:35px; transform:translate(-50%,0); filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); transition:left .22s ease,bottom .34s cubic-bezier(.2,.8,.2,1); pointer-events:none; }
+.chicken-track-label { position:absolute; top:7px; left:50%; transform:translateX(-50%); z-index:6; font-size:9px; font-weight:950; color:#71809e; letter-spacing:.14em; white-space:nowrap; }
+.chicken-car { position:absolute; left:50%; z-index:3; font-size:27px; transform:translate(-50%,-50%) rotate(90deg); will-change:top; pointer-events:none; filter:drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
+.chicken-player { position:absolute; left:24px; bottom:18%; z-index:10; font-size:35px; transform:translate(-50%,50%); filter:drop-shadow(0 0 12px rgba(250,204,21,.35)); transition:left .34s cubic-bezier(.2,.8,.2,1); pointer-events:none; }
 .chicken-player.move { animation:chickenHop .34s cubic-bezier(.2,.8,.2,1); }
-@keyframes chickenHop { 0%{transform:translate(-50%,8px) scale(.9)} 55%{transform:translate(-50%,-17px) scale(1.08)} 100%{transform:translate(-50%,0) scale(1)} }
+.chicken-finish { position:absolute; right:7px; top:8px; z-index:7; font-size:18px; opacity:.75; }
+.chicken-startline { position:absolute; left:0; top:0; bottom:0; width:3px; background:rgba(74,222,128,.45); z-index:5; }
+.chicken-finishline { position:absolute; right:0; top:0; bottom:0; width:4px; background:repeating-linear-gradient(180deg,#fff 0 12px,#111 12px 24px); opacity:.7; z-index:5; }
+.chicken-road-labels { display:flex; justify-content:space-between; color:#59657e; font-size:10px; text-transform:uppercase; letter-spacing:.16em; padding:0 5px; }
 @keyframes chickenDanger { 50%{box-shadow:0 0 30px rgba(248,113,113,.72); border-color:rgba(248,113,113,.95)} }
 @keyframes chickenSafe { 50%{box-shadow:0 0 25px rgba(74,222,128,.45); border-color:rgba(74,222,128,.8)} }
 .chicken-finish { position:absolute; top:7px; right:7px; z-index:5; font-size:21px; opacity:.85; }
@@ -3656,16 +3655,15 @@ button:disabled {
 
         <div class="chicken-road" id="chickenRoad">
           <div class="chicken-lane" id="chickenLane"></div>
-          <div class="chicken-road-labels"><span>START</span><span>5 SPUREN · AUTOS FAHREN DURCH</span><span>FINISH</span></div>
+          <div class="chicken-road-labels"><span>START 🐔</span><span>5 STRASSEN · AUTOS FAHREN NACH UNTEN</span><span>FINISH 🏁</span></div>
         </div>
 
-        <div class="chicken-lane-buttons" id="chickenLaneButtons" aria-label="Spur wählen"></div>
         <div class="chicken-controls">
           <button class="arcade-action start" id="chickenStartButton" onclick="chickenStart()">🐔 START</button>
-          <button class="arcade-action continue chicken-move-btn" id="chickenContinueButton" onclick="chickenContinue()" disabled>⬆️ VORWÄRTS</button>
+          <button class="arcade-action continue chicken-move-btn" id="chickenContinueButton" onclick="chickenContinue()" disabled>➡️ WEITER</button>
           <button class="arcade-action cash" id="chickenCashButton" onclick="chickenCashOut()" disabled>CASH OUT</button>
         </div>
-        <div class="arcade-status" id="chickenStatus">Bereit. Wähle nach dem Start deine Spur und bring das Chicken Schritt für Schritt nach oben.</div>
+        <div class="arcade-status" id="chickenStatus">Bereit. Das Chicken startet ganz links und läuft Straße für Straße nach rechts. Timing entscheidet.</div>
       </div>
     </section>
 
@@ -9271,11 +9269,10 @@ spinRoulette = function() {
 ========================================= */
 const chickenMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00];
 const chickenLaneCount = 5;
-const chickenRows = 6;
+const chickenRoadHeight = 420;
 let chickenInRound = false;
 let chickenStep = 0;
 let chickenBetValue = 10;
-let chickenLaneIndex = 2;
 let chickenCarsState = [];
 let chickenAnimationFrame = null;
 let chickenLastFrame = 0;
@@ -9285,48 +9282,54 @@ const chickenCarTypes = ["🚗","🚙","🚕","🚓","🏎️"];
 function chickenSpawnCars() {
   chickenCarsState = [];
   for (let lane=0; lane<chickenLaneCount; lane++) {
-    const count = 2 + (Math.random() < .55 ? 1 : 0);
+    const count = 2 + (Math.random() < .75 ? 1 : 0);
     for (let n=0; n<count; n++) {
       chickenCarsState.push({
         lane,
-        y: -80 - n*145 - Math.random()*160,
-        speed: 75 + Math.random()*95,
-        type: chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)],
-        phase: Math.random()*Math.PI*2
+        y: -80 - n*145 - Math.random()*110,
+        speed: 70 + Math.random()*105,
+        type: chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)]
       });
     }
   }
+}
+
+function chickenPlayerX() {
+  const road = document.getElementById("chickenRoad");
+  const width = road ? road.clientWidth : 700;
+  const left = 24;
+  const right = Math.max(24,width-24);
+  return left + (right-left) * (chickenStep / chickenLaneCount);
 }
 
 function chickenRender() {
   const lane = document.getElementById("chickenLane");
   if (!lane) return;
   lane.innerHTML = "";
-  for (let i=0;i<chickenLaneCount;i++) {
+
+  for (let i=0; i<chickenLaneCount; i++) {
     const track = document.createElement("div");
-    track.className = "chicken-track" + (i === chickenLaneIndex ? " active" : "");
+    track.className = "chicken-track" + (chickenStep === i ? " active" : "");
     track.dataset.lane = i;
 
     const label = document.createElement("span");
     label.className = "chicken-track-label";
-    label.textContent = String.fromCharCode(65+i);
+    label.textContent = `STRASSE ${i+1}`;
     track.appendChild(label);
 
-    const finish = document.createElement("span");
-    finish.className = "chicken-finish";
-    finish.textContent = "🏁";
-    track.appendChild(finish);
-
-    const startLine = document.createElement("span");
-    startLine.className = "chicken-startline";
-    track.appendChild(startLine);
-
-    if (i === chickenLaneIndex) {
-      const chicken = document.createElement("span");
-      chicken.className = "chicken-player" + (chickenStep > 0 ? " move" : "");
-      chicken.textContent = "🐔";
-      chicken.style.bottom = `${12 + chickenStep * 60}px`;
-      track.appendChild(chicken);
+    if (i === 0) {
+      const startLine = document.createElement("span");
+      startLine.className = "chicken-startline";
+      track.appendChild(startLine);
+    }
+    if (i === chickenLaneCount-1) {
+      const finishLine = document.createElement("span");
+      finishLine.className = "chicken-finishline";
+      track.appendChild(finishLine);
+      const finish = document.createElement("span");
+      finish.className = "chicken-finish";
+      finish.textContent = "🏁";
+      track.appendChild(finish);
     }
     lane.appendChild(track);
   }
@@ -9342,25 +9345,15 @@ function chickenRender() {
     track.appendChild(el);
   });
 
+  const chicken = document.createElement("span");
+  chicken.className = "chicken-player" + (chickenStep > 0 ? " move" : "");
+  chicken.textContent = "🐔";
+  chicken.style.left = `${chickenPlayerX()}px`;
+  lane.appendChild(chicken);
+
   const mult = chickenStep > 0 ? chickenMultipliers[Math.min(chickenStep-1,chickenMultipliers.length-1)] : 1;
   const multEl = document.getElementById("chickenMultiplier");
   if (multEl) multEl.textContent = chickenFormatMultiplier(mult);
-  chickenRenderLaneButtons();
-}
-
-function chickenRenderLaneButtons() {
-  const wrap = document.getElementById("chickenLaneButtons");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-  for (let i=0;i<chickenLaneCount;i++) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "chicken-lane-btn" + (i === chickenLaneIndex ? " active" : "");
-    btn.textContent = `SPUR ${String.fromCharCode(65+i)}`;
-    btn.disabled = !chickenInRound;
-    btn.onclick = () => chickenSelectLane(i);
-    wrap.appendChild(btn);
-  }
 }
 
 function chickenClampBet(input) {
@@ -9379,32 +9372,25 @@ function chickenSetButtons() {
   const bet = document.getElementById("chickenBet");
   if (start) start.disabled = active;
   if (bet) bet.disabled = active;
-  if (cont) cont.disabled = !active || chickenStep >= chickenMultipliers.length;
+  if (cont) cont.disabled = !active || chickenStep >= chickenLaneCount;
   if (cash) cash.disabled = !active || chickenStep <= 0;
-  chickenRenderLaneButtons();
-}
-
-function chickenSelectLane(index) {
-  if (!chickenInRound || index < 0 || index >= chickenLaneCount) return;
-  chickenLaneIndex = index;
-  document.querySelectorAll(".chicken-track").forEach((el,i) => el.classList.toggle("active",i===index));
-  chickenRender();
-  chickenSetStatus(`Spur ${String.fromCharCode(65+index)} gewählt. Jetzt den richtigen Moment abpassen und VORWÄRTS drücken.`,"info");
 }
 
 function chickenStartTraffic() {
   if (chickenAnimationFrame) cancelAnimationFrame(chickenAnimationFrame);
   chickenLastFrame = performance.now();
+  const round = chickenRoundId;
   const tick = (now) => {
-    if (!chickenInRound || chickenRoundId === 0) return;
+    if (!chickenInRound || chickenRoundId !== round) return;
     const dt = Math.min(.05,(now-chickenLastFrame)/1000);
     chickenLastFrame = now;
     const lane = document.getElementById("chickenLane");
+    const height = lane?.clientHeight || chickenRoadHeight;
     chickenCarsState.forEach((car,index) => {
       car.y += car.speed * dt;
-      if (car.y > 440) {
-        car.y = -60 - Math.random()*150;
-        car.speed = 75 + Math.random()*95;
+      if (car.y > height + 55) {
+        car.y = -80 - Math.random()*170;
+        car.speed = 70 + Math.random()*105;
         car.type = chickenCarTypes[Math.floor(Math.random()*chickenCarTypes.length)];
       }
       const el = lane?.querySelector(`.chicken-car[data-car-index="${index}"]`);
@@ -9420,10 +9406,11 @@ function chickenStopTraffic() {
   chickenAnimationFrame = null;
 }
 
-function chickenIsLaneBlocked() {
-  // The chicken crosses the next 60px segment now. Cars in that segment cause a crash.
-  const chickenY = 12 + chickenStep * 60;
-  return chickenCarsState.some(car => car.lane === chickenLaneIndex && car.y > chickenY-42 && car.y < chickenY+34);
+function chickenIsRoadBlocked(roadIndex) {
+  const lane = document.getElementById("chickenLane");
+  const height = lane?.clientHeight || chickenRoadHeight;
+  const crossingY = height * .82;
+  return chickenCarsState.some(car => car.lane === roadIndex && car.y > crossingY - 36 && car.y < crossingY + 36);
 }
 
 function chickenStart() {
@@ -9437,10 +9424,9 @@ function chickenStart() {
   game.chickenRounds += 1;
   chickenInRound = true;
   chickenStep = 0;
-  chickenLaneIndex = 2;
   chickenRoundId += 1;
   chickenSpawnCars();
-  chickenSetStatus("🚦 RUN! Das Chicken steht unten und der Verkehr läuft permanent. Wähle A–E und drücke VORWÄRTS, um eine Straße nach oben zu überqueren.","info");
+  chickenSetStatus("🚦 START! Das Chicken ist ganz links. Warte auf eine Lücke und drücke WEITER, damit es die erste Straße nach rechts überquert.","info");
   chickenRender();
   chickenSetButtons();
   chickenStartTraffic();
@@ -9449,13 +9435,14 @@ function chickenStart() {
 }
 
 function chickenContinue() {
-  if (!chickenInRound || chickenStep >= chickenMultipliers.length) return;
+  if (!chickenInRound || chickenStep >= chickenLaneCount) return;
+  const nextRoad = chickenStep;
 
-  if (chickenIsLaneBlocked()) {
+  if (chickenIsRoadBlocked(nextRoad)) {
     chickenInRound = false;
-    const danger = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
+    const danger = document.querySelector(`.chicken-track[data-lane="${nextRoad}"]`);
     if (danger) danger.classList.add("danger");
-    chickenSetStatus("💥 CRASH! Das Chicken ist beim Überqueren von Spur " + String.fromCharCode(65+chickenLaneIndex) + " mit einem Auto kollidiert. Einsatz verloren.","lose");
+    chickenSetStatus(`💥 CRASH! Das Chicken wurde auf Straße ${nextRoad+1} erwischt. Einsatz verloren.`,"lose");
     chickenStopTraffic();
     chickenSetButtons();
     chickenRender();
@@ -9463,7 +9450,7 @@ function chickenContinue() {
     return;
   }
 
-  const safe = document.querySelector(`.chicken-track[data-lane="${chickenLaneIndex}"]`);
+  const safe = document.querySelector(`.chicken-track[data-lane="${nextRoad}"]`);
   if (safe) { safe.classList.remove("safe-flash"); void safe.offsetWidth; safe.classList.add("safe-flash"); }
 
   chickenStep += 1;
@@ -9471,15 +9458,15 @@ function chickenContinue() {
   game.chickenBestMultiplier = Math.max(game.chickenBestMultiplier, mult);
   chickenRender();
 
-  if (chickenStep >= chickenMultipliers.length) {
-    chickenSetStatus(`🏁 FINISH! Das Chicken hat die Straße geschafft: ${chickenFormatMultiplier(mult)}. Du kannst auszahlen oder noch nichts mehr riskieren.`,"win");
+  if (chickenStep >= chickenLaneCount) {
+    chickenSetStatus(`🏁 FINISH! Das Chicken ist ganz rechts angekommen: ${chickenFormatMultiplier(mult)}. Jetzt kannst du auszahlen.`,"win");
     chickenSetButtons();
     chickenStopTraffic();
     arcadeSaveAndRefresh();
     return;
   }
 
-  chickenSetStatus(`🐔 Schritt ${chickenStep}/${chickenMultipliers.length} geschafft — ${chickenFormatMultiplier(mult)}. Wechsel jetzt bei Bedarf die Spur und warte auf eine echte Lücke.`,"win");
+  chickenSetStatus(`🐔 Straße ${chickenStep}/${chickenLaneCount} geschafft — ${chickenFormatMultiplier(mult)}. Die nächste Straße liegt rechts.`,`win`);
   chickenSetButtons();
   arcadeSaveAndRefresh();
 }
@@ -9496,326 +9483,6 @@ function chickenCashOut() {
   chickenSetButtons();
   chickenRender();
   createParticles("🐔");
-  arcadeSaveAndRefresh();
-}
-
-/* =========================================
-   TOWER
-========================================= */
-const towerMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00,12.00,20.00,35.00,50.00];
-let towerInRound = false;
-let towerFloor = 0;
-let towerSafePath = 0;
-let towerLastPath = 1;
-let towerBetValue = 10;
-
-function towerSetStatus(text,type="") {
-  const el = document.getElementById("towerStatus");
-  if (!el) return;
-  el.className = `arcade-status${type ? " "+type : ""}`;
-  el.textContent = text;
-}
-
-function towerRender() {
-  const progress = document.getElementById("towerProgress");
-  if (progress) {
-    progress.innerHTML = "";
-    for (let i=1;i<=10;i++) {
-      const floor = document.createElement("div");
-      floor.className = "tower-floor" + (i <= towerFloor ? " done" : "") + (i === towerFloor+1 && towerInRound ? " current" : "");
-      floor.textContent = `F${i}`;
-      progress.appendChild(floor);
-    }
-  }
-
-  const mult = towerFloor > 0 ? towerMultipliers[towerFloor-1] : 1;
-  document.getElementById("towerMultiplier").textContent = towerFormatMultiplier(mult);
-  document.getElementById("towerFloorCaption").textContent = `Floor ${towerFloor} / 10`;
-  const sky = document.getElementById("towerSky");
-  if (sky) sky.textContent = towerFloor >= 10 ? "👑" : towerFloor >= 6 ? "🏯" : "🏰";
-
-  const player = document.getElementById("towerPlayer");
-  if (player) {
-    player.classList.remove("path-a","path-b","path-c");
-    const selectedPath = towerSafePath === -1 ? towerLastPath : towerSafePath;
-    player.classList.add(selectedPath === 0 ? "path-a" : selectedPath === 2 ? "path-c" : "path-b");
-    player.style.bottom = `${18 + Math.min(towerFloor,10) * 19}px`;
-    player.classList.toggle("climb", towerFloor > 0);
-  }
-}
-
-function towerFormatMultiplier(value) {
-  return `×${Number(value).toFixed(2)}`;
-}
-
-function towerSetPaths(enabled) {
-  ["towerPathA","towerPathB","towerPathC"].forEach(id => {
-    const button = document.getElementById(id);
-    if (button) button.disabled = !enabled;
-  });
-}
-
-function towerSetButtons() {
-  const start = document.getElementById("towerStartButton");
-  const cont = document.getElementById("towerContinueButton");
-  const cash = document.getElementById("towerCashButton");
-  const bet = document.getElementById("towerBet");
-  if (start) start.disabled = towerInRound;
-  if (bet) bet.disabled = towerInRound;
-  if (cont) cont.disabled = !towerInRound || towerFloor <= 0 || towerFloor >= 10 || towerSafePath !== -1;
-  if (cash) cash.disabled = !towerInRound || towerFloor <= 0;
-}
-
-function towerClampBet(input) {
-  let value = parseInt(input?.value,10);
-  if (!Number.isFinite(value)) value = 10;
-  value = Math.max(10, Math.min(1000, Math.floor(value/10)*10));
-  if (input) input.value = value;
-  return value;
-}
-
-function towerStart() {
-  if (towerInRound) return;
-  towerBetValue = towerClampBet(document.getElementById("towerBet"));
-  if (game.balance < towerBetValue) {
-    towerSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
-    return;
-  }
-
-  game.balance -= towerBetValue;
-  game.towerRounds += 1;
-  towerInRound = true;
-  towerFloor = 0;
-  towerSafePath = Math.floor(Math.random()*3);
-  towerLastPath = towerSafePath;
-  towerSetStatus("Wähle deinen Weg auf Floor 1.","info");
-  towerRender();
-  towerSetPaths(true);
-  towerSetButtons();
-  arcadeRegisterPlayedRound("tower");
-  arcadeSaveAndRefresh();
-}
-
-function towerChoose(pathIndex) {
-  if (!towerInRound || towerSafePath === -1 || towerFloor >= 10) return;
-  towerLastPath = pathIndex;
-
-  if (pathIndex !== towerSafePath) {
-    towerInRound = false;
-    towerSetPaths(false);
-    towerSetStatus(`💥 Falscher Weg. Floor ${towerFloor+1} war nicht sicher. LOSS.`,"lose");
-    towerSetButtons();
-    arcadeSaveAndRefresh();
-    return;
-  }
-
-  towerFloor += 1;
-  towerSafePath = -1;
-  game.towerBestFloor = Math.max(game.towerBestFloor, towerFloor);
-  towerRender();
-  const sky = document.getElementById("towerSky");
-  if (sky) {
-    sky.classList.remove("climb");
-    void sky.offsetWidth;
-    sky.classList.add("climb");
-  }
-
-  if (towerFloor >= 10) {
-    towerSetStatus("👑 Summit erreicht! ×50.00 — CASH OUT.","win");
-  } else {
-    towerSetStatus(`✅ Floor ${towerFloor} geschafft — ${towerFormatMultiplier(towerMultipliers[towerFloor-1])}. CONTINUE oder CASH OUT.`,"win");
-  }
-  towerSetPaths(false);
-  towerSetButtons();
-  arcadeSaveAndRefresh();
-}
-
-function towerContinue() {
-  if (!towerInRound || towerFloor <= 0 || towerFloor >= 10 || towerSafePath !== -1) return;
-  towerSafePath = Math.floor(Math.random()*3);
-  towerLastPath = towerSafePath;
-  towerSetStatus(`Floor ${towerFloor+1}: Wähle A, B oder C.`,"info");
-  towerSetPaths(true);
-  towerSetButtons();
-}
-
-function towerCashOut() {
-  if (!towerInRound || towerFloor <= 0) return;
-  const multiplier = towerMultipliers[towerFloor-1];
-  const payout = Math.floor(towerBetValue * multiplier);
-  game.balance += payout;
-  game.biggestWin = Math.max(game.biggestWin || 0, payout);
-  towerInRound = false;
-  towerSafePath = 0;
-  towerLastPath = 1;
-  towerSetPaths(false);
-  towerSetStatus(`💰 CASH OUT: +${payout} Curios bei ${towerFormatMultiplier(multiplier)}.`,"win");
-  towerSetButtons();
-  towerRender();
-  createParticles("🪜");
-  arcadeSaveAndRefresh();
-}
-
-/* =========================================
-   MINES
-========================================= */
-let minesInRound = false;
-let minesBetValue = 10;
-let minesCountValue = 5;
-let minesSet = new Set();
-let minesRevealed = new Set();
-
-function minesSetStatus(text,type="") {
-  const el = document.getElementById("minesStatus");
-  if (!el) return;
-  el.className = `arcade-status${type ? " "+type : ""}`;
-  el.textContent = text;
-}
-
-function minesClampBet(input) {
-  let value = parseInt(input?.value,10);
-  if (!Number.isFinite(value)) value = 10;
-  value = Math.max(10, Math.min(1000, Math.floor(value/10)*10));
-  if (input) input.value = value;
-  return value;
-}
-
-function minesMultiplierForSafe(safe, mineCount) {
-  if (safe <= 0) return 1;
-  const mineFactor = 0.105 + mineCount * 0.018;
-  const value = 1 + safe * mineFactor + safe * safe * 0.008;
-  return Math.min(50, Number(value.toFixed(2)));
-}
-
-function minesRenderBoard(revealAll=false) {
-  const board = document.getElementById("minesBoard");
-  if (!board) return;
-  board.innerHTML = "";
-  for (let i=0;i<25;i++) {
-    const button = document.createElement("button");
-    button.className = "mine-cell";
-    button.type = "button";
-    const isMine = minesSet.has(i);
-    const revealed = minesRevealed.has(i);
-
-    if (revealed || revealAll) {
-      button.disabled = true;
-      if (isMine) {
-        button.classList.add("mine");
-        button.textContent = "💣";
-      } else {
-        button.classList.add("revealed");
-        button.textContent = "💎";
-      }
-    } else if (!minesInRound) {
-      button.disabled = true;
-      button.textContent = "?";
-    } else {
-      button.textContent = "";
-      button.setAttribute("aria-label",`Mines-Feld ${i+1}`);
-      button.onclick = () => minesReveal(i);
-    }
-    board.appendChild(button);
-  }
-
-  const safe = minesRevealed.size;
-  const mult = minesMultiplierForSafe(safe,minesCountValue);
-  document.getElementById("minesMultiplier").textContent = `×${mult.toFixed(2)}`;
-  document.getElementById("minesSafeDisplay").textContent = safe;
-  document.getElementById("minesCountDisplay").textContent = minesCountValue;
-  document.getElementById("minesPayoutDisplay").textContent = `${safe ? Math.floor(minesBetValue*mult) : 0} ◉`;
-}
-
-function minesPlaceMines() {
-  minesSet = new Set();
-  while (minesSet.size < minesCountValue) {
-    minesSet.add(Math.floor(Math.random()*25));
-  }
-}
-
-function minesSetButtons() {
-  const start = document.getElementById("minesStartButton");
-  const cash = document.getElementById("minesCashButton");
-  const bet = document.getElementById("minesBet");
-  const count = document.getElementById("minesCount");
-  if (start) start.disabled = minesInRound;
-  if (cash) cash.disabled = !minesInRound || minesRevealed.size <= 0;
-  if (bet) bet.disabled = minesInRound;
-  if (count) count.disabled = minesInRound;
-}
-
-function minesStart() {
-  if (minesInRound) return;
-  minesBetValue = minesClampBet(document.getElementById("minesBet"));
-  minesCountValue = parseInt(document.getElementById("minesCount")?.value,10) || 5;
-  minesCountValue = [1,3,5,10,15].includes(minesCountValue) ? minesCountValue : 5;
-
-  if (game.balance < minesBetValue) {
-    minesSetStatus("Nicht genug Curios für diesen Einsatz.","lose");
-    return;
-  }
-
-  game.balance -= minesBetValue;
-  game.minesRounds += 1;
-  minesInRound = true;
-  minesRevealed = new Set();
-  minesPlaceMines();
-  minesSetStatus("Das Feld ist aktiv. Wähle ein Feld.","info");
-  minesRenderBoard();
-  minesSetButtons();
-  arcadeRegisterPlayedRound("mines");
-  arcadeSaveAndRefresh();
-}
-
-function minesReveal(index) {
-  if (!minesInRound || minesRevealed.has(index)) return;
-
-  if (minesSet.has(index)) {
-    minesInRound = false;
-    minesRevealed.add(index);
-    minesRenderBoard(true);
-    minesSetStatus("💣 MINE! LOSS — Einsatz verloren.","lose");
-    minesSetButtons();
-    arcadeSaveAndRefresh();
-    return;
-  }
-
-  minesRevealed.add(index);
-  const safe = minesRevealed.size;
-  const multiplier = minesMultiplierForSafe(safe,minesCountValue);
-  game.minesBestSafe = Math.max(game.minesBestSafe, safe);
-  minesRenderBoard();
-
-  const safeTotal = 25 - minesCountValue;
-  if (safe >= safeTotal) {
-    const payout = Math.floor(minesBetValue * multiplier);
-    game.balance += payout;
-    game.biggestWin = Math.max(game.biggestWin || 0,payout);
-    minesInRound = false;
-    minesRenderBoard(true);
-    minesSetStatus(`💎 ALLE sicheren Felder! +${payout} Curios bei ×${multiplier.toFixed(2)}.`,"win");
-    minesSetButtons();
-    createParticles("💎");
-    arcadeSaveAndRefresh();
-    return;
-  }
-
-  minesSetStatus(`💎 Sicher! ${safe} Feld${safe === 1 ? "" : "er"} aufgedeckt — ×${multiplier.toFixed(2)}.`,"win");
-  minesSetButtons();
-  arcadeSaveAndRefresh();
-}
-
-function minesCashOut() {
-  if (!minesInRound || minesRevealed.size <= 0) return;
-  const multiplier = minesMultiplierForSafe(minesRevealed.size,minesCountValue);
-  const payout = Math.floor(minesBetValue * multiplier);
-  game.balance += payout;
-  game.biggestWin = Math.max(game.biggestWin || 0,payout);
-  minesInRound = false;
-  minesRenderBoard();
-  minesSetStatus(`💰 CASH OUT: +${payout} Curios bei ×${multiplier.toFixed(2)}.`,"win");
-  minesSetButtons();
-  createParticles("💎");
   arcadeSaveAndRefresh();
 }
 
@@ -9898,6 +9565,44 @@ updateProfile();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
