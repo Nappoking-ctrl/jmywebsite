@@ -2338,6 +2338,24 @@ button:disabled {
 .tower-floor { height:31px; border-radius:8px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.035); color:#647089; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; transition:.25s ease; }
 .tower-floor.done { background:rgba(192,132,252,.13); border-color:rgba(192,132,252,.4); color:#e9d5ff; box-shadow:0 0 15px rgba(192,132,252,.08); }
 .tower-floor.current { border-color:rgba(103,232,249,.45); color:#67e8f9; box-shadow:0 0 20px rgba(56,189,248,.08); }
+.tower-scene { position:relative; min-height:300px; flex:1; overflow:hidden; border-radius:16px; background:radial-gradient(circle at 50% 18%,rgba(139,92,246,.16),transparent 42%),linear-gradient(180deg,rgba(15,23,42,.35),rgba(2,6,23,.72)); border:1px solid rgba(255,255,255,.06); }
+.tower-building { position:absolute; left:50%; bottom:28px; transform:translateX(-50%); width:min(42%,230px); height:245px; display:flex; flex-direction:column; align-items:center; }
+.tower-roof { font-size:40px; line-height:1; margin-bottom:4px; filter:drop-shadow(0 0 15px rgba(192,132,252,.25)); }
+.tower-levels { width:100%; height:205px; display:flex; flex-direction:column; justify-content:space-between; }
+.tower-level { position:relative; height:17px; margin:0 14px; border-radius:5px; background:linear-gradient(90deg,rgba(99,102,241,.16),rgba(192,132,252,.25),rgba(99,102,241,.16)); border:1px solid rgba(192,132,252,.2); box-shadow:0 0 10px rgba(129,140,248,.05); }
+.tower-level span { position:absolute; left:-24px; top:1px; color:#66738f; font-size:8px; font-weight:900; }
+.tower-level.done { border-color:rgba(103,232,249,.42); background:rgba(103,232,249,.13); box-shadow:0 0 14px rgba(103,232,249,.1); }
+.tower-level.current { border-color:rgba(192,132,252,.75); box-shadow:0 0 18px rgba(192,132,252,.22); }
+.tower-route { position:absolute; bottom:18px; width:34%; height:235px; opacity:.8; border-top:2px solid rgba(103,232,249,.25); border-radius:50% 50% 0 0; pointer-events:none; }
+.tower-route-a { left:5%; transform:skewY(-13deg); border-left:2px solid rgba(103,232,249,.18); }
+.tower-route-b { left:33%; height:250px; border-left:2px solid rgba(192,132,252,.22); }
+.tower-route-c { right:5%; transform:skewY(13deg); border-right:2px solid rgba(103,232,249,.18); }
+.tower-player { position:absolute; left:50%; bottom:18px; transform:translateX(-50%); font-size:31px; z-index:5; transition:left .35s ease,bottom .35s ease,transform .35s ease; filter:drop-shadow(0 0 12px rgba(255,255,255,.25)); }
+.tower-player.path-a { left:18%; }
+.tower-player.path-b { left:50%; }
+.tower-player.path-c { left:82%; }
+.tower-player.climb { animation:towerPlayerClimb .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes towerPlayerClimb { 0%{transform:translateX(-50%) translateY(12px);opacity:.45} 60%{transform:translateX(-50%) translateY(-10px);opacity:1} 100%{transform:translateX(-50%) translateY(0)} }
 .tower-main { min-height:390px; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; border-radius:20px; background:linear-gradient(180deg,rgba(30,41,59,.24),rgba(7,10,20,.65)); border:1px solid rgba(255,255,255,.07); overflow:hidden; }
 .tower-sky { flex:1; display:flex; align-items:center; justify-content:center; font-size:54px; filter:drop-shadow(0 0 22px rgba(192,132,252,.18)); }
 .tower-sky.climb { animation:towerClimb .55s cubic-bezier(.2,.8,.2,1); }
@@ -3700,6 +3718,27 @@ button:disabled {
         <div class="tower-wrap">
           <div class="tower-progress" id="towerProgress"></div>
           <div class="tower-main">
+            <div class="tower-scene" id="towerScene">
+              <div class="tower-building" aria-hidden="true">
+                <div class="tower-roof">🏰</div>
+                <div class="tower-levels">
+                  <div class="tower-level" data-level="10"><span>10</span></div>
+                  <div class="tower-level" data-level="9"><span>9</span></div>
+                  <div class="tower-level" data-level="8"><span>8</span></div>
+                  <div class="tower-level" data-level="7"><span>7</span></div>
+                  <div class="tower-level" data-level="6"><span>6</span></div>
+                  <div class="tower-level" data-level="5"><span>5</span></div>
+                  <div class="tower-level" data-level="4"><span>4</span></div>
+                  <div class="tower-level" data-level="3"><span>3</span></div>
+                  <div class="tower-level" data-level="2"><span>2</span></div>
+                  <div class="tower-level" data-level="1"><span>1</span></div>
+                </div>
+              </div>
+              <div class="tower-route tower-route-a"></div>
+              <div class="tower-route tower-route-b"></div>
+              <div class="tower-route tower-route-c"></div>
+              <div class="tower-player" id="towerPlayer">🧙</div>
+            </div>
             <div class="tower-sky" id="towerSky">🏰</div>
             <div class="tower-floor-caption" id="towerFloorCaption">Floor 0 / 10</div>
             <div class="tower-paths">
@@ -9344,7 +9383,7 @@ function chickenStart() {
 }
 
 function chickenContinue() {
-  if (!chickenInRound || chickenStep <= 0 || chickenStep >= chickenMultipliers.length) return;
+  if (!chickenInRound || chickenStep >= chickenMultipliers.length) return;
 
   const stepIndex = chickenStep;
   const hitChance = Math.min(0.52, 0.14 + stepIndex * 0.065);
@@ -9395,6 +9434,7 @@ const towerMultipliers = [1.20,1.50,2.00,3.00,5.00,8.00,12.00,20.00,35.00,50.00]
 let towerInRound = false;
 let towerFloor = 0;
 let towerSafePath = 0;
+let towerLastPath = 1;
 let towerBetValue = 10;
 
 function towerSetStatus(text,type="") {
@@ -9421,6 +9461,15 @@ function towerRender() {
   document.getElementById("towerFloorCaption").textContent = `Floor ${towerFloor} / 10`;
   const sky = document.getElementById("towerSky");
   if (sky) sky.textContent = towerFloor >= 10 ? "👑" : towerFloor >= 6 ? "🏯" : "🏰";
+
+  const player = document.getElementById("towerPlayer");
+  if (player) {
+    player.classList.remove("path-a","path-b","path-c");
+    const selectedPath = towerSafePath === -1 ? towerLastPath : towerSafePath;
+    player.classList.add(selectedPath === 0 ? "path-a" : selectedPath === 2 ? "path-c" : "path-b");
+    player.style.bottom = `${18 + Math.min(towerFloor,10) * 19}px`;
+    player.classList.toggle("climb", towerFloor > 0);
+  }
 }
 
 function towerFormatMultiplier(value) {
@@ -9466,6 +9515,7 @@ function towerStart() {
   towerInRound = true;
   towerFloor = 0;
   towerSafePath = Math.floor(Math.random()*3);
+  towerLastPath = towerSafePath;
   towerSetStatus("Wähle deinen Weg auf Floor 1.","info");
   towerRender();
   towerSetPaths(true);
@@ -9476,6 +9526,7 @@ function towerStart() {
 
 function towerChoose(pathIndex) {
   if (!towerInRound || towerSafePath === -1 || towerFloor >= 10) return;
+  towerLastPath = pathIndex;
 
   if (pathIndex !== towerSafePath) {
     towerInRound = false;
@@ -9510,6 +9561,7 @@ function towerChoose(pathIndex) {
 function towerContinue() {
   if (!towerInRound || towerFloor <= 0 || towerFloor >= 10 || towerSafePath !== -1) return;
   towerSafePath = Math.floor(Math.random()*3);
+  towerLastPath = towerSafePath;
   towerSetStatus(`Floor ${towerFloor+1}: Wähle A, B oder C.`,"info");
   towerSetPaths(true);
   towerSetButtons();
@@ -9523,6 +9575,7 @@ function towerCashOut() {
   game.biggestWin = Math.max(game.biggestWin || 0, payout);
   towerInRound = false;
   towerSafePath = 0;
+  towerLastPath = 1;
   towerSetPaths(false);
   towerSetStatus(`💰 CASH OUT: +${payout} Curios bei ${towerFormatMultiplier(multiplier)}.`,"win");
   towerSetButtons();
@@ -9773,6 +9826,44 @@ updateProfile();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
