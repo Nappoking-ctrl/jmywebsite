@@ -243,19 +243,18 @@ h1:hover {
 ========================================= */
 
 .slots {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  display: flex;
 
-  width: 100%;
-  max-width: 680px;
+  justify-content: center;
+
+  gap: 12px;
+
   margin: 15px auto 25px;
 }
 
 .slot {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 115px;
+  height: 135px;
 
   display: flex;
 
@@ -277,7 +276,7 @@ h1:hover {
     inset 0 0 30px rgba(0,0,0,.7),
     0 10px 30px rgba(0,0,0,.25);
 
-  font-size: clamp(30px, 5vw, 54px);
+  font-size: 66px;
 
   user-select: none;
 
@@ -783,13 +782,14 @@ button:disabled {
   }
 
   .slots {
-    gap: 6px;
-    max-width: 100%;
+    gap: 7px;
   }
 
   .slot {
-    font-size: clamp(24px, 7vw, 42px);
-    border-radius: 12px;
+    width: 90px;
+    height: 110px;
+
+    font-size: 50px;
   }
 
   .casino {
@@ -927,31 +927,17 @@ button:disabled {
 
     <div class="slots">
 
-      <div class="slot" id="slot1">🍒</div>
-      <div class="slot" id="slot2">⭐</div>
-      <div class="slot" id="slot3">💎</div>
-      <div class="slot" id="slot4">🍋</div>
-      <div class="slot" id="slot5">🔔</div>
-      <div class="slot" id="slot6">🍒</div>
-      <div class="slot" id="slot7">⭐</div>
-      <div class="slot" id="slot8">💎</div>
-      <div class="slot" id="slot9">🍋</div>
-      <div class="slot" id="slot10">🔔</div>
-      <div class="slot" id="slot11">🍒</div>
-      <div class="slot" id="slot12">⭐</div>
-      <div class="slot" id="slot13">💎</div>
-      <div class="slot" id="slot14">🍋</div>
-      <div class="slot" id="slot15">🔔</div>
-      <div class="slot" id="slot16">🍒</div>
-      <div class="slot" id="slot17">⭐</div>
-      <div class="slot" id="slot18">💎</div>
-      <div class="slot" id="slot19">🍋</div>
-      <div class="slot" id="slot20">🔔</div>
-      <div class="slot" id="slot21">🍒</div>
-      <div class="slot" id="slot22">⭐</div>
-      <div class="slot" id="slot23">💎</div>
-      <div class="slot" id="slot24">🍋</div>
-      <div class="slot" id="slot25">🔔</div>
+      <div class="slot" id="slot1">
+        🍒
+      </div>
+
+      <div class="slot" id="slot2">
+        ⭐
+      </div>
+
+      <div class="slot" id="slot3">
+        💎
+      </div>
 
     </div>
 
@@ -1203,7 +1189,15 @@ const secretInput =
   document.getElementById("secretInput");
 
 
-const slots = Array.from(document.querySelectorAll(".slot"));
+const slots = [
+
+  document.getElementById("slot1"),
+
+  document.getElementById("slot2"),
+
+  document.getElementById("slot3")
+
+];
 
 
 /* =========================================
@@ -1387,7 +1381,15 @@ function spin() {
     );
 
 
-    const finalSymbols = Array.from({ length: slots.length }, () => randomSymbol());
+    const finalSymbols = [
+
+      randomSymbol(),
+
+      randomSymbol(),
+
+      randomSymbol()
+
+    ];
 
 
     finalSymbols.forEach(
@@ -1429,139 +1431,164 @@ function spin() {
 
 function calculateWin(resultSymbols) {
 
-  // The middle row (5 cells) is the active payline.
-  const activeLine = resultSymbols.slice(10, 15);
-  const icons = activeLine.map(x => x.icon);
+  const icons =
+    resultSymbols.map(
+      x => x.icon
+    );
+
 
   let win = 0;
+
 
   /* ================================
      JACKPOT
   ================================= */
 
-  if (icons.every(icon => icon === "👁️")) {
+  if (
+    icons[0] === "👁️" &&
+    icons[1] === "👁️" &&
+    icons[2] === "👁️"
+  ) {
 
-    win = game.bet * 100;
+    win =
+      game.bet * 100;
+
 
     game.balance += win;
+
     game.jackpots++;
 
+
     game.biggestWin =
-      Math.max(game.biggestWin, win);
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
 
     slots.forEach(slot => {
-      slot.classList.add("win");
+
+      slot.classList.add(
+        "win"
+      );
+
     });
 
-    document.getElementById("jackpotAmount").textContent =
+
+    document.getElementById(
+      "jackpotAmount"
+    ).textContent =
       "+" + win + " Curios";
 
-    document.getElementById("jackpotScreen").style.display =
+
+    document.getElementById(
+      "jackpotScreen"
+    ).style.display =
       "flex";
 
-    createParticles("💎");
 
-    return;
-  }
-
-  /* ================================
-     FIVE EQUAL
-  ================================= */
-
-  if (icons.every(icon => icon === icons[0])) {
-
-    const multiplier = activeLine[0].multiplier;
-
-    win = game.bet * multiplier;
-
-    game.balance += win;
-
-    game.biggestWin =
-      Math.max(game.biggestWin, win);
-
-    slots.slice(10, 15).forEach(slot => {
-      slot.classList.add("win");
-    });
-
-    showResult(
-      "✨ Fünf gleiche! +" + win + " Curios",
-      "win"
+    createParticles(
+      "💎"
     );
 
-    createParticles(activeLine[0].icon);
 
     return;
+
   }
+
 
   /* ================================
      THREE EQUAL
   ================================= */
 
-  const counts = {};
+  if (
+    icons[0] === icons[1] &&
+    icons[1] === icons[2]
+  ) {
 
-  icons.forEach(icon => {
-    counts[icon] = (counts[icon] || 0) + 1;
-  });
+    const multiplier =
+      resultSymbols[0]
+        .multiplier;
 
-  const threeIcon = Object.keys(counts).find(
-    icon => counts[icon] >= 3
-  );
 
-  if (threeIcon) {
+    win =
+      game.bet *
+      multiplier;
 
-    win = game.bet * 3;
 
     game.balance += win;
 
-    game.biggestWin =
-      Math.max(game.biggestWin, win);
 
-    activeLine.forEach((symbol, index) => {
-      if (symbol.icon === threeIcon) {
-        slots[10 + index].classList.add("win");
-      }
+    game.biggestWin =
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
+
+    slots.forEach(slot => {
+
+      slot.classList.add(
+        "win"
+      );
+
     });
 
+
     showResult(
-      "✨ Drei gleiche! +" + win + " Curios",
+      "✨ Drei gleiche! +" +
+      win +
+      " Curios",
       "win"
     );
 
-    createParticles(threeIcon);
+
+    createParticles(
+      resultSymbols[0].icon
+    );
+
 
     return;
+
   }
+
 
   /* ================================
      TWO EQUAL
   ================================= */
 
-  const twoIcon = Object.keys(counts).find(
-    icon => counts[icon] >= 2
-  );
+  if (
+    icons[0] === icons[1] ||
+    icons[1] === icons[2] ||
+    icons[0] === icons[2]
+  ) {
 
-  if (twoIcon) {
+    win =
+      game.bet * 2;
 
-    win = game.bet * 2;
 
     game.balance += win;
 
-    game.biggestWin =
-      Math.max(game.biggestWin, win);
 
-    activeLine.forEach((symbol, index) => {
-      if (symbol.icon === twoIcon) {
-        slots[10 + index].classList.add("win");
-      }
-    });
+    game.biggestWin =
+      Math.max(
+        game.biggestWin,
+        win
+      );
+
 
     showResult(
-      "Nicht schlecht. +" + win + " Curios",
+      "Nicht schlecht. +" +
+      win +
+      " Curios",
       "win"
     );
 
+
     return;
+
   }
+
 
   /* ================================
      NOTHING
@@ -1571,8 +1598,13 @@ function calculateWin(resultSymbols) {
     "Nichts diesmal... 👀",
     "lose"
   );
+
 }
 
+
+/* =========================================
+   RESULT
+========================================= */
 
 function showResult(
   message,
@@ -2175,9 +2207,14 @@ function juliusEgg() {
       "Julius was here.";
 
 
-    slots.forEach((slot, index) => {
-       slot.textContent = ["🍒", "⭐", "💎", "🍋", "🔔"][index % 5];
-     });
+    slots[0].textContent =
+      "🍒";
+
+    slots[1].textContent =
+      "⭐";
+
+    slots[2].textContent =
+      "💎";
 
 
     showResult(
@@ -2881,7 +2918,6 @@ setTimeout(() => {
 
 </body>
 </html>
-
 
 
 
