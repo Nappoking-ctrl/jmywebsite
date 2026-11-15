@@ -1,1236 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090a0d">
-<title>SOLACE — A place to feel understood.</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-
+<title>Crystal Quest – Tempel der vergessenen Kristalle</title>
 <style>
-:root {
-  --bg: #090a0d;
-  --surface: #111318;
-  --surface2: #191c23;
-  --text: #f1f0ed;
-  --muted: #92949e;
-  --accent: #c6a8e8;
-  --line: rgba(255,255,255,.09);
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'DM Sans', sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 90px;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  overflow-x: hidden;
-}
-
-body.modal-open {
-  overflow: hidden;
-}
-
-::selection {
-  background: #b99bd9;
-  color: #090a0d;
-}
-
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-
-/* BACKGROUND */
-
-.background-glow {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(143,104,186,.12), transparent 70%);
-  top: -250px;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: -1;
-  animation: glow 8s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from { opacity: .5; transform: translate(-50%,0) scale(1); }
-  to { opacity: 1; transform: translate(-50%,60px) scale(1.3); }
-}
-
-/* NAVIGATION */
-
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 76px;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8%;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  background: rgba(9,10,13,.78);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-}
-
-.logo {
-  font-size: 21px;
-  font-weight: 600;
-  letter-spacing: 6px;
-}
-
-.logo span { color: var(--accent); }
-
-.nav-links {
-  display: flex;
-  gap: 35px;
-  align-items: center;
-}
-
-.nav-links a {
-  font-size: 12px;
-  color: var(--muted);
-  transition: .3s;
-}
-
-.nav-links a:hover { color: white; }
-
-.nav-button {
-  border: 1px solid var(--line);
-  padding: 11px 19px;
-  border-radius: 30px;
-  color: white !important;
-}
-
-.nav-button:hover {
-  background: white;
-  color: black !important;
-}
-
-.menu-button {
-  display: none;
-  color: white;
-  background: none;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-/* HERO */
-
-.hero {
-  min-height: 790px;
-  height: 100vh;
-  max-height: 1050px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  padding: 120px 20px 70px;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 55%, rgba(111,80,145,.16), transparent 50%),
-    linear-gradient(180deg, transparent 60%, var(--bg) 100%);
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-  animation: heroIn 1.4s cubic-bezier(.2,.8,.2,1) both;
-}
-
-@keyframes heroIn {
-  from { opacity: 0; transform: translateY(35px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: var(--accent);
-  font-size: 10px;
-  font-weight: 600;
-  margin-bottom: 32px;
-}
-
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(55px, 9vw, 112px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -3px;
-}
-
-.hero h1 em {
-  color: var(--accent);
-  font-weight: 400;
-}
-
-.hero-description {
-  color: #a6a6af;
-  font-size: 15px;
-  line-height: 1.9;
-  max-width: 480px;
-  margin: 30px auto 40px;
-  font-weight: 300;
-}
-
-.primary-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: #f0eaf7;
-  color: #15111a;
-  border: none;
-  border-radius: 50px;
-  padding: 16px 27px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  transition: .35s;
-}
-
-.primary-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(198,168,232,.2);
-}
-
-.primary-button span {
-  font-size: 17px;
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #666873;
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.scroll-indicator::after {
-  content: "";
-  display: block;
-  width: 1px;
-  height: 35px;
-  background: linear-gradient(var(--accent), transparent);
-  margin: 14px auto 0;
-}
-
-/* GENERAL SECTIONS */
-
-section {
-  padding: 110px 8%;
-}
-
-.section-label {
-  color: var(--accent);
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(36px, 5vw, 59px);
-  font-weight: 400;
-  line-height: 1.2;
-}
-
-.section-subtitle {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.9;
-  max-width: 520px;
-  margin-top: 17px;
-  font-weight: 300;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(35px);
-  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* DAILY THOUGHT */
-
-.daily-section {
-  padding-top: 30px;
-}
-
-.daily-card {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 90% 10%, rgba(174,135,213,.2), transparent 50%),
-    linear-gradient(130deg, #19151f, #101116);
-  border: 1px solid rgba(198,168,232,.15);
-  border-radius: 25px;
-  padding: 65px 60px;
-  text-align: center;
-}
-
-.daily-card::after {
-  content: "“";
-  position: absolute;
-  right: 45px;
-  top: -45px;
-  font-family: var(--serif);
-  font-size: 250px;
-  color: rgba(255,255,255,.025);
-}
-
-.daily-card h2 {
-  font-family: var(--serif);
-  font-size: clamp(25px, 4vw, 43px);
-  font-weight: 400;
-  line-height: 1.5;
-  max-width: 800px;
-  margin: 25px auto;
-}
-
-.daily-card p {
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--accent);
-  text-transform: uppercase;
-}
-
-.daily-author {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-/* SEARCH */
-
-.search-section {
-  padding-bottom: 35px;
-}
-
-.search-wrapper {
-  margin-top: 40px;
-  max-width: 650px;
-  position: relative;
-}
-
-.search-wrapper input {
-  width: 100%;
-  padding: 19px 55px 19px 23px;
-  border-radius: 13px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: white;
-  font-size: 13px;
-  outline: none;
-  transition: .3s;
-}
-
-.search-wrapper input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 25px rgba(198,168,232,.08);
-}
-
-.search-wrapper input::placeholder { color: #686b76; }
-
-.search-icon {
-  position: absolute;
-  right: 22px;
-  top: 17px;
-  color: var(--muted);
-  font-size: 19px;
-}
-
-/* CATEGORY GRID */
-
-.categories-section {
-  padding-top: 35px;
-}
-
-.category-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.category-count {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.category-card {
-  position: relative;
-  min-height: 225px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 27px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: transform .4s, border-color .4s, background .4s;
-}
-
-.category-card:hover {
-  transform: translateY(-7px);
-  border-color: rgba(198,168,232,.4);
-  background: #17151d;
-}
-
-.category-card::after {
-  content: "";
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  right: -90px;
-  bottom: -100px;
-  background: var(--card-glow, rgba(198,168,232,.12));
-  filter: blur(50px);
-  border-radius: 50%;
-  transition: .4s;
-}
-
-.category-card:hover::after {
-  transform: scale(1.8);
-}
-
-.category-icon {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: rgba(198,168,232,.1);
-  color: var(--accent);
-  font-size: 19px;
-  margin-bottom: 28px;
-}
-
-.category-card h3 {
-  font-family: var(--serif);
-  font-size: 23px;
-  font-weight: 400;
-  margin-bottom: 9px;
-}
-
-.category-card p {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.card-arrow {
-  position: absolute;
-  right: 25px;
-  top: 28px;
-  color: #77717e;
-  font-size: 19px;
-  transition: .3s;
-}
-
-.category-card:hover .card-arrow {
-  color: var(--accent);
-  transform: translate(3px,-3px);
-}
-
-.no-results {
-  display: none;
-  color: var(--muted);
-  padding: 40px 0;
-  font-size: 13px;
-}
-
-/* QUOTE GENERATOR */
-
-.quote-section {
-  padding-top: 100px;
-  padding-bottom: 130px;
-}
-
-.quote-box {
-  background: linear-gradient(120deg,#15171e,#17131d);
-  border: 1px solid var(--line);
-  border-radius: 25px;
-  padding: 75px 35px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.quote-box h2 {
-  font-family: var(--serif);
-  font-size: clamp(29px, 4vw, 46px);
-  font-weight: 400;
-  line-height: 1.5;
-  max-width: 750px;
-  margin: 0 auto 35px;
-  transition: opacity .3s, transform .3s;
-}
-
-.quote-box h2.changing {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.outline-button {
-  border: 1px solid rgba(198,168,232,.4);
-  background: transparent;
-  color: var(--text);
-  padding: 14px 25px;
-  border-radius: 40px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.outline-button:hover {
-  background: var(--accent);
-  color: #17121d;
-}
-
-/* FOOTER */
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 65px 8% 35px;
-}
-
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.footer-description {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
-  margin-top: 15px;
-}
-
-.footer-links {
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.footer-links a:hover { color: white; }
-
-.footer-bottom {
-  border-top: 1px solid var(--line);
-  margin-top: 55px;
-  padding-top: 25px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  color: #62646c;
-  font-size: 10px;
-}
-
-/* TOPIC MODAL */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0,0,0,.8);
-  backdrop-filter: blur(12px);
-  opacity: 0;
-  transition: opacity .3s;
-}
-
-.modal.active {
-  display: flex;
-  opacity: 1;
-}
-
-.modal-content {
-  width: 100%;
-  max-width: 700px;
-  max-height: 85vh;
-  overflow-y: auto;
-  background: #12131a;
-  border: 1px solid rgba(198,168,232,.2);
-  border-radius: 23px;
-  padding: 45px;
-  position: relative;
-  animation: modalIn .4s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes modalIn {
-  from { transform: translateY(25px) scale(.97); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.close-modal {
-  position: absolute;
-  right: 25px;
-  top: 22px;
-  width: 35px;
-  height: 35px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-.modal-content h2 {
-  font-family: var(--serif);
-  font-size: 45px;
-  font-weight: 400;
-  margin: 18px 0;
-}
-
-.modal-quote {
-  color: var(--accent);
-  font-family: var(--serif);
-  font-size: 24px;
-  line-height: 1.6;
-  margin: 30px 0;
-}
-
-.modal-content h4 {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--accent);
-  margin: 30px 0 12px;
-}
-
-.modal-content p {
-  color: #b2b2bc;
-  font-size: 13px;
-  line-height: 1.9;
-  font-weight: 300;
-}
-
-.modal-tip {
-  background: var(--surface2);
-  border-radius: 13px;
-  padding: 22px;
-  margin-top: 15px;
-}
-
-/* MOBILE */
-
-@media(max-width: 800px) {
-  nav { padding: 0 6%; }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 76px;
-    left: 0;
-    width: 100%;
-    padding: 30px;
-    background: #101116;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 25px;
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-links.open { display: flex; }
-  .menu-button { display: block; }
-  section { padding-left: 6%; padding-right: 6%; }
-  .category-grid { grid-template-columns: repeat(2,1fr); }
-  .category-card { min-height: 205px; padding: 20px; }
-  .daily-card { padding: 50px 25px; }
-  footer { padding-left: 6%; padding-right: 6%; }
-}
-
-@media(max-width: 500px) {
-  .hero { min-height: 730px; }
-  .hero h1 { letter-spacing: -2px; }
-  .hero-description { font-size: 13px; }
-  .category-grid { grid-template-columns: 1fr; }
-  .category-card { min-height: 180px; }
-  .category-header { align-items: start; flex-direction: column; }
-  .quote-box { padding: 55px 23px; }
-  .modal-content { padding: 35px 24px; }
-  .modal-content h2 { font-size: 36px; }
-  .modal-quote { font-size: 21px; }
-  .footer-bottom { flex-direction: column; }
-}
-
-@media(prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+:root{--bg:#10131b;--panel:#1b2230;--gold:#f3c969;--text:#f4f0e6;--muted:#a9b2c2}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#293246,#10131b 65%);color:var(--text);font-family:system-ui,Segoe UI,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+main{width:min(100%,900px)}
+header{text-align:center;margin-bottom:16px}
+h1{margin:0;color:var(--gold);letter-spacing:3px;font-size:clamp(1.7rem,5vw,2.7rem);text-shadow:0 3px #694c1e}
+header p{margin:6px 0;color:var(--muted)}
+.frame{background:#171d28;border:2px solid #566174;border-radius:16px;padding:14px;box-shadow:0 18px 55px #0009}
+.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.stat{background:#252e3d;border:1px solid #3b4659;border-radius:9px;padding:8px 12px;font-weight:700}
+.stat span{color:var(--gold)}
+#game{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;background:#080b11;border:3px solid #3c4656;border-radius:8px;image-rendering:pixelated;touch-action:none}
+.below{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:9px;padding:10px 15px;background:var(--gold);color:#241a08;font-weight:800;cursor:pointer}
+button:hover{filter:brightness(1.08)}
+#message{color:var(--muted);font-size:.95rem;min-height:24px}
+.help{text-align:center;color:var(--muted);font-size:.88rem;margin:13px 0 0}
+.touch{display:none;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,48px);gap:5px;justify-content:center;margin-top:12px}
+.touch button{padding:0;font-size:1.2rem;background:#344052;color:white;border:1px solid #66758b}
+.touch button:nth-child(1){grid-column:2;grid-row:1}
+.touch button:nth-child(2){grid-column:1;grid-row:2}
+.touch button:nth-child(3){grid-column:2;grid-row:2}
+.touch button:nth-child(4){grid-column:3;grid-row:2}
+@media(max-width:650px){body{padding:8px}.frame{padding:8px}.touch{display:grid}.help{font-size:.8rem}}
 </style>
 </head>
-
 <body>
-
-<div class="background-glow"></div>
-
-<!-- NAVIGATION -->
-
-<nav>
-  <a href="#" class="logo">SOLA<span>CE</span></a>
-
-  <div class="nav-links" id="navLinks">
-    <a href="#home">Home</a>
-    <a href="#daily">A thought for you</a>
-    <a href="#topics">Explore topics</a>
-    <a href="#quotes">Inspiration</a>
-    <a href="#topics" class="nav-button">Find your way ↗</a>
-  </div>
-
-  <button class="menu-button" id="menuButton" aria-label="Menü öffnen">☰</button>
-</nav>
-
-<!-- HERO -->
-
-<header class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow">A PLACE TO FEEL UNDERSTOOD</div>
-
-    <h1>
-      You are more<br>
-      than what you<br>
-      <em>feel.</em>
-    </h1>
-
-    <p class="hero-description">
-      Sometimes, all we need is the right thought,
-      a little understanding, or someone reminding
-      us that we are not alone.
-    </p>
-
-    <a href="#topics" class="primary-button">
-      Explore your feelings <span>↗</span>
-    </a>
-  </div>
-
-  <div class="scroll-indicator">SCROLL TO EXPLORE</div>
+<main>
+<header>
+<h1>CRYSTAL QUEST</h1>
+<p>Tempel der vergessenen Kristalle</p>
 </header>
-
-<!-- DAILY THOUGHT -->
-
-<section class="daily-section reveal" id="daily">
-  <div class="daily-card">
-    <p>A LITTLE REMINDER FOR YOU</p>
-
-    <h2 id="dailyQuote">
-      "You don't have to have everything figured out to deserve a beautiful life."
-    </h2>
-
-    <div class="daily-author">— A thought worth keeping</div>
-  </div>
-</section>
-
-<!-- SEARCH -->
-
-<section class="search-section reveal" id="topics">
-  <div class="section-label">01 — FIND YOURSELF</div>
-
-  <h2 class="section-title">
-    What is on your<br><em>mind today?</em>
-  </h2>
-
-  <p class="section-subtitle">
-    There is no wrong place to start. Explore what you
-    feel, what you experience, and what you might need.
-  </p>
-
-  <div class="search-wrapper">
-    <input
-      type="search"
-      id="searchInput"
-      placeholder="Search for a feeling, problem or topic..."
-      aria-label="Themen durchsuchen"
-    >
-    <span class="search-icon">⌕</span>
-  </div>
-</section>
-
-<!-- CATEGORIES -->
-
-<section class="categories-section reveal">
-  <div class="category-header">
-    <div>
-      <div class="section-label">EXPLORE THE COLLECTION</div>
-      <h2 class="section-title">A little closer<br>to <em>understanding.</em></h2>
-    </div>
-
-    <div class="category-count" id="categoryCount">12 TOPICS</div>
-  </div>
-
-  <div class="category-grid" id="categoryGrid">
-
-    <article class="category-card" data-title="Depression" data-keywords="traurig leer hoffnungslos antriebslos">
-      <div class="category-icon">☾</div>
-      <span class="card-arrow">↗</span>
-      <h3>Depression</h3>
-      <p>When even the smallest things feel heavy.</p>
-    </article>
-
-    <article class="category-card" data-title="Anxiety" data-keywords="angst sorgen panik zukunft angststörung">
-      <div class="category-icon">◌</div>
-      <span class="card-arrow">↗</span>
-      <h3>Anxiety</h3>
-      <p>When your mind never seems to rest.</p>
-    </article>
-
-    <article class="category-card" data-title="Loneliness" data-keywords="einsam alleine isoliert niemand freunde">
-      <div class="category-icon">✧</div>
-      <span class="card-arrow">↗</span>
-      <h3>Loneliness</h3>
-      <p>Feeling alone, even when surrounded by people.</p>
-    </article>
-
-    <article class="category-card" data-title="ADHD" data-keywords="adhs konzentration impulsivität aufmerksamkeit">
-      <div class="category-icon">∞</div>
-      <span class="card-arrow">↗</span>
-      <h3>ADHD</h3>
-      <p>A mind that sometimes moves too fast.</p>
-    </article>
-
-    <article class="category-card" data-title="Self-worth" data-keywords="selbstwert selbsthass selbstzweifel wertlos">
-      <div class="category-icon">♡</div>
-      <span class="card-arrow">↗</span>
-      <h3>Self-worth</h3>
-      <p>Learning to see yourself differently.</p>
-    </article>
-
-    <article class="category-card" data-title="Overthinking" data-keywords="grübeln gedanken nachdenken gedankenkreisen">
-      <div class="category-icon">〰</div>
-      <span class="card-arrow">↗</span>
-      <h3>Overthinking</h3>
-      <p>When your thoughts won't let you sleep.</p>
-    </article>
-
-    <article class="category-card" data-title="Heartbreak" data-keywords="liebeskummer trennung liebe vermissen beziehung">
-      <div class="category-icon">♡</div>
-      <span class="card-arrow">↗</span>
-      <h3>Heartbreak</h3>
-      <p>When letting go feels impossible.</p>
-    </article>
-
-    <article class="category-card" data-title="Social anxiety" data-keywords="soziale phobie schüchtern menschen freunde kennenlernen">
-      <div class="category-icon">⌁</div>
-      <span class="card-arrow">↗</span>
-      <h3>Social anxiety</h3>
-      <p>When being around people feels difficult.</p>
-    </article>
-
-    <article class="category-card" data-title="Burnout" data-keywords="stress erschöpfung überforderung müde">
-      <div class="category-icon">◐</div>
-      <span class="card-arrow">↗</span>
-      <h3>Burnout</h3>
-      <p>When you have given more than you had.</p>
-    </article>
-
-    <article class="category-card" data-title="Fear of abandonment" data-keywords="verlustangst verlassen werden bindungsangst">
-      <div class="category-icon">◇</div>
-      <span class="card-arrow">↗</span>
-      <h3>Fear of abandonment</h3>
-      <p>Being afraid of losing the people you love.</p>
-    </article>
-
-    <article class="category-card" data-title="Motivation" data-keywords="motivation disziplin antrieb ziele">
-      <div class="category-icon">✦</div>
-      <span class="card-arrow">↗</span>
-      <h3>Motivation</h3>
-      <p>Finding a reason to take the next step.</p>
-    </article>
-
-    <article class="category-card" data-title="Feeling lost" data-keywords="zukunft orientierungslos sinnlos feststecken">
-      <div class="category-icon">☼</div>
-      <span class="card-arrow">↗</span>
-      <h3>Feeling lost</h3>
-      <p>Not knowing where life is taking you.</p>
-    </article>
-
-  </div>
-
-  <div class="no-results" id="noResults">
-    We couldn't find that topic. Try another word.
-  </div>
-</section>
-
-<!-- RANDOM QUOTE -->
-
-<section class="quote-section reveal" id="quotes">
-  <div class="quote-box">
-    <div class="section-label">02 — SOMETHING TO REMEMBER</div>
-
-    <h2 id="randomQuote">
-      "You are allowed to grow at your own pace."
-    </h2>
-
-    <button class="outline-button" id="newQuote">
-      Give me another thought ↗
-    </button>
-  </div>
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-  <div class="footer-top">
-    <div>
-      <a href="#" class="logo">SOLA<span>CE</span></a>
-      <p class="footer-description">
-        A little understanding can change a lot.<br>
-        Take your time. You belong here.
-      </p>
-    </div>
-
-    <div class="footer-links">
-      <a href="#home">Home</a>
-      <a href="#topics">Topics</a>
-      <a href="#daily">Daily thought</a>
-      <a href="mailto:hello@example.com">Contact</a>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <span>© 2026 SOLACE. A place to feel understood.</span>
-    <span>Made with care, for the human experience.</span>
-  </div>
-
-  <p style="color:#62646c;font-size:10px;line-height:1.8;margin-top:25px;max-width:800px;">
-    SOLACE provides general information and emotional support,
-    not medical advice, diagnosis or treatment. If you are
-    experiencing significant distress, please consider speaking
-    with a qualified mental health professional.
-  </p>
-</footer>
-
-<!-- TOPIC MODAL -->
-
-<div class="modal" id="topicModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-content">
-    <button class="close-modal" id="closeModal" aria-label="Schließen">×</button>
-
-    <div class="section-label">A MOMENT FOR YOURSELF</div>
-
-    <h2 id="modalTitle">Loneliness.</h2>
-
-    <div class="modal-quote" id="modalQuote"></div>
-
-    <h4>A thought for you</h4>
-    <p id="modalThought"></p>
-
-    <div class="modal-tip">
-      <h4 style="margin-top:0">A little advice</h4>
-      <p id="modalTip"></p>
-    </div>
-
-    <p style="margin-top:30px;font-size:11px;">
-      Take what helps you. Leave what doesn't.
-      You are allowed to take your time.
-    </p>
-  </div>
+<section class="frame">
+<div class="hud">
+<div class="stat">💎 Kristalle: <span id="gems">0 / 0</span></div>
+<div class="stat">❤️ Leben: <span id="lives">3</span></div>
+<div class="stat">🔑 Schlüssel: <span id="keys">0</span></div>
+<div class="stat">⭐ Punkte: <span id="score">0</span></div>
 </div>
-
+<canvas id="game" width="640" height="448" aria-label="Crystal Quest Spielfeld"></canvas>
+<div class="below">
+<div id="message">Sammle alle Kristalle und finde den Ausgang.</div>
+<div><button id="restart">↻ Neu starten</button></div>
+</div>
+<div class="touch" aria-label="Touch-Steuerung">
+<button data-dir="up">▲</button><button data-dir="left">◀</button>
+<button data-dir="down">▼</button><button data-dir="right">▶</button>
+</div>
+<p class="help">Steuerung: Pfeiltasten oder WASD · R = Neustart · Sammle alle Kristalle, dann betrete den Ausgang.</p>
+</section>
+</main>
 <script>
+(() => {
+"use strict";
+const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
+const TILE=32,COLS=20,ROWS=14;
+const ui={gems:document.getElementById("gems"),lives:document.getElementById("lives"),keys:document.getElementById("keys"),score:document.getElementById("score"),message:document.getElementById("message")};
 
-// TOPIC CONTENT
-
-const topics = {
-  "Depression": {
-    quote: "You are not lazy for struggling with things that once felt easy.",
-    thought: "Depression can affect energy, motivation, concentration and the ability to experience pleasure. What looks like inactivity from the outside can involve an enormous amount of effort on the inside. Your difficulties do not define your worth.",
-    tip: "Try choosing one very small task today. Open a window, take a shower or step outside for five minutes. You don't need to solve everything at once. If these feelings persist, consider reaching out to a mental health professional."
-  },
-
-  "Anxiety": {
-    quote: "Not every thought deserves your attention, and not every fear predicts your future.",
-    thought: "Anxiety can make uncertain situations feel dangerous, even when there is no immediate threat. Your feelings are real, but they are not always an accurate prediction of what will happen.",
-    tip: "Try grounding yourself: name five things you see, four things you feel and three things you hear. If anxiety repeatedly interferes with your everyday life, professional support can help."
-  },
-
-  "Loneliness": {
-    quote: "You can be surrounded by people and still wish someone truly knew you.",
-    thought: "Loneliness is not necessarily about the number of people in your life. It can be about missing genuine connection, understanding and emotional closeness. It doesn't mean there is something wrong with you.",
-    tip: "Start small. Say hello to someone, join an activity or send a message without expecting an immediate deep friendship. Meaningful relationships often grow through repeated, ordinary moments."
-  },
-
-  "ADHD": {
-    quote: "Your mind doesn't have to work like everyone else's to be worthy of understanding.",
-    thought: "ADHD can influence attention, impulse control, organization and emotional regulation. It is not simply a lack of discipline. Different people experience ADHD in different ways.",
-    tip: "Experiment with external structure: short work sessions, written reminders, visible task lists and regular breaks. If ADHD affects your daily life, a qualified professional can help you explore suitable support."
-  },
-
-  "Self-worth": {
-    quote: "You do not have to become someone else to deserve kindness.",
-    thought: "Self-worth can become tied to achievements, appearance or the approval of others. But your value as a person does not need to be earned through perfection.",
-    tip: "Notice how you speak to yourself. When a harsh thought appears, ask yourself whether you would say the same thing to someone you care about. Try replacing judgment with curiosity."
-  },
-
-  "Overthinking": {
-    quote: "You cannot think your way into certainty about everything.",
-    thought: "Overthinking can feel like problem-solving, but repeatedly examining the same situation may increase distress rather than provide clarity.",
-    tip: "Write down the thought that keeps returning. Separate what you know from what you are assuming. Then choose one practical action, or consciously give yourself permission to pause."
-  },
-
-  "Heartbreak": {
-    quote: "Missing someone doesn't necessarily mean they belong in your future.",
-    thought: "A breakup can mean losing a person, a routine, shared plans and the future you imagined. Grief does not follow a straight line. Missing someone and knowing a relationship has ended can coexist.",
-    tip: "Give yourself space to process the loss. Try not to measure your recovery by how quickly you stop thinking about someone. Reconnect with routines and people that make you feel grounded."
-  },
-
-  "Social anxiety": {
-    quote: "You are not being judged as closely as your anxiety might make you believe.",
-    thought: "Social anxiety can make conversations, new situations and everyday interactions feel threatening. It can create an intense fear of embarrassment or rejection.",
-    tip: "Try taking small, manageable social steps. A short conversation or asking someone a simple question can be a starting point. You don't have to become the most outgoing person in the room."
-  },
-
-  "Burnout": {
-    quote: "Rest is not something you have to earn by exhausting yourself first.",
-    thought: "Prolonged stress and excessive demands can leave people emotionally and physically exhausted. Recovery is not simply a matter of trying harder.",
-    tip: "Look at which demands can be reduced, postponed or shared. Build genuine recovery time into your routine. Persistent exhaustion deserves attention and may require professional assessment."
-  },
-
-  "Fear of abandonment": {
-    quote: "You can love someone deeply without having to abandon yourself.",
-    thought: "Fear of abandonment can make uncertainty in relationships feel overwhelming. Delayed replies, distance or disagreements may trigger strong fears of losing someone.",
-    tip: "When you feel triggered, pause before reacting. Try identifying what happened, what you fear it means and what you actually know. Healthy relationships also need room for independence."
-  },
-
-  "Motivation": {
-    quote: "You don't need to feel ready to take one small step.",
-    thought: "Motivation naturally fluctuates. Waiting until you feel completely motivated can make starting even harder. Small actions can sometimes help create momentum.",
-    tip: "Choose one task that takes less than ten minutes. Make it specific and manageable. Focus on beginning rather than completing everything."
-  },
-
-  "Feeling lost": {
-    quote: "You are not behind in life. You are living a life that is still unfolding.",
-    thought: "Not knowing what comes next can feel frightening, especially when you compare yourself to other people. But there is no universal timetable for figuring life out.",
-    tip: "Instead of trying to plan your entire future, identify one thing that matters to you this week. Small decisions can gradually create direction."
+// # Wand, . Boden, D Erde, G Kristall, O Fels, K Schlüssel, E Ausgang,
+// M Wächter, T Stachel-Falle, L verschlossene Tür
+const LEVEL=[
+"####################",
+"#....D....#........#",
+"#.##.O...##.###....#",
+"#..G..D.....#...G..#",
+"#.####.####.#.##...#",
+"#....#....O.#......#",
+"##O..#..G..D...##..#",
+"#...##.#####..M....#",
+"#.G....K....D..#...#",
+"#.###..###.##..#G..#",
+"#.....T....L.......#",
+"#.O....D.....##....#",
+"#.......G..........#",
+"####################"
+];
+let map,player,gems,totalGems,keys,lives,score,gameState,enemyTick=0,moveLock=false;
+const colors={wall:"#30394b",wallTop:"#46546a",dirt:"#765334",dirtLight:"#9b7048",floor:"#171d27",floorAlt:"#1b2431"};
+function reset(){
+ map=LEVEL.map(row=>row.split(""));
+ player={x:1,y:1};gems=0;keys=0;lives=3;score=0;gameState="playing";enemyTick=0;moveLock=false;
+ totalGems=map.flat().filter(c=>c==="G").length;
+ // Make sure player starts on floor.
+ map[player.y][player.x]=".";
+ ui.message.textContent="Sammle alle Kristalle und finde den Ausgang.";
+ updateHud();draw();
+}
+function updateHud(){ui.gems.textContent=`${gems} / ${totalGems}`;ui.lives.textContent=lives;ui.keys.textContent=keys;ui.score.textContent=score}
+function setMessage(s){ui.message.textContent=s}
+function inside(x,y){return x>=0&&y>=0&&x<COLS&&y<ROWS}
+function tile(x,y){return inside(x,y)?map[y][x]:"#"}
+function move(dx,dy){
+ if(gameState!=="playing"||moveLock)return;
+ const nx=player.x+dx,ny=player.y+dy,t=tile(nx,ny);
+ if(t==="#")return;
+ if(t==="D"){map[ny][nx]=".";player.x=nx;player.y=ny;score+=2;setMessage("Du hast dich durch die Erde gegraben.");}
+ else if(t==="O"){
+   const bx=nx+dx,by=ny+dy;
+   if(dx===0||tile(bx,by)!==".")return;
+   map[by][bx]="O";map[ny][nx]=".";player.x=nx;player.y=ny;
+ }
+ else if(t==="L"){
+   if(keys<1){setMessage("Die Tür ist verschlossen. Suche einen Schlüssel!");return;}
+   keys--;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Die Steintür öffnet sich knarrend.");
+ }
+ else if(t==="G"){gems++;score+=100;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Kristall eingesammelt!");}
+ else if(t==="K"){keys++;score+=50;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Schlüssel gefunden!");}
+ else if(t==="T"){player.x=nx;player.y=ny;hurt("Eine Bodenfalle hat dich erwischt!");}
+ else if(t==="M"){player.x=nx;player.y=ny;hurt("Der Tempelwächter hat dich erwischt!");}
+ else if(t==="E"){
+   if(gems<totalGems){setMessage(`Der Ausgang bleibt versiegelt. Es fehlen noch ${totalGems-gems} Kristalle.`);return;}
+   player.x=nx;player.y=ny;gameState="won";score+=250;setMessage("Geschafft! Du hast den Tempel bezwungen. 🎉");
+ }
+ else {player.x=nx;player.y=ny;}
+ updateHud();draw();
+}
+function hurt(reason){
+ lives--;updateHud();
+ if(lives<=0){gameState="lost";setMessage("Game Over – der Tempel hat dich besiegt. Drücke R zum Neustart.");return}
+ // Reset position to start; collected treasure remains collected.
+ player.x=1;player.y=1;setMessage(reason+" Du wurdest zum Eingang zurückgebracht.");
+}
+function tick(){
+ if(gameState!=="playing")return;
+ enemyTick++;
+ if(enemyTick%2===0){
+  const enemies=[];
+  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(map[y][x]==="M")enemies.push({x,y});
+  for(const e of enemies){
+   const dx=Math.sign(player.x-e.x),dy=Math.sign(player.y-e.y);
+   let nx=e.x,ny=e.y;
+   if(Math.abs(player.x-e.x)>Math.abs(player.y-e.y))nx+=dx;else ny+=dy;
+   if(tile(nx,ny)==="."){
+    map[e.y][e.x]=".";map[ny][nx]="M";
+   }else if(nx===player.x&&ny===player.y)hurt("Ein Wächter hat dich berührt!");
   }
-};
-
-// SEARCH FUNCTION
-
-const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".category-card");
-const noResults = document.getElementById("noResults");
-const categoryCount = document.getElementById("categoryCount");
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase().trim();
-  let visible = 0;
-
-  cards.forEach(card => {
-    const text = (
-      card.dataset.title + " " +
-      card.dataset.keywords + " " +
-      card.innerText
-    ).toLowerCase();
-
-    const matches = text.includes(query);
-
-    card.style.display = matches ? "" : "none";
-
-    if (matches) visible++;
-  });
-
-  noResults.style.display = visible === 0 ? "block" : "none";
-  categoryCount.textContent = visible + " TOPICS";
-});
-
-// MODAL FUNCTION
-
-const modal = document.getElementById("topicModal");
-
-function openTopic(name) {
-  const topic = topics[name];
-  if (!topic) return;
-
-  document.getElementById("modalTitle").textContent = name + ".";
-  document.getElementById("modalQuote").textContent = "“" + topic.quote + "”";
-  document.getElementById("modalThought").textContent = topic.thought;
-  document.getElementById("modalTip").textContent = topic.tip;
-
-  modal.style.display = "flex";
-  document.body.classList.add("modal-open");
-
-  requestAnimationFrame(() => modal.classList.add("active"));
-  document.getElementById("closeModal").focus();
+ }
+ // Gravity: rocks fall into empty floor, or crush the player.
+ for(let y=ROWS-2;y>0;y--)for(let x=1;x<COLS-1;x++){
+  if(map[y][x]==="O"&&map[y+1][x]==="."){
+   if(player.x===x&&player.y===y+1){hurt("Ein herabfallender Felsbrocken hat dich getroffen!");}
+   map[y+1][x]="O";map[y][x]=".";
+  }
+ }
+ draw();
 }
-
-function closeTopic() {
-  modal.classList.remove("active");
-  document.body.classList.remove("modal-open");
-
-  setTimeout(() => {
-    if (!modal.classList.contains("active")) {
-      modal.style.display = "none";
-    }
-  }, 300);
+function roundedRect(x,y,w,h,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function drawTile(c,x,y){
+ const px=x*TILE,py=y*TILE;
+ ctx.fillStyle=((x+y)%2)?colors.floor:colors.floorAlt;ctx.fillRect(px,py,TILE,TILE);
+ if(c==="#"){
+  ctx.fillStyle=colors.wall;ctx.fillRect(px,py,TILE,TILE);
+  ctx.fillStyle=colors.wallTop;ctx.fillRect(px+2,py+2,TILE-4,5);
+  ctx.fillStyle="#222a39";ctx.fillRect(px+3,py+TILE-6,TILE-6,3);
+  ctx.fillStyle="#56647a";ctx.fillRect(px+5,py+12,4,3);ctx.fillRect(px+21,py+22,5,3);
+ }else if(c==="D"){
+  ctx.fillStyle=colors.dirt;ctx.fillRect(px+2,py+2,28,28);
+  ctx.fillStyle=colors.dirtLight;ctx.fillRect(px+6,py+7,7,4);ctx.fillRect(px+19,py+19,6,4);
+  ctx.fillStyle="#4d3527";ctx.fillRect(px+15,py+12,4,4);
+ }else if(c==="O"){
+  roundedRect(px+3,py+3,26,26,7,"#6f7884");roundedRect(px+6,py+5,20,8,4,"#aab3bc");
+  ctx.fillStyle="#4b5562";ctx.fillRect(px+8,py+20,14,4);ctx.fillRect(px+21,py+13,4,5);
+ }else if(c==="G"){
+  ctx.fillStyle="#55f0ff";ctx.beginPath();ctx.moveTo(px+16,py+3);ctx.lineTo(px+27,py+15);ctx.lineTo(px+16,py+29);ctx.lineTo(px+5,py+15);ctx.closePath();ctx.fill();
+  ctx.fillStyle="#d9ffff";ctx.beginPath();ctx.moveTo(px+16,py+5);ctx.lineTo(px+20,py+15);ctx.lineTo(px+16,py+23);ctx.lineTo(px+12,py+15);ctx.closePath();ctx.fill();
+ }else if(c==="K"){
+  ctx.strokeStyle="#ffd65b";ctx.lineWidth=4;ctx.beginPath();ctx.arc(px+12,py+12,6,0,Math.PI*2);ctx.stroke();ctx.fillStyle="#ffd65b";ctx.fillRect(px+16,py+11,11,4);ctx.fillRect(px+22,py+14,3,5);
+ }else if(c==="E"){
+  ctx.fillStyle="#4c3826";ctx.fillRect(px+5,py+2,22,30);ctx.fillStyle="#d5a34b";ctx.fillRect(px+8,py+5,16,27);ctx.fillStyle="#392a21";ctx.fillRect(px+11,py+8,10,24);ctx.fillStyle="#f6d36c";ctx.fillRect(px+18,py+18,2,3);
+ }else if(c==="L"){
+  ctx.fillStyle="#7e4934";ctx.fillRect(px+3,py+2,26,30);ctx.fillStyle="#c18a50";ctx.fillRect(px+7,py+5,18,25);ctx.fillStyle="#553624";ctx.fillRect(px+10,py+9,12,21);ctx.fillStyle="#e9c16d";ctx.fillRect(px+20,py+18,3,3);
+ }else if(c==="T"){
+  ctx.fillStyle="#394454";for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(px+2+i*8,py+28);ctx.lineTo(px+6+i*8,py+7);ctx.lineTo(px+10+i*8,py+28);ctx.fill()}
+ }else if(c==="M"){
+  roundedRect(px+5,py+5,22,23,7,"#a54b43");ctx.fillStyle="#ffdb8b";ctx.fillRect(px+9,py+12,4,4);ctx.fillRect(px+20,py+12,4,4);ctx.fillStyle="#241b20";ctx.fillRect(px+10,py+13,2,2);ctx.fillRect(px+21,py+13,2,2);ctx.fillStyle="#552c34";ctx.fillRect(px+11,py+21,10,3);
+ }
 }
-
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    openTopic(card.dataset.title);
-  });
+function drawPlayer(){
+ const x=player.x*TILE,y=player.y*TILE;
+ // Original explorer sprite, drawn from simple shapes.
+ ctx.fillStyle="#0008";ctx.beginPath();ctx.ellipse(x+16,y+27,10,4,0,0,Math.PI*2);ctx.fill();
+ roundedRect(x+7,y+12,18,15,5,"#3c9b77");
+ roundedRect(x+8,y+2,16,14,5,"#e6b98a");
+ ctx.fillStyle="#293447";ctx.fillRect(x+8,y+1,16,5);ctx.fillRect(x+7,y+5,4,4);ctx.fillRect(x+21,y+5,4,4);
+ ctx.fillStyle="#26303e";ctx.fillRect(x+12,y+8,2,2);ctx.fillRect(x+20,y+8,2,2);
+ ctx.fillStyle="#e6b98a";ctx.fillRect(x+3,y+17,5,7);ctx.fillRect(x+24,y+17,5,7);
+}
+function draw(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)drawTile(map[y][x],x,y);
+ drawPlayer();
+ if(gameState==="won"||gameState==="lost"){
+  ctx.fillStyle="#080b11cc";ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.textAlign="center";ctx.fillStyle=gameState==="won"?"#f3d27b":"#ff8d82";
+  ctx.font="bold 34px system-ui";ctx.fillText(gameState==="won"?"TEMPEL GESCHAFFT!":"GAME OVER",canvas.width/2,canvas.height/2-8);
+  ctx.fillStyle="#fff";ctx.font="18px system-ui";ctx.fillText("Drücke R für einen neuen Versuch",canvas.width/2,canvas.height/2+28);
+ }
+}
+const keyMap={ArrowUp:[0,-1],w:[0,-1],W:[0,-1],ArrowDown:[0,1],s:[0,1],S:[0,1],ArrowLeft:[-1,0],a:[-1,0],A:[-1,0],ArrowRight:[1,0],d:[1,0],D:[1,0]};
+document.addEventListener("keydown",e=>{
+ if(e.key.toLowerCase()==="r"){reset();return}
+ const dir=keyMap[e.key];if(dir){e.preventDefault();move(...dir)}
 });
-
-document.getElementById("closeModal").addEventListener("click", closeTopic);
-
-modal.addEventListener("click", event => {
-  if (event.target === modal) closeTopic();
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeTopic();
-});
-
-// RANDOM QUOTES
-
-const quotes = [
-  "You are allowed to grow at your own pace.",
-  "Some days, surviving is an achievement of its own.",
-  "You deserve the same patience you give to others.",
-  "Not every chapter needs to make sense while you're living it.",
-  "You are not difficult to love just because you need understanding.",
-  "A quiet life can still be a beautiful one.",
-  "You don't have to carry everything alone.",
-  "Healing is not always visible.",
-  "Your past explains parts of you. It does not have to define your future.",
-  "There is no deadline for becoming yourself.",
-  "You are allowed to begin again.",
-  "Even small steps count when the road feels difficult."
-];
-
-let lastQuote = -1;
-
-document.getElementById("newQuote").addEventListener("click", () => {
-  const element = document.getElementById("randomQuote");
-
-  element.classList.add("changing");
-
-  setTimeout(() => {
-    let next;
-
-    do {
-      next = Math.floor(Math.random() * quotes.length);
-    } while (next === lastQuote);
-
-    lastQuote = next;
-
-    element.textContent = "“" + quotes[next] + "”";
-    element.classList.remove("changing");
-  }, 300);
-});
-
-// DAILY QUOTE
-
-const dailyQuotes = [
-  "You don't have to have everything figured out to deserve a beautiful life.",
-  "You are more than the things you struggle with.",
-  "A difficult day does not mean a difficult life.",
-  "Be gentle with the person you are becoming.",
-  "You deserve to feel at home within yourself."
-];
-
-// Same daily message for everyone, based on date
-
-const today = new Date();
-const dateNumber = Math.floor(
-  Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) / 86400000
-);
-
-document.getElementById("dailyQuote").textContent =
-  "“" + dailyQuotes[((dateNumber % dailyQuotes.length) + dailyQuotes.length) % dailyQuotes.length] + "”";
-
-// SCROLL REVEAL
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll(".reveal").forEach(element => {
-  observer.observe(element);
-});
-
-// MOBILE MENU
-
-const menuButton = document.getElementById("menuButton");
-const navLinks = document.getElementById("navLinks");
-
-menuButton.addEventListener("click", () => {
-  const open = navLinks.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", open);
-  menuButton.textContent = open ? "×" : "☰";
-});
-
-navLinks.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    menuButton.textContent = "☰";
-    menuButton.setAttribute("aria-expanded", "false");
-  });
-});
-
+document.querySelectorAll("[data-dir]").forEach(btn=>btn.addEventListener("click",()=>{
+ const dirs={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};move(...dirs[btn.dataset.dir]);
+}));
+document.getElementById("restart").addEventListener("click",reset);
+setInterval(tick,550);
+reset();
+})();
 </script>
 </body>
 </html>
