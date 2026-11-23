@@ -4,528 +4,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eine kleine Angelegenheit</title>
+<title>Project 27 — Eine kleine Angelegenheit</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
 
 :root {
-  --bg: #101114;
-  --panel: #17191e;
-  --panel-light: #1d2026;
-  --text: #e9e5dc;
-  --muted: #8c8b88;
-  --gold: #c4a77d;
-  --gold-light: #e1c9a4;
-  --line: rgba(196,167,125,.2);
-  --success: #9db99b;
-  --danger: #c78e83;
+  --bg:#101114;
+  --panel:#17191e;
+  --panel2:#1d2026;
+  --text:#e9e5dc;
+  --muted:#92918c;
+  --gold:#c4a77d;
+  --gold-light:#e1c9a4;
+  --line:rgba(196,167,125,.2);
+  --success:#9db99b;
+  --danger:#c78e83;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(196,167,125,.07), transparent 45%),
+    radial-gradient(ellipse at 50% 0%,rgba(196,167,125,.07),transparent 45%),
     var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .13;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-  z-index: 10;
-}
-
-button, input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.wrapper {
-  width: min(760px, 100%);
-  margin: 0 auto;
-  padding: 35px 24px 80px;
-  position: relative;
-  z-index: 1;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 17px;
-  margin-bottom: 80px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(196,167,125,.6);
-}
-
-.screen {
-  display: none;
-  animation: appear .7s ease both;
-}
-
-.screen.active {
-  display: block;
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.eyebrow {
-  font-family: 'DM Mono', monospace;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 10px;
-  margin-bottom: 22px;
-}
-
-h1, h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 400;
-  line-height: 1.16;
-}
-
-h1 {
-  font-size: clamp(40px, 8vw, 67px);
-  max-width: 650px;
-  margin-bottom: 24px;
-}
-
-h2 {
-  font-size: clamp(31px, 6vw, 46px);
-  margin-bottom: 20px;
-}
-
-p {
-  color: #aaa9a4;
-  line-height: 1.8;
-  font-size: 15px;
-}
-
-.gold {
-  color: var(--gold-light);
-}
-
-.divider {
-  height: 1px;
-  background: var(--line);
-  margin: 38px 0;
-}
-
-.intro-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 40px 0;
-}
-
-.meta-box {
-  border: 1px solid var(--line);
-  padding: 17px;
-  background: rgba(255,255,255,.015);
-}
-
-.meta-label {
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 9px;
-}
-
-.meta-value {
-  font-size: 13px;
-  color: var(--text);
-}
-
-.primary-btn, .secondary-btn {
-  border: 1px solid var(--gold);
-  padding: 15px 22px;
-  background: var(--gold);
-  color: #171717;
-  font-size: 12px;
-  letter-spacing: 1px;
-  transition: .25s;
-  margin-top: 20px;
-}
-
-.primary-btn:hover {
-  background: var(--gold-light);
-  transform: translateY(-2px);
-}
-
-.secondary-btn {
-  background: transparent;
-  color: var(--gold-light);
-}
-
-.secondary-btn:hover {
-  background: rgba(196,167,125,.1);
-}
-
-button:focus-visible, input:focus-visible {
-  outline: 2px solid var(--gold-light);
-  outline-offset: 4px;
-}
-
-.file-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 25px;
-  margin: 32px 0;
-  position: relative;
-}
-
-.file-card::before {
-  content: "VERTRAULICH";
-  position: absolute;
-  top: 16px;
-  right: 17px;
-  font-family: 'DM Mono', monospace;
-  color: rgba(196,167,125,.5);
-  font-size: 9px;
-  letter-spacing: 2px;
-}
-
-.file-number {
-  color: var(--gold);
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  margin-bottom: 18px;
-}
-
-.file-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 400;
-  margin-bottom: 10px;
-}
-
-.file-card p {
-  font-size: 13px;
-}
-
-.progress-wrap {
-  margin: 35px 0 45px;
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-.progress-track {
-  width: 100%;
-  height: 2px;
-  background: #292b30;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--gold);
-  transition: width .5s ease;
-}
-
-.riddle-box {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  padding: 28px;
-  margin: 28px 0;
-}
-
-.riddle-number {
-  font-family: 'DM Mono', monospace;
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-
-.riddle-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  line-height: 1.5;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
-.clue {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 17px;
-  line-height: 1.7;
-}
-
-.answer-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 25px;
-}
-
-.answer-row input {
-  flex: 1;
-  min-width: 0;
-  background: #101216;
-  border: 1px solid #383a3f;
-  color: var(--text);
-  padding: 14px 15px;
-  outline: none;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 1px;
-}
-
-.answer-row input:focus {
-  border-color: var(--gold);
-}
-
-.answer-row button {
-  margin: 0;
-  padding: 0 18px;
-}
-
-.feedback {
-  min-height: 23px;
-  font-size: 12px;
-  margin-top: 14px;
-  color: var(--danger);
-}
-
-.feedback.good {
-  color: var(--success);
-}
-
-.hint-btn {
-  border: none;
-  background: none;
-  color: var(--muted);
-  font-size: 11px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  margin-top: 8px;
-}
-
-.hint-text {
-  display: none;
-  font-size: 12px;
-  color: var(--gold-light);
-  margin-top: 12px;
-}
-
-.hint-text.visible {
-  display: block;
-}
-
-.success-mark {
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--success);
-  color: var(--success);
-  display: grid;
-  place-items: center;
-  margin-bottom: 25px;
-  font-size: 20px;
-}
-
-.reveal-card {
-  background: linear-gradient(135deg, #1e2025, #14161a);
-  border: 1px solid var(--line);
-  padding: 35px;
-  margin: 30px 0;
-  text-align: center;
-}
-
-.reveal-label {
-  font-family: 'DM Mono', monospace;
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: 3px;
-  margin-bottom: 18px;
-}
-
-.reveal-word {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(42px, 9vw, 70px);
-  color: var(--gold-light);
-  letter-spacing: 2px;
-}
-
-.reveal-sub {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 12px;
-}
-
-.trip-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin: 30px 0;
-}
-
-.trip-item {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 20px;
-}
-
-.trip-item .icon {
-  font-size: 18px;
-  margin-bottom: 13px;
-  color: var(--gold);
-}
-
-.trip-item h4 {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 7px;
-}
-
-.trip-item p {
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.invitation {
-  border-left: 2px solid var(--gold);
-  padding: 5px 0 5px 23px;
-  margin: 32px 0;
-}
-
-.invitation p {
-  color: #c5c1b8;
-  font-size: 15px;
-}
-
-.choice-list {
-  display: grid;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.choice {
-  text-align: left;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--text);
-  padding: 18px 20px;
-  transition: .2s;
-}
-
-.choice:hover {
-  border-color: var(--gold);
-  background: var(--panel-light);
-  transform: translateX(3px);
-}
-
-.choice strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.choice span {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.final-message {
-  display: none;
-  margin-top: 28px;
-  padding: 25px;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  animation: appear .5s ease;
-}
-
-.final-message.visible {
-  display: block;
-}
-
-.footer {
-  border-top: 1px solid var(--line);
-  margin-top: 90px;
-  padding-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  color: #65666a;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 1px;
-}
-
-@media(max-width: 520px) {
-  .wrapper {
-    padding: 25px 19px 60px;
-  }
-  .topbar {
-    margin-bottom: 60px;
-  }
-  .intro-meta, .trip-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .riddle-box {
-    padding: 21px;
-  }
-  .answer-row {
-    flex-direction: column;
-  }
-  .answer-row button {
-    padding: 14px;
-  }
-  .footer {
-    gap: 15px;
-    flex-direction: column;
-  }
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  z-index:10;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{
+  outline:2px solid var(--gold-light);
+  outline-offset:4px;
+}
+.wrapper{
+  width:min(760px,100%);
+  margin:auto;
+  padding:35px 24px 80px;
+  position:relative;
+  z-index:1;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:17px;
+  margin-bottom:75px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--muted);
+}
+.status{display:flex;align-items:center;gap:8px}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 10px rgba(196,167,125,.6);
+}
+.screen{display:none;animation:appear .65s ease both}
+.screen.active{display:block}
+@keyframes appear{
+  from{opacity:0;transform:translateY(13px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:10px;
+  margin-bottom:22px;
+}
+h1,h2{
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  line-height:1.16;
+}
+h1{font-size:clamp(40px,8vw,67px);margin-bottom:24px}
+h2{font-size:clamp(31px,6vw,46px);margin-bottom:20px}
+h3{font-family:'Playfair Display',serif;font-weight:400}
+p{color:#aaa9a4;line-height:1.8;font-size:15px}
+.gold{color:var(--gold-light)}
+.divider{height:1px;background:var(--line);margin:38px 0}
+.intro-meta{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:15px;margin:40px 0;
+}
+.meta-box{
+  border:1px solid var(--line);
+  padding:17px;background:rgba(255,255,255,.015);
+}
+.meta-label,.file-number,.riddle-number,.reveal-label{
+  font-family:'DM Mono',monospace;
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.meta-label{color:var(--muted);margin-bottom:9px}
+.meta-value{font-size:13px}
+.primary-btn,.secondary-btn{
+  border:1px solid var(--gold);
+  padding:15px 22px;
+  background:var(--gold);
+  color:#171717;
+  font-size:11px;
+  letter-spacing:1px;
+  transition:.25s;
+  margin-top:20px;
+}
+.primary-btn:hover{
+  background:var(--gold-light);
+  transform:translateY(-2px);
+}
+.secondary-btn{
+  background:transparent;color:var(--gold-light);
+}
+.secondary-btn:hover{background:rgba(196,167,125,.1)}
+.file-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:25px;
+  margin:30px 0;
+  position:relative;
+}
+.file-card:before{
+  content:"VERTRAULICH";
+  position:absolute;top:16px;right:17px;
+  font-family:'DM Mono',monospace;
+  color:rgba(196,167,125,.5);
+  font-size:9px;letter-spacing:2px;
+}
+.file-card h3{font-size:24px;margin:18px 0 10px}
+.file-card p{font-size:13px}
+.progress-wrap{margin:35px 0 45px}
+.progress-info{
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;
+  color:var(--muted);font-size:10px;
+  letter-spacing:1px;margin-bottom:10px;
+}
+.progress-track{height:2px;background:#292b30}
+.progress-fill{height:100%;background:var(--gold);transition:width .5s}
+.riddle-box{
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:28px;margin:28px 0;
+}
+.riddle-number{margin-bottom:20px}
+.riddle-text{
+  font-family:'Playfair Display',serif;
+  font-size:24px;line-height:1.5;
+  color:var(--text);margin-bottom:20px;
+}
+.clue{color:var(--muted);font-size:12px;margin-top:17px;line-height:1.7}
+.answer-row{display:flex;gap:10px;margin-top:25px}
+.answer-row input{
+  flex:1;min-width:0;
+  background:#101216;border:1px solid #383a3f;
+  color:var(--text);padding:14px 15px;
+  outline:none;font-family:'DM Mono',monospace;
+  font-size:13px;
+}
+.answer-row input:focus{border-color:var(--gold)}
+.answer-row button{margin:0;padding:0 18px}
+.feedback{min-height:23px;font-size:12px;margin-top:14px;color:var(--danger)}
+.feedback.good{color:var(--success)}
+.hint-btn{
+  border:none;background:none;color:var(--muted);
+  font-size:11px;text-decoration:underline;
+  text-underline-offset:4px;margin-top:8px;
+}
+.hint-text{display:none;font-size:12px;color:var(--gold-light);margin-top:12px}
+.hint-text.visible{display:block}
+.secret-target{
+  display:inline-block;
+  width:16px;height:16px;
+  border:1px solid rgba(196,167,125,.12);
+  border-radius:50%;
+  position:absolute;
+  left:calc(50% + 155px);
+  top:230px;
+  cursor:pointer;
+  transition:.3s;
+}
+.secret-target:hover{
+  border-color:var(--gold);
+  box-shadow:0 0 15px rgba(196,167,125,.35);
+}
+.secret-target.found{
+  background:var(--gold);
+  border-color:var(--gold);
+}
+.mini-note{
+  font-family:'DM Mono',monospace;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1px;
+}
+.cipher{
+  font-family:'DM Mono',monospace;
+  color:var(--gold-light);
+  background:#101216;
+  border:1px solid var(--line);
+  padding:22px 16px;
+  text-align:center;
+  font-size:clamp(16px,4vw,22px);
+  letter-spacing:3px;
+  margin:22px 0;
+  line-height:1.8;
+}
+.code-hint{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin-top:15px;
+}
+.image-puzzle{
+  position:relative;
+  margin:25px 0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#17191e;
+}
+.image-puzzle img{
+  width:100%;
+  display:block;
+  min-height:230px;
+  max-height:390px;
+  object-fit:cover;
+  filter:brightness(.73) saturate(.7);
+}
+.hotspot{
+  position:absolute;
+  width:36px;height:36px;
+  border:1px solid rgba(225,201,164,.8);
+  border-radius:50%;
+  background:rgba(16,17,20,.55);
+  color:var(--gold-light);
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  display:grid;place-items:center;
+  transition:.2s;
+}
+.hotspot:hover{background:var(--gold);color:#111}
+.hotspot.found{
+  background:var(--success);
+  color:#101114;
+  border-color:var(--success);
+  pointer-events:none;
+}
+.found-count{
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:1px;
+  color:var(--muted);margin-top:12px;
+}
+.success-mark{
+  width:42px;height:42px;border:1px solid var(--success);
+  color:var(--success);display:grid;place-items:center;
+  margin-bottom:25px;font-size:20px;
+}
+.reveal-card{
+  background:linear-gradient(135deg,#1e2025,#14161a);
+  border:1px solid var(--line);
+  padding:35px;margin:30px 0;text-align:center;
+}
+.reveal-label{margin-bottom:18px}
+.reveal-word{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(42px,9vw,70px);
+  color:var(--gold-light);letter-spacing:2px;
+}
+.reveal-sub{font-size:12px;color:var(--muted);margin-top:12px}
+.trip-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;margin:30px 0;
+}
+.trip-item{background:var(--panel);border:1px solid var(--line);padding:20px}
+.trip-item .icon{font-size:18px;margin-bottom:13px;color:var(--gold)}
+.trip-item h4{font-size:13px;font-weight:500;margin-bottom:7px}
+.trip-item p{font-size:11px;line-height:1.6}
+.invitation{border-left:2px solid var(--gold);padding:5px 0 5px 23px;margin:32px 0}
+.invitation p{color:#c5c1b8;font-size:15px}
+.choice-list{display:grid;gap:10px;margin-top:30px}
+.choice{
+  text-align:left;border:1px solid var(--line);
+  background:var(--panel);color:var(--text);
+  padding:18px 20px;transition:.2s;
+}
+.choice:hover{
+  border-color:var(--gold);
+  background:var(--panel2);transform:translateX(3px);
+}
+.choice strong{display:block;font-size:13px;font-weight:500;margin-bottom:5px}
+.choice span{font-size:11px;color:var(--muted)}
+.final-message{
+  display:none;margin-top:28px;padding:25px;
+  border:1px solid var(--line);background:var(--panel);
+  animation:appear .5s ease;
+}
+.final-message.visible{display:block}
+.footer{
+  border-top:1px solid var(--line);
+  margin-top:90px;padding-top:20px;
+  display:flex;justify-content:space-between;
+  color:#65666a;font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:1px;
+}
+@media(max-width:520px){
+  .wrapper{padding:25px 19px 60px}
+  .topbar{margin-bottom:60px}
+  .riddle-box{padding:21px}
+  .answer-row{flex-direction:column}
+  .answer-row button{padding:14px}
+  .secret-target{left:78%;top:210px}
+  .footer{gap:15px;flex-direction:column}
 }
 </style>
 </head>
@@ -533,468 +340,566 @@ button:focus-visible, input:focus-visible {
 <body>
 <div class="wrapper">
 
-  <div class="topbar">
-    <span>PROJECT 27 / FILE 001</span>
-    <div class="status">
-      <span class="status-dot"></span>
-      <span>Aktenstatus: Offen</span>
+<div class="topbar">
+  <span>PROJECT 27 / FILE 001</span>
+  <div class="status">
+    <span class="status-dot"></span>
+    <span id="statusText">Aktenstatus: Offen</span>
+  </div>
+</div>
+
+
+<!-- START -->
+<section class="screen active" id="start">
+  <div class="eyebrow">Eine kleine Angelegenheit</div>
+  <h1>Manche Dinge sollte man nicht sofort <span class="gold">verraten.</span></h1>
+
+  <p>
+    Es gibt da etwas, das ich dich fragen möchte.
+    Allerdings wäre es ziemlich langweilig, wenn ich dir
+    einfach direkt erzählen würde, worum es geht.
+  </p>
+
+  <div class="intro-meta">
+    <div class="meta-box">
+      <div class="meta-label">Aktenzeichen</div>
+      <div class="meta-value">27-12 / 2026</div>
+    </div>
+    <div class="meta-box">
+      <div class="meta-label">Schwierigkeitsgrad</div>
+      <div class="meta-value">Machbar. Versprochen.</div>
     </div>
   </div>
 
-  <!-- STARTSEITE -->
-  <section class="screen active" id="start">
-    <div class="eyebrow">Eine kleine Angelegenheit</div>
-
-    <h1>Manche Dinge sollte man nicht sofort <span class="gold">verraten.</span></h1>
-
+  <div class="file-card">
+    <div class="file-number">DOKUMENT 001 — EINGANG</div>
+    <h3>Eine Einladung?</h3>
     <p>
-      Es gibt da etwas, das ich dich fragen möchte.
-      Allerdings wäre es ziemlich langweilig, wenn ich dir
-      einfach direkt erzählen würde, worum es geht.
+      Die vollständigen Informationen sind noch nicht freigegeben.
+      Sechs kleine Aufgaben sollten allerdings ausreichen,
+      um herauszufinden, worum es geht.
+    </p>
+  </div>
+
+  <p style="font-size:12px">
+    Übrigens: Nicht alles, was wichtig ist, steht direkt vor dir.
+  </p>
+
+  <!-- Unsichtbarer, anklickbarer Hinweis -->
+  <button class="secret-target" id="secretTarget"
+    aria-label="Versteckten Hinweis untersuchen"
+    onclick="findSecret()"></button>
+
+  <p class="mini-note" id="secretFeedback" style="margin-top:15px">
+    HINWEIS: Untersuche die Akte aufmerksam.
+  </p>
+
+  <button class="primary-btn" onclick="goTo('cipher')">
+    AKTE ÖFFNEN →
+  </button>
+</section>
+
+
+<!-- GEHEIME KOORDINATEN -->
+<section class="screen" id="coordinates">
+  <div class="eyebrow">Geheimer Fund / 00</div>
+  <div class="success-mark">⌖</div>
+  <h2>Ein erster Fund.</h2>
+  <p>
+    Du hast etwas entdeckt, das dort eigentlich nicht auffallen sollte.
+    Vielleicht ist es ein Teil einer größeren Information.
+  </p>
+
+  <div class="reveal-card">
+    <div class="reveal-label">KOORDINATE A</div>
+    <div class="reveal-word" style="font-size:40px">52° 31' N</div>
+    <div class="reveal-sub">Ein Teil der gesuchten Position.</div>
+  </div>
+
+  <p>
+    Behalte diese Information im Hinterkopf.
+    Sie könnte später noch nützlich werden.
+  </p>
+
+  <button class="primary-btn" onclick="goTo('cipher')">
+    WEITER →
+  </button>
+</section>
+
+
+<!-- CAESAR CODE -->
+<section class="screen" id="cipher">
+  <div class="eyebrow">Ermittlungsphase / 01</div>
+  <h2>Eine verschlüsselte Nachricht.</h2>
+  <p>
+    Dieses Dokument wurde offenbar nicht für jeden geschrieben.
+    Zum Glück ist das Verfahren nicht besonders kompliziert.
+  </p>
+
+  <div class="progress-wrap">
+    <div class="progress-info"><span>FORTSCHRITT</span><span>01 / 06</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:16.6%"></div></div>
+  </div>
+
+  <div class="riddle-box">
+    <div class="riddle-number">DOKUMENT 002 — CHIFFRE</div>
+    <div class="cipher">EJF TUBEU JTU OJDIU EBT [ ? ]</div>
+    <p>
+      Ein berühmter römischer Feldherr soll dieses Verfahren
+      besonders gemocht haben.
+    </p>
+    <p class="code-hint">
+      Jeder Buchstabe wurde um genau eine Stelle im Alphabet
+      nach vorne verschoben. Um die Nachricht zu lesen,
+      musst du ihn also wieder zurückschieben.
     </p>
 
-    <div class="intro-meta">
-      <div class="meta-box">
-        <div class="meta-label">Aktenzeichen</div>
-        <div class="meta-value">27-12 / 2026</div>
-      </div>
-      <div class="meta-box">
-        <div class="meta-label">Schwierigkeitsgrad</div>
-        <div class="meta-value">Machbar. Versprochen.</div>
-      </div>
+    <div class="answer-row">
+      <input id="cipherAnswer" placeholder="Entschlüsselte Nachricht ...">
+      <button class="primary-btn" onclick="checkCipher()">PRÜFEN</button>
     </div>
-
-    <div class="file-card">
-      <div class="file-number">DOKUMENT 001 — EINGANG</div>
-      <h3>Eine Einladung?</h3>
-      <p>
-        Die vollständigen Informationen sind noch nicht freigegeben.
-        Drei kleine Hinweise sollten allerdings ausreichen,
-        um herauszufinden, worum es geht.
-      </p>
+    <div class="feedback" id="cipherFeedback"></div>
+    <button class="hint-btn" onclick="toggleHint('cipherHint')">Tipp anzeigen</button>
+    <div class="hint-text" id="cipherHint">
+      E wird zu D, J wird zu I. Die Nachricht beginnt mit „DIE ...“
     </div>
+  </div>
+</section>
 
-    <p style="font-size:12px;">
-      Du kannst dir Zeit lassen. Es gibt keine Zeitbegrenzung
-      und auch keinen Grund, etwas zu überstürzen.
+
+<!-- BILDERSUCHE -->
+<section class="screen" id="searchImage">
+  <div class="eyebrow">Ermittlungsphase / 02</div>
+  <h2>Etwas stimmt hier nicht.</h2>
+  <p>
+    In diesem Bild haben sich drei kleine Markierungen versteckt.
+    Finde sie alle. Du musst nur darauf klicken.
+  </p>
+
+  <div class="progress-wrap">
+    <div class="progress-info"><span>FORTSCHRITT</span><span>02 / 06</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:33%"></div></div>
+  </div>
+
+  <div class="image-puzzle">
+    <img
+      src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=85"
+      alt="Stadtansicht bei Nacht mit Gebäuden und Lichtern">
+
+    <button class="hotspot" style="left:18%;top:35%" onclick="findSymbol(this,'A')">?</button>
+    <button class="hotspot" style="left:65%;top:55%" onclick="findSymbol(this,'B')">?</button>
+    <button class="hotspot" style="left:82%;top:22%" onclick="findSymbol(this,'C')">?</button>
+  </div>
+
+  <div class="found-count">
+    <span>GEFUNDENE MARKIERUNGEN</span>
+    <span id="foundCount">0 / 3</span>
+  </div>
+
+  <div class="feedback" id="imageFeedback"></div>
+
+  <div id="imageContinue" style="display:none">
+    <p class="gold" style="margin-top:20px">
+      Alle drei Markierungen wurden gefunden.
     </p>
-
     <button class="primary-btn" onclick="goTo('riddle1')">
-      AKTE ÖFFNEN →
+      NÄCHSTES DOKUMENT →
     </button>
-  </section>
-
-
-  <!-- RÄTSEL 1 -->
-  <section class="screen" id="riddle1">
-    <div class="eyebrow">Ermittlungsphase / 01</div>
-    <h2>Der erste Hinweis.</h2>
-    <p>
-      Beginnen wir mit dem Ort. Ein paar Dinge dürften dir
-      bekannt vorkommen.
-    </p>
-
-    <div class="progress-wrap">
-      <div class="progress-info">
-        <span>FORTSCHRITT</span>
-        <span>01 / 03</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:33%"></div>
-      </div>
-    </div>
-
-    <div class="riddle-box">
-      <div class="riddle-number">HINWEIS NR. 01 — DER ORT</div>
-      <div class="riddle-text">
-        Ein Tor, das Geschichte geschrieben hat.<br>
-        Ein Turm, der die Stadt überragt.<br>
-        Und ein Bär, der eigentlich gar nicht hierher gehört.
-      </div>
-      <p>
-        Gesucht ist eine deutsche Stadt. Wie heißt sie?
-      </p>
-
-      <div class="answer-row">
-        <input id="answer1" type="text" placeholder="Deine Antwort ..." autocomplete="off">
-        <button class="primary-btn" onclick="checkAnswer(1)">PRÜFEN</button>
-      </div>
-      <div class="feedback" id="feedback1"></div>
-      <button class="hint-btn" onclick="showHint(1)">Kleiner Tipp nötig?</button>
-      <div class="hint-text" id="hint1">
-        Die Stadt hat ein berühmtes Brandenburger Tor.
-      </div>
-    </div>
-  </section>
-
-
-  <!-- RÄTSEL 2 -->
-  <section class="screen" id="riddle2">
-    <div class="eyebrow">Ermittlungsphase / 02</div>
-    <h2>Der richtige Zeitpunkt.</h2>
-    <p>
-      Der Ort wäre damit geklärt. Aber wann soll die Sache stattfinden?
-    </p>
-
-    <div class="progress-wrap">
-      <div class="progress-info">
-        <span>FORTSCHRITT</span>
-        <span>02 / 03</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:66%"></div>
-      </div>
-    </div>
-
-    <div class="riddle-box">
-      <div class="riddle-number">HINWEIS NR. 02 — DER ZEITPUNKT</div>
-      <div class="riddle-text">
-        Ein Jahr geht zu Ende.<br>
-        Ein neues beginnt.<br>
-        Und irgendwo dazwischen wird es ziemlich laut.
-      </div>
-      <p>
-        An welchem Abend findet das Ganze statt?
-      </p>
-
-      <div class="answer-row">
-        <input id="answer2" type="text" placeholder="Deine Antwort ..." autocomplete="off">
-        <button class="primary-btn" onclick="checkAnswer(2)">PRÜFEN</button>
-      </div>
-      <div class="feedback" id="feedback2"></div>
-      <button class="hint-btn" onclick="showHint(2)">Kleiner Tipp nötig?</button>
-      <div class="hint-text" id="hint2">
-        Es ist der 31. Dezember.
-      </div>
-    </div>
-  </section>
-
-
-  <!-- RÄTSEL 3 -->
-  <section class="screen" id="riddle3">
-    <div class="eyebrow">Ermittlungsphase / 03</div>
-    <h2>Die letzte Information.</h2>
-    <p>
-      Fast geschafft. Eine Frage bleibt noch offen:
-      Wie viel Zeit sollte man dafür einplanen?
-    </p>
-
-    <div class="progress-wrap">
-      <div class="progress-info">
-        <span>FORTSCHRITT</span>
-        <span>03 / 03</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:100%"></div>
-      </div>
-    </div>
-
-    <div class="riddle-box">
-      <div class="riddle-number">HINWEIS NR. 03 — DIE DAUER</div>
-      <div class="riddle-text">
-        Ein Wochenende wäre zu kurz.<br>
-        Eine ganze Woche vielleicht etwas zu lang.<br>
-        Gesucht ist die goldene Mitte.
-      </div>
-      <p>
-        Wie lange könnte die Reise dauern?
-      </p>
-
-      <div class="answer-row">
-        <input id="answer3" type="text" placeholder="Deine Antwort ..." autocomplete="off">
-        <button class="primary-btn" onclick="checkAnswer(3)">PRÜFEN</button>
-      </div>
-      <div class="feedback" id="feedback3"></div>
-      <button class="hint-btn" onclick="showHint(3)">Kleiner Tipp nötig?</button>
-      <div class="hint-text" id="hint3">
-        Zwischen drei und vier Tagen.
-      </div>
-    </div>
-  </section>
-
-
-  <!-- AUFLÖSUNG -->
-  <section class="screen" id="reveal">
-    <div class="eyebrow">Ermittlungsphase abgeschlossen</div>
-    <div class="success-mark">✓</div>
-    <h2>Die Akte ist vollständig.</h2>
-    <p>
-      Alle Hinweise wurden korrekt zugeordnet.
-      Damit kann das eigentliche Vorhaben endlich offengelegt werden.
-    </p>
-
-    <div class="divider"></div>
-
-    <div class="reveal-card">
-      <div class="reveal-label">ZIELORT</div>
-      <div class="reveal-word">BERLIN</div>
-      <div class="reveal-sub">31. Dezember 2026 — 01. Januar 2027</div>
-    </div>
-
-    <p>
-      Richtig geraten. Es geht tatsächlich um einen kleinen
-      Ausflug in die Hauptstadt. Und zwar nicht nur für einen Abend.
-    </p>
-
-    <button class="primary-btn" onclick="goTo('details')">
-      WEITERE INFORMATIONEN →
-    </button>
-  </section>
-
-
-  <!-- DETAILS -->
-  <section class="screen" id="details">
-    <div class="eyebrow">Dokument 004 / Das Vorhaben</div>
-    <h2>Ein paar Tage in Berlin.</h2>
-
-    <p>
-      Die Idee wäre, für ungefähr drei bis vier Tage nach Berlin
-      zu fahren und den Jahreswechsel dort zu verbringen.
-    </p>
-
-    <div class="trip-grid">
-      <div class="trip-item">
-        <div class="icon">⌖</div>
-        <h4>Der Ort</h4>
-        <p>Berlin. Eine Stadt, in der es genug zu entdecken gibt.</p>
-      </div>
-
-      <div class="trip-item">
-        <div class="icon">◷</div>
-        <h4>Die Zeit</h4>
-        <p>Rund um Silvester 2026/27.</p>
-      </div>
-
-      <div class="trip-item">
-        <div class="icon">↗</div>
-        <h4>Der Plan</h4>
-        <p>Die Stadt erkunden, essen gehen und den Jahreswechsel erleben.</p>
-      </div>
-
-      <div class="trip-item">
-        <div class="icon">＋</div>
-        <h4>Die Dauer</h4>
-        <p>Ungefähr drei bis vier Tage, ganz entspannt.</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="eyebrow">Eine wichtige Anmerkung</div>
-    <h2>Keine versteckten Bedingungen.</h2>
-
-    <div class="invitation">
-      <p>
-        Ich würde die Reise sowieso machen. Ich hätte dich einfach
-        lieber dabei. Ich finde, manche Erlebnisse sind schöner,
-        wenn man sie mit jemandem teilen kann.
-        Und ich würde mich freuen, dich dabei noch ein Stück
-        besser kennenzulernen.
-      </p>
-    </div>
-
-    <p>
-      Um die Kosten musst du dir übrigens keine Gedanken machen.
-      Ich würde die Reise bezahlen. Du müsstest also nichts
-      beisteuern und bist mir auch nichts schuldig.
-    </p>
-
-    <p style="margin-top:15px;">
-      Und ganz wichtig: Das ist eine Einladung, keine Verpflichtung.
-      Wenn es zeitlich nicht passt oder du einfach nicht möchtest,
-      ist das vollkommen in Ordnung.
-    </p>
-
-    <button class="primary-btn" onclick="goTo('decision')">
-      DIE LETZTE FRAGE →
-    </button>
-  </section>
-
-
-  <!-- ENTSCHEIDUNG -->
-  <section class="screen" id="decision">
-    <div class="eyebrow">Dokument 005 / Abschluss</div>
-    <h2>Damit wäre alles gesagt.</h2>
-
-    <p>
-      Jetzt liegt die Entscheidung bei dir.
-      Es gibt keine richtige oder falsche Antwort.
-    </p>
-
-    <div class="file-card">
-      <div class="file-number">ABSCHLIESSENDE FRAGE</div>
-      <h3>Wärst du dabei?</h3>
-      <p>
-        Ein paar Tage Berlin, Silvester zusammen verbringen
-        und schauen, was die Stadt so zu bieten hat.
-      </p>
-    </div>
-
-    <div class="choice-list">
-      <button class="choice" onclick="choose('yes')">
-        <strong>Ja, klingt gut.</strong>
-        <span>Ich wäre gerne dabei.</span>
-      </button>
-
-      <button class="choice" onclick="choose('maybe')">
-        <strong>Ich muss noch überlegen.</strong>
-        <span>Ich würde gerne erst darüber nachdenken.</span>
-      </button>
-
-      <button class="choice" onclick="choose('no')">
-        <strong>Diesmal lieber nicht.</strong>
-        <span>Ist völlig in Ordnung.</span>
-      </button>
-    </div>
-
-    <div class="final-message" id="finalMessage"></div>
-  </section>
-
-
-  <div class="footer">
-    <span>PROJECT 27</span>
-    <span>ENDE DER AKTE</span>
-    <span>© 2026</span>
   </div>
+</section>
+
+
+<!-- RÄTSEL ORT -->
+<section class="screen" id="riddle1">
+  <div class="eyebrow">Ermittlungsphase / 03</div>
+  <h2>Der erste Hinweis.</h2>
+  <p>Beginnen wir mit dem Ort. Ein paar Dinge dürften dir bekannt vorkommen.</p>
+
+  <div class="progress-wrap">
+    <div class="progress-info"><span>FORTSCHRITT</span><span>03 / 06</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+  </div>
+
+  <div class="riddle-box">
+    <div class="riddle-number">HINWEIS NR. 03 — DER ORT</div>
+    <div class="riddle-text">
+      Ein Tor, das Geschichte geschrieben hat.<br>
+      Ein Turm, der die Stadt überragt.<br>
+      Und ein Bär, der eigentlich gar nicht hierher gehört.
+    </div>
+    <p>Gesucht ist eine deutsche Stadt. Wie heißt sie?</p>
+
+    <div class="answer-row">
+      <input id="answer1" placeholder="Deine Antwort ...">
+      <button class="primary-btn" onclick="checkAnswer(1)">PRÜFEN</button>
+    </div>
+    <div class="feedback" id="feedback1"></div>
+    <button class="hint-btn" onclick="toggleHint('hint1')">Kleiner Tipp nötig?</button>
+    <div class="hint-text" id="hint1">Die Stadt hat ein berühmtes Brandenburger Tor.</div>
+  </div>
+</section>
+
+
+<!-- RÄTSEL ZEIT -->
+<section class="screen" id="riddle2">
+  <div class="eyebrow">Ermittlungsphase / 04</div>
+  <h2>Der richtige Zeitpunkt.</h2>
+  <p>Der Ort wäre damit geklärt. Aber wann soll die Sache stattfinden?</p>
+
+  <div class="progress-wrap">
+    <div class="progress-info"><span>FORTSCHRITT</span><span>04 / 06</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:66%"></div></div>
+  </div>
+
+  <div class="riddle-box">
+    <div class="riddle-number">HINWEIS NR. 04 — DER ZEITPUNKT</div>
+    <div class="riddle-text">
+      Ein Jahr geht zu Ende.<br>
+      Ein neues beginnt.<br>
+      Und irgendwo dazwischen wird es ziemlich laut.
+    </div>
+    <p>An welchem Abend findet das Ganze statt?</p>
+
+    <div class="answer-row">
+      <input id="answer2" placeholder="Deine Antwort ...">
+      <button class="primary-btn" onclick="checkAnswer(2)">PRÜFEN</button>
+    </div>
+    <div class="feedback" id="feedback2"></div>
+    <button class="hint-btn" onclick="toggleHint('hint2')">Kleiner Tipp nötig?</button>
+    <div class="hint-text" id="hint2">Es ist der 31. Dezember.</div>
+  </div>
+</section>
+
+
+<!-- RÄTSEL DAUER -->
+<section class="screen" id="riddle3">
+  <div class="eyebrow">Ermittlungsphase / 05</div>
+  <h2>Die letzte Information.</h2>
+  <p>Eine Frage bleibt noch offen: Wie viel Zeit sollte man dafür einplanen?</p>
+
+  <div class="progress-wrap">
+    <div class="progress-info"><span>FORTSCHRITT</span><span>05 / 06</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:83%"></div></div>
+  </div>
+
+  <div class="riddle-box">
+    <div class="riddle-number">HINWEIS NR. 05 — DIE DAUER</div>
+    <div class="riddle-text">
+      Ein Wochenende wäre zu kurz.<br>
+      Eine ganze Woche vielleicht etwas zu lang.<br>
+      Gesucht ist die goldene Mitte.
+    </div>
+    <p>Wie lange könnte die Reise dauern?</p>
+
+    <div class="answer-row">
+      <input id="answer3" placeholder="Deine Antwort ...">
+      <button class="primary-btn" onclick="checkAnswer(3)">PRÜFEN</button>
+    </div>
+    <div class="feedback" id="feedback3"></div>
+    <button class="hint-btn" onclick="toggleHint('hint3')">Kleiner Tipp nötig?</button>
+    <div class="hint-text" id="hint3">Zwischen drei und vier Tagen.</div>
+  </div>
+</section>
+
+
+<!-- AUFLÖSUNG -->
+<section class="screen" id="reveal">
+  <div class="eyebrow">Ermittlungsphase abgeschlossen</div>
+  <div class="success-mark">✓</div>
+  <h2>Die Akte ist vollständig.</h2>
+  <p>
+    Alle Hinweise wurden korrekt zugeordnet.
+    Damit kann das eigentliche Vorhaben endlich offengelegt werden.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="reveal-card">
+    <div class="reveal-label">ZIELORT</div>
+    <div class="reveal-word">BERLIN</div>
+    <div class="reveal-sub">31. Dezember 2026 — 01. Januar 2027</div>
+  </div>
+
+  <p>
+    Richtig geraten. Es geht tatsächlich um einen kleinen Ausflug
+    in die Hauptstadt. Und zwar nicht nur für einen Abend.
+  </p>
+
+  <button class="primary-btn" onclick="goTo('details')">WEITERE INFORMATIONEN →</button>
+</section>
+
+
+<!-- EINLADUNG -->
+<section class="screen" id="details">
+  <div class="eyebrow">Dokument 007 / Das Vorhaben</div>
+  <h2>Ein paar Tage in Berlin.</h2>
+
+  <p>
+    Die Idee wäre, für ungefähr drei bis vier Tage nach Berlin
+    zu fahren und den Jahreswechsel dort zu verbringen.
+  </p>
+
+  <div class="trip-grid">
+    <div class="trip-item">
+      <div class="icon">⌖</div>
+      <h4>Der Ort</h4>
+      <p>Berlin. Eine Stadt, in der es genug zu entdecken gibt.</p>
+    </div>
+    <div class="trip-item">
+      <div class="icon">◷</div>
+      <h4>Die Zeit</h4>
+      <p>Rund um Silvester 2026/27.</p>
+    </div>
+    <div class="trip-item">
+      <div class="icon">↗</div>
+      <h4>Der Plan</h4>
+      <p>Die Stadt erkunden, essen gehen und den Jahreswechsel erleben.</p>
+    </div>
+    <div class="trip-item">
+      <div class="icon">＋</div>
+      <h4>Die Dauer</h4>
+      <p>Ungefähr drei bis vier Tage, ganz entspannt.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="eyebrow">Eine wichtige Anmerkung</div>
+  <h2>Keine versteckten Bedingungen.</h2>
+
+  <div class="invitation">
+    <p>
+      Ich würde die Reise sowieso machen. Ich hätte dich einfach
+      lieber dabei. Ich finde, manche Erlebnisse sind schöner,
+      wenn man sie mit jemandem teilen kann.
+      Und ich würde mich freuen, dich dabei noch ein Stück
+      besser kennenzulernen.
+    </p>
+  </div>
+
+  <p>
+    Um die Kosten musst du dir übrigens keine Gedanken machen.
+    Ich würde die Reise bezahlen. Du müsstest also nichts
+    beisteuern und bist mir auch nichts schuldig.
+  </p>
+
+  <p style="margin-top:15px">
+    Und ganz wichtig: Das ist eine Einladung, keine Verpflichtung.
+    Wenn es zeitlich nicht passt oder du einfach nicht möchtest,
+    ist das vollkommen in Ordnung.
+  </p>
+
+  <button class="primary-btn" onclick="goTo('decision')">DIE LETZTE FRAGE →</button>
+</section>
+
+
+<!-- ENTSCHEIDUNG -->
+<section class="screen" id="decision">
+  <div class="eyebrow">Dokument 008 / Abschluss</div>
+  <h2>Damit wäre alles gesagt.</h2>
+  <p>Jetzt liegt die Entscheidung bei dir. Es gibt keine richtige oder falsche Antwort.</p>
+
+  <div class="file-card">
+    <div class="file-number">ABSCHLIESSENDE FRAGE</div>
+    <h3>Wärst du dabei?</h3>
+    <p>
+      Ein paar Tage Berlin, Silvester zusammen verbringen
+      und schauen, was die Stadt so zu bieten hat.
+    </p>
+  </div>
+
+  <div class="choice-list">
+    <button class="choice" onclick="choose('yes')">
+      <strong>Ja, klingt gut.</strong>
+      <span>Ich wäre gerne dabei.</span>
+    </button>
+    <button class="choice" onclick="choose('maybe')">
+      <strong>Ich muss noch überlegen.</strong>
+      <span>Ich würde gerne erst darüber nachdenken.</span>
+    </button>
+    <button class="choice" onclick="choose('no')">
+      <strong>Diesmal lieber nicht.</strong>
+      <span>Ist völlig in Ordnung.</span>
+    </button>
+  </div>
+
+  <div class="final-message" id="finalMessage"></div>
+</section>
+
+
+<div class="footer">
+  <span>PROJECT 27</span>
+  <span>ENDE DER AKTE</span>
+  <span>© 2026</span>
+</div>
 
 </div>
 
 <script>
-const answers = {
-  1: ["berlin"],
-  2: ["silvester", "31.12.", "31.12", "31 dezember", "silvesterabend"],
-  3: ["3-4", "3–4", "3 bis 4", "drei bis vier", "3 bis vier", "drei bis 4", "3 tage", "4 tage", "drei tage", "vier tage"]
-};
-
-const nextScreens = {
-  1: "riddle2",
-  2: "riddle3",
-  3: "reveal"
-};
-
-function normalize(value) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, " ")
-    .replace(/[ä]/g, "ae")
-    .replace(/[ö]/g, "oe")
-    .replace(/[ü]/g, "ue");
+/* NAVIGATION */
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function goTo(id) {
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.remove("active");
-  });
+/* VERSTECKTER HINWEIS */
+let secretFound=false;
 
-  const target = document.getElementById(id);
-  target.classList.add("active");
+function findSecret(){
+  if(secretFound)return;
+  secretFound=true;
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  document.getElementById('secretTarget').classList.add('found');
+  document.getElementById('secretFeedback').textContent=
+    'GEFUNDEN. Ein versteckter Hinweis wurde freigegeben.';
+  document.getElementById('secretFeedback').style.color='var(--success)';
+
+  setTimeout(()=>goTo('coordinates'),700);
 }
 
-function checkAnswer(number) {
-  const input = document.getElementById("answer" + number);
-  const feedback = document.getElementById("feedback" + number);
-  const answer = normalize(input.value);
+/* CAESAR-VERSCHLÜSSELUNG */
+function checkCipher(){
+  const value=normalize(document.getElementById('cipherAnswer').value);
+  const feedback=document.getElementById('cipherFeedback');
 
-  const correct = answers[number].some(item => {
-    return normalize(item) === answer;
-  });
+  if(value.includes('die stadt ist nicht das ziel') ||
+     value.includes('die stadt ist nicht das')){
+    feedback.textContent='Richtig. Die Nachricht wurde entschlüsselt.';
+    feedback.className='feedback good';
+    setTimeout(()=>goTo('searchImage'),1000);
+  }else{
+    feedback.textContent='Noch nicht ganz. Verschiebe jeden Buchstaben um eine Stelle zurück.';
+    feedback.className='feedback';
+  }
+}
 
-  if (correct) {
-    feedback.textContent = "Richtig. Der nächste Hinweis wird freigegeben.";
-    feedback.className = "feedback good";
+/* BILDERSUCHE */
+let foundSymbols=[];
 
-    input.disabled = true;
+function findSymbol(button,letter){
+  if(foundSymbols.includes(letter))return;
 
-    setTimeout(() => {
-      goTo(nextScreens[number]);
-    }, 1100);
-  } else {
-    const messages = {
-      1: "Noch nicht ganz. Denk an das berühmte Tor.",
-      2: "Nicht ganz. Gesucht ist der letzte Abend des Jahres.",
-      3: "Fast. Denk an die Zeit zwischen einem Wochenende und einer Woche."
+  foundSymbols.push(letter);
+  button.classList.add('found');
+  button.textContent='✓';
+
+  document.getElementById('foundCount').textContent=
+    foundSymbols.length+' / 3';
+
+  if(foundSymbols.length===3){
+    document.getElementById('imageFeedback').textContent=
+      'Alle Markierungen gefunden. Gute Arbeit.';
+    document.getElementById('imageFeedback').className='feedback good';
+    document.getElementById('imageContinue').style.display='block';
+  }
+}
+
+/* ANTWORTEN */
+function normalize(value){
+  return value.toLowerCase().trim()
+    .replace(/\s+/g,' ')
+    .replace(/[ä]/g,'ae')
+    .replace(/[ö]/g,'oe')
+    .replace(/[ü]/g,'ue');
+}
+
+const answers={
+  1:['berlin'],
+  2:['silvester','31.12','31.12.','31 dezember','silvesterabend'],
+  3:['3-4','3–4','3 bis 4','drei bis vier','3 tage','4 tage','drei tage','vier tage']
+};
+
+const nextScreens={
+  1:'riddle2',
+  2:'riddle3',
+  3:'reveal'
+};
+
+function checkAnswer(number){
+  const input=document.getElementById('answer'+number);
+  const feedback=document.getElementById('feedback'+number);
+  const answer=normalize(input.value);
+
+  const correct=answers[number].some(item=>normalize(item)===answer);
+
+  if(correct){
+    feedback.textContent='Richtig. Der nächste Hinweis wird freigegeben.';
+    feedback.className='feedback good';
+    input.disabled=true;
+    setTimeout(()=>goTo(nextScreens[number]),1000);
+  }else{
+    const messages={
+      1:'Noch nicht ganz. Denk an das berühmte Tor.',
+      2:'Nicht ganz. Gesucht ist der letzte Abend des Jahres.',
+      3:'Fast. Denk an die Zeit zwischen einem Wochenende und einer Woche.'
     };
-
-    feedback.textContent = messages[number];
-    feedback.className = "feedback";
+    feedback.textContent=messages[number];
+    feedback.className='feedback';
     input.focus();
   }
 }
 
-function showHint(number) {
-  document.getElementById("hint" + number)
-    .classList.toggle("visible");
+function toggleHint(id){
+  document.getElementById(id).classList.toggle('visible');
 }
 
-document.querySelectorAll(".answer-row input").forEach(input => {
-  input.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-      const number = Number(input.id.replace("answer", ""));
-      checkAnswer(number);
+/* ENTER-TASTE */
+document.querySelectorAll('.answer-row input').forEach(input=>{
+  input.addEventListener('keydown',event=>{
+    if(event.key==='Enter'){
+      if(input.id==='cipherAnswer')checkCipher();
+      else if(input.id.startsWith('answer')){
+        checkAnswer(Number(input.id.replace('answer','')));
+      }
     }
   });
 });
 
-function choose(answer) {
-  const message = document.getElementById("finalMessage");
+/* ABSCHLUSS */
+function choose(answer){
+  const message=document.getElementById('finalMessage');
 
-  const messages = {
-    yes: `
+  const messages={
+    yes:`
       <div class="eyebrow">Antwort erhalten</div>
-      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
-        Das freut mich.
-      </h3>
+      <h3 style="font-size:25px;margin-bottom:12px">Das freut mich.</h3>
       <p>
         Dann können wir ja langsam anfangen, die Reise zu planen.
         Die Details klären wir ganz entspannt zusammen.
-      </p>
-    `,
-    maybe: `
+      </p>`,
+    maybe:`
       <div class="eyebrow">Antwort erhalten</div>
-      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
-        Natürlich.
-      </h3>
+      <h3 style="font-size:25px;margin-bottom:12px">Natürlich.</h3>
       <p>
         Lass dir ruhig Zeit. Du musst dich nicht sofort entscheiden.
         Wir können jederzeit darüber sprechen.
-      </p>
-    `,
-    no: `
+      </p>`,
+    no:`
       <div class="eyebrow">Antwort erhalten</div>
-      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
-        Alles gut.
-      </h3>
+      <h3 style="font-size:25px;margin-bottom:12px">Alles gut.</h3>
       <p>
         Danke, dass du dir die kleine Akte überhaupt angesehen hast.
         Kein Stress und keine unangenehme Situation.
-      </p>
-    `
+      </p>`
   };
 
-  message.innerHTML = messages[answer];
-  message.classList.add("visible");
+  message.innerHTML=messages[answer];
+  message.classList.add('visible');
 
-  document.querySelectorAll(".choice").forEach(button => {
-    button.disabled = true;
-    button.style.opacity = ".45";
-    button.style.cursor = "default";
+  document.querySelectorAll('.choice').forEach(button=>{
+    button.disabled=true;
+    button.style.opacity='.45';
+    button.style.cursor='default';
   });
 
-  message.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+  message.scrollIntoView({behavior:'smooth',block:'center'});
 }
 </script>
 
 </body>
 </html>
+
 
 
 
