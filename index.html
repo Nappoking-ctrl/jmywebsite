@@ -1,223 +1,937 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crystal Quest – Tempel der vergessenen Kristalle</title>
+<meta name="theme-color" content="#10121b">
+<title>Eine kleine Frage an dich ♡</title>
+
 <style>
-:root{--bg:#10131b;--panel:#1b2230;--gold:#f3c969;--text:#f4f0e6;--muted:#a9b2c2}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#293246,#10131b 65%);color:var(--text);font-family:system-ui,Segoe UI,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
-main{width:min(100%,900px)}
-header{text-align:center;margin-bottom:16px}
-h1{margin:0;color:var(--gold);letter-spacing:3px;font-size:clamp(1.7rem,5vw,2.7rem);text-shadow:0 3px #694c1e}
-header p{margin:6px 0;color:var(--muted)}
-.frame{background:#171d28;border:2px solid #566174;border-radius:16px;padding:14px;box-shadow:0 18px 55px #0009}
-.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
-.stat{background:#252e3d;border:1px solid #3b4659;border-radius:9px;padding:8px 12px;font-weight:700}
-.stat span{color:var(--gold)}
-#game{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;background:#080b11;border:3px solid #3c4656;border-radius:8px;image-rendering:pixelated;touch-action:none}
-.below{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
-button{border:0;border-radius:9px;padding:10px 15px;background:var(--gold);color:#241a08;font-weight:800;cursor:pointer}
-button:hover{filter:brightness(1.08)}
-#message{color:var(--muted);font-size:.95rem;min-height:24px}
-.help{text-align:center;color:var(--muted);font-size:.88rem;margin:13px 0 0}
-.touch{display:none;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,48px);gap:5px;justify-content:center;margin-top:12px}
-.touch button{padding:0;font-size:1.2rem;background:#344052;color:white;border:1px solid #66758b}
-.touch button:nth-child(1){grid-column:2;grid-row:1}
-.touch button:nth-child(2){grid-column:1;grid-row:2}
-.touch button:nth-child(3){grid-column:2;grid-row:2}
-.touch button:nth-child(4){grid-column:3;grid-row:2}
-@media(max-width:650px){body{padding:8px}.frame{padding:8px}.touch{display:grid}.help{font-size:.8rem}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+
+:root {
+    --bg: #10121b;
+    --card: rgba(255,255,255,.055);
+    --text: #f6f2ee;
+    --muted: #aaa9b7;
+    --pink: #e7a6b8;
+    --purple: #b9a8ed;
+    --line: rgba(255,255,255,.11);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(ellipse at 15% 15%, rgba(153,104,178,.18), transparent 45%),
+        radial-gradient(ellipse at 85% 70%, rgba(207,128,153,.12), transparent 45%),
+        #10121b;
+}
+
+button {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* NAVIGATION */
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 7%;
+    backdrop-filter: blur(18px);
+    background: rgba(16,18,27,.65);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.nav-right {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* GENERAL */
+
+section {
+    padding: 110px 8%;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.eyebrow {
+    color: var(--pink);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+}
+
+h1 {
+    font-size: clamp(48px, 8vw, 92px);
+    line-height: 1.08;
+}
+
+h2 {
+    font-size: clamp(35px, 5vw, 55px);
+    line-height: 1.15;
+    margin-bottom: 22px;
+}
+
+h3 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.accent {
+    color: var(--pink);
+    font-style: italic;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border: 1px solid rgba(231,166,184,.45);
+    border-radius: 50px;
+    color: white;
+    background: linear-gradient(135deg, #b77f9d, #9278b9);
+    cursor: pointer;
+    transition: .3s;
+    font-weight: 600;
+    box-shadow: 0 10px 35px rgba(183,127,157,.15);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(183,127,157,.25);
+}
+
+.btn.secondary {
+    background: rgba(255,255,255,.045);
+    border: 1px solid var(--line);
+    box-shadow: none;
+}
+
+.btn.secondary:hover {
+    background: rgba(255,255,255,.1);
+}
+
+.center {
+    text-align: center;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 120px;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero p {
+    max-width: 490px;
+    margin: 25px 0 35px;
+    font-size: 16px;
+}
+
+.hero-tag {
+    display: inline-block;
+    border: 1px solid var(--line);
+    padding: 9px 16px;
+    border-radius: 50px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 30px;
+    background: rgba(255,255,255,.04);
+}
+
+.hero-bottom {
+    position: absolute;
+    bottom: 35px;
+    left: 8%;
+    color: #777987;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.hero-decoration {
+    position: absolute;
+    right: 8%;
+    top: 30%;
+    font-size: clamp(90px, 16vw, 200px);
+    color: rgba(231,166,184,.10);
+    font-family: 'Playfair Display', serif;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-20px) rotate(4deg); }
+}
+
+/* INTRO */
+
+.intro-box {
+    max-width: 760px;
+    margin: auto;
+    padding: 55px;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    text-align: center;
+}
+
+.intro-box p {
+    margin-top: 18px;
+}
+
+/* BERLIN */
+
+.berlin-section {
+    text-align: center;
+}
+
+.berlin-visual {
+    position: relative;
+    height: 390px;
+    margin: 40px 0;
+    border-radius: 28px;
+    overflow: hidden;
+    background:
+      linear-gradient(to top, rgba(10,12,20,.95), rgba(10,12,20,.08)),
+      radial-gradient(ellipse at 50% 30%, #8d6a87, transparent 50%),
+      linear-gradient(135deg, #262b48, #4c3c5a, #191e32);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.berlin-visual::before {
+    content: "BERLIN";
+    position: absolute;
+    top: 38px;
+    font-size: clamp(65px, 14vw, 150px);
+    font-weight: 700;
+    letter-spacing: 12px;
+    color: rgba(255,255,255,.09);
+}
+
+.skyline {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    gap: 8px;
+}
+
+.building {
+    background: #171a29;
+    border-top: 2px solid rgba(255,255,255,.12);
+    width: 8%;
+    height: 65%;
+    position: relative;
+}
+
+.building:nth-child(2n) { height: 90%; }
+.building:nth-child(3n) { height: 55%; }
+
+.building::after {
+    content: "";
+    position: absolute;
+    inset: 15px 8px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #d8b78c 0 5px,
+        transparent 5px 17px
+    );
+    opacity: .45;
+}
+
+.berlin-caption {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+}
+
+.berlin-section > p {
+    max-width: 600px;
+    margin: auto;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+}
+
+.card {
+    padding: 28px;
+    border-radius: 22px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(231,166,184,.4);
+}
+
+.card-icon {
+    font-size: 28px;
+    margin-bottom: 22px;
+    display: block;
+}
+
+.card p {
+    font-size: 13px;
+}
+
+/* ITINERARY */
+
+.itinerary {
+    max-width: 780px;
+    margin: 40px auto 0;
+}
+
+.day {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 18px;
+    margin-bottom: 13px;
+    overflow: hidden;
+}
+
+.day button {
+    background: none;
+    border: none;
+    color: white;
+    width: 100%;
+    text-align: left;
+    padding: 23px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.day-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+}
+
+.day-content p {
+    padding: 0 23px 23px;
+    font-size: 14px;
+}
+
+.plus {
+    color: var(--pink);
+    font-size: 22px;
+    transition: .3s;
+}
+
+.day.active .plus {
+    transform: rotate(45deg);
+}
+
+/* WHY */
+
+.why {
+    max-width: 720px;
+    margin: auto;
+    padding: 45px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, rgba(183,127,157,.13), rgba(146,120,185,.12));
+    border: 1px solid rgba(231,166,184,.2);
+}
+
+.why p {
+    margin-top: 17px;
+}
+
+/* COUNTDOWN */
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    min-width: 95px;
+    padding: 20px 12px;
+    border-radius: 17px;
+    background: var(--card);
+    border: 1px solid var(--line);
+}
+
+.time-box strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.time-box span {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* FINAL */
+
+.final-card {
+    max-width: 760px;
+    margin: auto;
+    padding: 60px 35px;
+    text-align: center;
+    border-radius: 30px;
+    border: 1px solid rgba(231,166,184,.24);
+    background: linear-gradient(145deg, rgba(183,127,157,.13), rgba(146,120,185,.10));
+}
+
+.final-card p {
+    max-width: 520px;
+    margin: 20px auto;
+}
+
+.final-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.response {
+    display: none;
+    margin-top: 30px;
+    padding: 22px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.06);
+    animation: appear .5s ease;
+}
+
+.response.show {
+    display: block;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 55px 20px;
+    color: #777987;
+    font-size: 12px;
+}
+
+footer span {
+    color: var(--pink);
+}
+
+/* PROGRESS */
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    z-index: 50;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+}
+
+/* MOBILE */
+
+@media(max-width: 750px) {
+    nav { padding: 17px 6%; }
+    .nav-right { font-size: 9px; }
+    section { padding: 85px 6%; }
+    .hero { min-height: 95vh; }
+    .hero-decoration { right: 5%; top: 24%; }
+    .intro-box { padding: 35px 23px; }
+    .cards { grid-template-columns: 1fr; }
+    .berlin-visual { height: 280px; }
+    .why { padding: 30px 23px; }
+    .final-card { padding: 45px 22px; }
+    .time-box { min-width: 72px; }
+    .time-box strong { font-size: 28px; }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 </style>
 </head>
-<body>
-<main>
-<header>
-<h1>CRYSTAL QUEST</h1>
-<p>Tempel der vergessenen Kristalle</p>
-</header>
-<section class="frame">
-<div class="hud">
-<div class="stat">💎 Kristalle: <span id="gems">0 / 0</span></div>
-<div class="stat">❤️ Leben: <span id="lives">3</span></div>
-<div class="stat">🔑 Schlüssel: <span id="keys">0</span></div>
-<div class="stat">⭐ Punkte: <span id="score">0</span></div>
-</div>
-<canvas id="game" width="640" height="448" aria-label="Crystal Quest Spielfeld"></canvas>
-<div class="below">
-<div id="message">Sammle alle Kristalle und finde den Ausgang.</div>
-<div><button id="restart">↻ Neu starten</button></div>
-</div>
-<div class="touch" aria-label="Touch-Steuerung">
-<button data-dir="up">▲</button><button data-dir="left">◀</button>
-<button data-dir="down">▼</button><button data-dir="right">▶</button>
-</div>
-<p class="help">Steuerung: Pfeiltasten oder WASD · R = Neustart · Sammle alle Kristalle, dann betrete den Ausgang.</p>
-</section>
-</main>
-<script>
-(() => {
-"use strict";
-const canvas=document.getElementById("game"),ctx=canvas.getContext("2d");
-const TILE=32,COLS=20,ROWS=14;
-const ui={gems:document.getElementById("gems"),lives:document.getElementById("lives"),keys:document.getElementById("keys"),score:document.getElementById("score"),message:document.getElementById("message")};
 
-// # Wand, . Boden, D Erde, G Kristall, O Fels, K Schlüssel, E Ausgang,
-// M Wächter, T Stachel-Falle, L verschlossene Tür
-const LEVEL=[
-"####################",
-"#....D....#........#",
-"#.##.O...##.###....#",
-"#..G..D.....#...G..#",
-"#.####.####.#.##...#",
-"#....#....O.#......#",
-"##O..#..G..D...##..#",
-"#...##.#####..M....#",
-"#.G....K....D..#...#",
-"#.###..###.##..#G..#",
-"#.....T....L.......#",
-"#.O....D.....##....#",
-"#.......G..........#",
-"####################"
-];
-let map,player,gems,totalGems,keys,lives,score,gameState,enemyTick=0,moveLock=false;
-const colors={wall:"#30394b",wallTop:"#46546a",dirt:"#765334",dirtLight:"#9b7048",floor:"#171d27",floorAlt:"#1b2431"};
-function reset(){
- map=LEVEL.map(row=>row.split(""));
- player={x:1,y:1};gems=0;keys=0;lives=3;score=0;gameState="playing";enemyTick=0;moveLock=false;
- totalGems=map.flat().filter(c=>c==="G").length;
- // Make sure player starts on floor.
- map[player.y][player.x]=".";
- ui.message.textContent="Sammle alle Kristalle und finde den Ausgang.";
- updateHud();draw();
-}
-function updateHud(){ui.gems.textContent=`${gems} / ${totalGems}`;ui.lives.textContent=lives;ui.keys.textContent=keys;ui.score.textContent=score}
-function setMessage(s){ui.message.textContent=s}
-function inside(x,y){return x>=0&&y>=0&&x<COLS&&y<ROWS}
-function tile(x,y){return inside(x,y)?map[y][x]:"#"}
-function move(dx,dy){
- if(gameState!=="playing"||moveLock)return;
- const nx=player.x+dx,ny=player.y+dy,t=tile(nx,ny);
- if(t==="#")return;
- if(t==="D"){map[ny][nx]=".";player.x=nx;player.y=ny;score+=2;setMessage("Du hast dich durch die Erde gegraben.");}
- else if(t==="O"){
-   const bx=nx+dx,by=ny+dy;
-   if(dx===0||tile(bx,by)!==".")return;
-   map[by][bx]="O";map[ny][nx]=".";player.x=nx;player.y=ny;
- }
- else if(t==="L"){
-   if(keys<1){setMessage("Die Tür ist verschlossen. Suche einen Schlüssel!");return;}
-   keys--;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Die Steintür öffnet sich knarrend.");
- }
- else if(t==="G"){gems++;score+=100;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Kristall eingesammelt!");}
- else if(t==="K"){keys++;score+=50;map[ny][nx]=".";player.x=nx;player.y=ny;setMessage("Schlüssel gefunden!");}
- else if(t==="T"){player.x=nx;player.y=ny;hurt("Eine Bodenfalle hat dich erwischt!");}
- else if(t==="M"){player.x=nx;player.y=ny;hurt("Der Tempelwächter hat dich erwischt!");}
- else if(t==="E"){
-   if(gems<totalGems){setMessage(`Der Ausgang bleibt versiegelt. Es fehlen noch ${totalGems-gems} Kristalle.`);return;}
-   player.x=nx;player.y=ny;gameState="won";score+=250;setMessage("Geschafft! Du hast den Tempel bezwungen. 🎉");
- }
- else {player.x=nx;player.y=ny;}
- updateHud();draw();
-}
-function hurt(reason){
- lives--;updateHud();
- if(lives<=0){gameState="lost";setMessage("Game Over – der Tempel hat dich besiegt. Drücke R zum Neustart.");return}
- // Reset position to start; collected treasure remains collected.
- player.x=1;player.y=1;setMessage(reason+" Du wurdest zum Eingang zurückgebracht.");
-}
-function tick(){
- if(gameState!=="playing")return;
- enemyTick++;
- if(enemyTick%2===0){
-  const enemies=[];
-  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(map[y][x]==="M")enemies.push({x,y});
-  for(const e of enemies){
-   const dx=Math.sign(player.x-e.x),dy=Math.sign(player.y-e.y);
-   let nx=e.x,ny=e.y;
-   if(Math.abs(player.x-e.x)>Math.abs(player.y-e.y))nx+=dx;else ny+=dy;
-   if(tile(nx,ny)==="."){
-    map[e.y][e.x]=".";map[ny][nx]="M";
-   }else if(nx===player.x&&ny===player.y)hurt("Ein Wächter hat dich berührt!");
-  }
- }
- // Gravity: rocks fall into empty floor, or crush the player.
- for(let y=ROWS-2;y>0;y--)for(let x=1;x<COLS-1;x++){
-  if(map[y][x]==="O"&&map[y+1][x]==="."){
-   if(player.x===x&&player.y===y+1){hurt("Ein herabfallender Felsbrocken hat dich getroffen!");}
-   map[y+1][x]="O";map[y][x]=".";
-  }
- }
- draw();
-}
-function roundedRect(x,y,w,h,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
-function drawTile(c,x,y){
- const px=x*TILE,py=y*TILE;
- ctx.fillStyle=((x+y)%2)?colors.floor:colors.floorAlt;ctx.fillRect(px,py,TILE,TILE);
- if(c==="#"){
-  ctx.fillStyle=colors.wall;ctx.fillRect(px,py,TILE,TILE);
-  ctx.fillStyle=colors.wallTop;ctx.fillRect(px+2,py+2,TILE-4,5);
-  ctx.fillStyle="#222a39";ctx.fillRect(px+3,py+TILE-6,TILE-6,3);
-  ctx.fillStyle="#56647a";ctx.fillRect(px+5,py+12,4,3);ctx.fillRect(px+21,py+22,5,3);
- }else if(c==="D"){
-  ctx.fillStyle=colors.dirt;ctx.fillRect(px+2,py+2,28,28);
-  ctx.fillStyle=colors.dirtLight;ctx.fillRect(px+6,py+7,7,4);ctx.fillRect(px+19,py+19,6,4);
-  ctx.fillStyle="#4d3527";ctx.fillRect(px+15,py+12,4,4);
- }else if(c==="O"){
-  roundedRect(px+3,py+3,26,26,7,"#6f7884");roundedRect(px+6,py+5,20,8,4,"#aab3bc");
-  ctx.fillStyle="#4b5562";ctx.fillRect(px+8,py+20,14,4);ctx.fillRect(px+21,py+13,4,5);
- }else if(c==="G"){
-  ctx.fillStyle="#55f0ff";ctx.beginPath();ctx.moveTo(px+16,py+3);ctx.lineTo(px+27,py+15);ctx.lineTo(px+16,py+29);ctx.lineTo(px+5,py+15);ctx.closePath();ctx.fill();
-  ctx.fillStyle="#d9ffff";ctx.beginPath();ctx.moveTo(px+16,py+5);ctx.lineTo(px+20,py+15);ctx.lineTo(px+16,py+23);ctx.lineTo(px+12,py+15);ctx.closePath();ctx.fill();
- }else if(c==="K"){
-  ctx.strokeStyle="#ffd65b";ctx.lineWidth=4;ctx.beginPath();ctx.arc(px+12,py+12,6,0,Math.PI*2);ctx.stroke();ctx.fillStyle="#ffd65b";ctx.fillRect(px+16,py+11,11,4);ctx.fillRect(px+22,py+14,3,5);
- }else if(c==="E"){
-  ctx.fillStyle="#4c3826";ctx.fillRect(px+5,py+2,22,30);ctx.fillStyle="#d5a34b";ctx.fillRect(px+8,py+5,16,27);ctx.fillStyle="#392a21";ctx.fillRect(px+11,py+8,10,24);ctx.fillStyle="#f6d36c";ctx.fillRect(px+18,py+18,2,3);
- }else if(c==="L"){
-  ctx.fillStyle="#7e4934";ctx.fillRect(px+3,py+2,26,30);ctx.fillStyle="#c18a50";ctx.fillRect(px+7,py+5,18,25);ctx.fillStyle="#553624";ctx.fillRect(px+10,py+9,12,21);ctx.fillStyle="#e9c16d";ctx.fillRect(px+20,py+18,3,3);
- }else if(c==="T"){
-  ctx.fillStyle="#394454";for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(px+2+i*8,py+28);ctx.lineTo(px+6+i*8,py+7);ctx.lineTo(px+10+i*8,py+28);ctx.fill()}
- }else if(c==="M"){
-  roundedRect(px+5,py+5,22,23,7,"#a54b43");ctx.fillStyle="#ffdb8b";ctx.fillRect(px+9,py+12,4,4);ctx.fillRect(px+20,py+12,4,4);ctx.fillStyle="#241b20";ctx.fillRect(px+10,py+13,2,2);ctx.fillRect(px+21,py+13,2,2);ctx.fillStyle="#552c34";ctx.fillRect(px+11,py+21,10,3);
- }
-}
-function drawPlayer(){
- const x=player.x*TILE,y=player.y*TILE;
- // Original explorer sprite, drawn from simple shapes.
- ctx.fillStyle="#0008";ctx.beginPath();ctx.ellipse(x+16,y+27,10,4,0,0,Math.PI*2);ctx.fill();
- roundedRect(x+7,y+12,18,15,5,"#3c9b77");
- roundedRect(x+8,y+2,16,14,5,"#e6b98a");
- ctx.fillStyle="#293447";ctx.fillRect(x+8,y+1,16,5);ctx.fillRect(x+7,y+5,4,4);ctx.fillRect(x+21,y+5,4,4);
- ctx.fillStyle="#26303e";ctx.fillRect(x+12,y+8,2,2);ctx.fillRect(x+20,y+8,2,2);
- ctx.fillStyle="#e6b98a";ctx.fillRect(x+3,y+17,5,7);ctx.fillRect(x+24,y+17,5,7);
-}
-function draw(){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)drawTile(map[y][x],x,y);
- drawPlayer();
- if(gameState==="won"||gameState==="lost"){
-  ctx.fillStyle="#080b11cc";ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.textAlign="center";ctx.fillStyle=gameState==="won"?"#f3d27b":"#ff8d82";
-  ctx.font="bold 34px system-ui";ctx.fillText(gameState==="won"?"TEMPEL GESCHAFFT!":"GAME OVER",canvas.width/2,canvas.height/2-8);
-  ctx.fillStyle="#fff";ctx.font="18px system-ui";ctx.fillText("Drücke R für einen neuen Versuch",canvas.width/2,canvas.height/2+28);
- }
-}
-const keyMap={ArrowUp:[0,-1],w:[0,-1],W:[0,-1],ArrowDown:[0,1],s:[0,1],S:[0,1],ArrowLeft:[-1,0],a:[-1,0],A:[-1,0],ArrowRight:[1,0],d:[1,0],D:[1,0]};
-document.addEventListener("keydown",e=>{
- if(e.key.toLowerCase()==="r"){reset();return}
- const dir=keyMap[e.key];if(dir){e.preventDefault();move(...dir)}
+<body>
+
+<div class="progress" id="progress"></div>
+
+<nav>
+    <div class="logo">a little something ♡</div>
+    <div class="nav-right">Eine Einladung</div>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-tag">✦ Eine kleine Überraschung für Liza</div>
+        <div class="eyebrow">Ich habe mir etwas überlegt</div>
+        <h1>Hey Liza,<br>ich hätte da<br><span class="accent">eine Frage.</span></h1>
+        <p>
+            Keine Sorge, es wird weder kompliziert noch gibt es etwas zu lernen.
+            Ich wollte dir nur etwas zeigen. :)
+        </p>
+        <a href="#idee" class="btn">Na, dann zeig mal <span>↓</span></a>
+    </div>
+    <div class="hero-decoration">♡</div>
+    <div class="hero-bottom">SCROLL A LITTLE · 01 / 05</div>
+</section>
+
+<!-- INTRO -->
+
+<section id="idee">
+    <div class="intro-box reveal">
+        <div class="eyebrow">Zunächst einmal</div>
+        <h2>Eine kleine <span class="accent">Idee.</span></h2>
+        <p>
+            Ich habe überlegt, was ich an Silvester machen könnte.
+            Dabei ist mir eine Idee gekommen, die ich irgendwie ziemlich schön finde.
+        </p>
+        <p>
+            Und bevor ich lange um den heißen Brei herumrede:
+            Wie wäre es, wenn wir gemeinsam nach Berlin fahren?
+        </p>
+    </div>
+</section>
+
+<!-- BERLIN -->
+
+<section class="berlin-section reveal">
+    <div class="eyebrow">Destination · 2026 / 2027</div>
+    <h2>Unser kleiner <span class="accent">Berlin-Trip?</span></h2>
+
+    <div class="berlin-visual">
+        <div class="skyline">
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+            <div class="building"></div>
+        </div>
+        <div class="berlin-caption">Berlin, wir kommen?</div>
+    </div>
+
+    <p>
+        Ich dachte an ungefähr 3–4 Tage über den Jahreswechsel.
+        Ein bisschen Großstadtluft, neue Eindrücke und einfach mal raus aus dem Alltag.
+    </p>
+</section>
+
+<!-- IDEAS -->
+
+<section class="reveal">
+    <div class="center">
+        <div class="eyebrow">Was wir machen könnten</div>
+        <h2>Ein paar <span class="accent">Ideen.</span></h2>
+        <p>Natürlich ohne strikten Zeitplan. Wir wollen schließlich keinen Marathon laufen.</p>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <span class="card-icon">🏙️</span>
+            <h3>Die Stadt erkunden</h3>
+            <p>Durch Berlin schlendern, schöne Ecken entdecken und einfach schauen, wo es uns hinführt.</p>
+        </div>
+
+        <div class="card">
+            <span class="card-icon">🍝</span>
+            <h3>Gut essen</h3>
+            <p>Ein paar leckere Restaurants ausprobieren und uns zwischendurch etwas gönnen.</p>
+        </div>
+
+        <div class="card">
+            <span class="card-icon">✨</span>
+            <h3>Silvester</h3>
+            <p>Gemeinsam ins neue Jahr starten und einen schönen Abend verbringen.</p>
+        </div>
+
+        <div class="card">
+            <span class="card-icon">☕</span>
+            <h3>Kleine Pausen</h3>
+            <p>Gemütliche Cafés, etwas Warmes trinken und einfach mal abschalten.</p>
+        </div>
+
+        <div class="card">
+            <span class="card-icon">📸</span>
+            <h3>Erinnerungen</h3>
+            <p>Ein paar schöne Fotos machen und vielleicht die eine oder andere lustige Geschichte sammeln.</p>
+        </div>
+
+        <div class="card">
+            <span class="card-icon">🗺️</span>
+            <h3>Spontan sein</h3>
+            <p>Wir müssen nicht alles vorher planen. Manchmal entstehen die besten Momente ganz nebenbei.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ITINERARY -->
+
+<section class="reveal">
+    <div class="center">
+        <div class="eyebrow">Ein möglicher Ablauf</div>
+        <h2>Unser kleiner <span class="accent">Reiseplan.</span></h2>
+        <p>Nur eine grobe Vorstellung. Wir können alles so gestalten, wie wir Lust haben.</p>
+    </div>
+
+    <div class="itinerary">
+
+        <div class="day">
+            <button onclick="toggleDay(this)">
+                <span>01 · Ankommen & Berlin entdecken</span>
+                <span class="plus">+</span>
+            </button>
+            <div class="day-content">
+                <p>
+                    Ankommen, einchecken, die ersten Eindrücke sammeln und den Abend
+                    entspannt ausklingen lassen.
+                </p>
+            </div>
+        </div>
+
+        <div class="day">
+            <button onclick="toggleDay(this)">
+                <span>02 · Ein Tag voller Möglichkeiten</span>
+                <span class="plus">+</span>
+            </button>
+            <div class="day-content">
+                <p>
+                    Die Stadt erkunden, etwas Leckeres essen, vielleicht ein paar
+                    Sehenswürdigkeiten besuchen und den Tag genießen.
+                </p>
+            </div>
+        </div>
+
+        <div class="day">
+            <button onclick="toggleDay(this)">
+                <span>03 · Silvester 🎆</span>
+                <span class="plus">+</span>
+            </button>
+            <div class="day-content">
+                <p>
+                    Den letzten Tag des Jahres entspannt verbringen und abends
+                    gemeinsam ins neue Jahr starten.
+                </p>
+            </div>
+        </div>
+
+        <div class="day">
+            <button onclick="toggleDay(this)">
+                <span>04 · Ein schöner Abschluss</span>
+                <span class="plus">+</span>
+            </button>
+            <div class="day-content">
+                <p>
+                    Noch gemütlich frühstücken, vielleicht einen letzten Spaziergang
+                    machen und anschließend die Heimreise antreten.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- COUNTDOWN -->
+
+<section class="center reveal">
+    <div class="eyebrow">Die Zeit läuft</div>
+    <h2>Bis zum <span class="accent">Jahreswechsel.</span></h2>
+    <p>Ein neues Jahr wartet schon.</p>
+
+    <div class="countdown">
+        <div class="time-box">
+            <strong id="days">00</strong>
+            <span>Tage</span>
+        </div>
+        <div class="time-box">
+            <strong id="hours">00</strong>
+            <span>Stunden</span>
+        </div>
+        <div class="time-box">
+            <strong id="minutes">00</strong>
+            <span>Minuten</span>
+        </div>
+        <div class="time-box">
+            <strong id="seconds">00</strong>
+            <span>Sekunden</span>
+        </div>
+    </div>
+</section>
+
+<!-- THE IMPORTANT PART -->
+
+<section class="reveal">
+    <div class="why">
+        <div class="eyebrow">Noch eine wichtige Sache</div>
+        <h2>Mach dir <span class="accent">keinen Kopf.</span></h2>
+
+        <p>
+            Mir ist bewusst, dass wir uns noch nicht ewig kennen.
+            Deshalb möchte ich auch nicht, dass du das Gefühl hast,
+            dass du zu irgendetwas Ja sagen musst.
+        </p>
+
+        <p>
+            Und wegen der Kosten brauchst du dir wirklich keine Gedanken zu machen.
+            Ich würde die Reise ohnehin machen und übernehme die Kosten.
+            Du musst mir dafür nichts zurückgeben und bist mir auch nichts schuldig.
+        </p>
+
+        <p>
+            Ich hätte einfach lieber dich dabei. Ich finde, manche Erlebnisse
+            sind schöner, wenn man sie mit jemandem teilen kann.
+            Und ich würde mich wirklich freuen, dich dabei noch besser kennenzulernen.
+        </p>
+
+        <p>
+            Wenn es dir zu früh ist oder du keine Lust hast, ist das natürlich
+            vollkommen okay. Ich wollte dich einfach gerne fragen. ♡
+        </p>
+    </div>
+</section>
+
+<!-- FINAL QUESTION -->
+
+<section class="reveal" id="antwort">
+    <div class="final-card">
+        <div class="eyebrow">Und jetzt die eigentliche Frage</div>
+
+        <h2>Liza, hast du Lust, mit mir nach <span class="accent">Berlin</span> zu fahren?</h2>
+
+        <p>
+            3–4 Tage, Silvester, ein bisschen Abenteuer und hoffentlich
+            eine richtig schöne gemeinsame Zeit.
+        </p>
+
+        <div class="final-buttons">
+            <button class="btn" onclick="answer('yes')">
+                Ich wäre dabei! ♡
+            </button>
+
+            <button class="btn secondary" onclick="answer('think')">
+                Ich muss noch überlegen
+            </button>
+
+            <button class="btn secondary" onclick="answer('no')">
+                Diesmal lieber nicht
+            </button>
+        </div>
+
+        <div class="response" id="response"></div>
+    </div>
+</section>
+
+<footer>
+    Mit ein bisschen Mühe gemacht <span>♡</span><br><br>
+    Und ganz ohne Verpflichtungen.
+</footer>
+
+<script>
+
+// Fortschrittsbalken
+
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = height > 0 ? (scrollTop / height) * 100 : 0;
+    document.getElementById('progress').style.width = progress + '%';
 });
-document.querySelectorAll("[data-dir]").forEach(btn=>btn.addEventListener("click",()=>{
- const dirs={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};move(...dirs[btn.dataset.dir]);
-}));
-document.getElementById("restart").addEventListener("click",reset);
-setInterval(tick,550);
-reset();
-})();
+
+// Kapitel aufklappen
+
+function toggleDay(button) {
+    const day = button.parentElement;
+    const content = day.querySelector('.day-content');
+
+    day.classList.toggle('active');
+
+    if (day.classList.contains('active')) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+    } else {
+        content.style.maxHeight = '0px';
+    }
+}
+
+// Countdown bis Silvester 2026
+
+function updateCountdown() {
+    const target = new Date('2027-01-01T00:00:00').getTime();
+    const now = new Date().getTime();
+    const difference = target - now;
+
+    if (difference <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const seconds = Math.floor((difference / 1000) % 60);
+
+    document.getElementById('days').textContent = String(days).padStart(2,'0');
+    document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Antworten
+
+function answer(type) {
+    const response = document.getElementById('response');
+
+    const messages = {
+        yes: `
+            <h3>Das freut mich wirklich! ❤️</h3>
+            <p>Dann müssen wir nur noch gemeinsam schauen, wie wir das Ganze am schönsten organisieren.</p>
+        `,
+        think: `
+            <h3>Natürlich. 😊</h3>
+            <p>Nimm dir alle Zeit, die du brauchst. Du musst dich nicht sofort entscheiden. Ich wollte dir die Idee einfach zeigen.</p>
+        `,
+        no: `
+            <h3>Alles gut. ♡</h3>
+            <p>Danke, dass du ehrlich bist. Kein Druck und kein schlechtes Gewissen. Ich hoffe trotzdem, dass wir uns bald wiedersehen.</p>
+        `
+    };
+
+    response.innerHTML = messages[type];
+    response.classList.add('show');
+
+    response.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
+
+// Sanfte Scroll-Animationen
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(element => {
+    observer.observe(element);
+});
+
 </script>
+
 </body>
 </html>
+
 
 
 
