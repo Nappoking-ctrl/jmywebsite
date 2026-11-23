@@ -4,20 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10121b">
-<title>Eine kleine Frage an dich ♡</title>
+<meta name="theme-color" content="#111318">
+<title>Eine kleine Einladung</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
-
 :root {
-    --bg: #10121b;
-    --card: rgba(255,255,255,.055);
-    --text: #f6f2ee;
-    --muted: #aaa9b7;
-    --pink: #e7a6b8;
-    --purple: #b9a8ed;
-    --line: rgba(255,255,255,.11);
+    --bg: #111318;
+    --surface: #191c23;
+    --surface2: #20242d;
+    --text: #f1f0ed;
+    --muted: #a1a4ad;
+    --accent: #c4a77d;
+    --line: rgba(255,255,255,.09);
 }
 
 * {
@@ -26,9 +28,7 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     font-family: 'DM Sans', sans-serif;
@@ -41,23 +41,15 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -2;
+    z-index: -1;
+    pointer-events: none;
     background:
-        radial-gradient(ellipse at 15% 15%, rgba(153,104,178,.18), transparent 45%),
-        radial-gradient(ellipse at 85% 70%, rgba(207,128,153,.12), transparent 45%),
-        #10121b;
+        radial-gradient(ellipse at 10% 10%, rgba(120,110,90,.12), transparent 45%),
+        radial-gradient(ellipse at 90% 70%, rgba(70,85,110,.12), transparent 45%);
 }
 
-button {
-    font: inherit;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* NAVIGATION */
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
 
 nav {
     position: fixed;
@@ -67,40 +59,29 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 7%;
+    padding: 22px 8%;
+    background: rgba(17,19,24,.8);
     backdrop-filter: blur(18px);
-    background: rgba(16,18,27,.65);
-    border-bottom: 1px solid rgba(255,255,255,.05);
+    border-bottom: 1px solid var(--line);
 }
 
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    letter-spacing: 1px;
+    font-size: 19px;
+    letter-spacing: .5px;
 }
 
 .nav-right {
     color: var(--muted);
-    font-size: 12px;
+    font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-/* GENERAL */
-
 section {
+    max-width: 1200px;
     padding: 110px 8%;
-    max-width: 1250px;
     margin: auto;
-}
-
-.eyebrow {
-    color: var(--pink);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-bottom: 22px;
 }
 
 h1, h2, h3 {
@@ -109,66 +90,72 @@ h1, h2, h3 {
 }
 
 h1 {
-    font-size: clamp(48px, 8vw, 92px);
+    font-size: clamp(48px, 8vw, 90px);
     line-height: 1.08;
 }
 
 h2 {
-    font-size: clamp(35px, 5vw, 55px);
+    font-size: clamp(35px, 5vw, 54px);
     line-height: 1.15;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 h3 {
-    font-size: 25px;
+    font-size: 23px;
     margin-bottom: 12px;
 }
 
 p {
     color: var(--muted);
-    line-height: 1.8;
+    line-height: 1.85;
     font-size: 15px;
 }
 
 .accent {
-    color: var(--pink);
+    color: var(--accent);
     font-style: italic;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 23px;
 }
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     padding: 15px 25px;
-    border: 1px solid rgba(231,166,184,.45);
-    border-radius: 50px;
-    color: white;
-    background: linear-gradient(135deg, #b77f9d, #9278b9);
+    border-radius: 5px;
+    background: var(--accent);
+    color: #171717;
+    border: 1px solid var(--accent);
+    font-weight: 700;
     cursor: pointer;
-    transition: .3s;
-    font-weight: 600;
-    box-shadow: 0 10px 35px rgba(183,127,157,.15);
+    transition: .25s;
 }
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(183,127,157,.25);
+    background: #d6bd99;
 }
 
 .btn.secondary {
-    background: rgba(255,255,255,.045);
-    border: 1px solid var(--line);
-    box-shadow: none;
+    background: transparent;
+    border-color: var(--line);
+    color: var(--text);
 }
 
 .btn.secondary:hover {
-    background: rgba(255,255,255,.1);
+    background: var(--surface2);
 }
 
-.center {
-    text-align: center;
-}
+.center { text-align: center; }
 
 /* HERO */
 
@@ -177,53 +164,44 @@ p {
     display: flex;
     align-items: center;
     position: relative;
-    padding-top: 120px;
+    padding-top: 130px;
 }
 
-.hero-content {
-    max-width: 850px;
-}
-
-.hero p {
-    max-width: 490px;
-    margin: 25px 0 35px;
-    font-size: 16px;
-}
+.hero-content { max-width: 800px; }
 
 .hero-tag {
     display: inline-block;
+    padding: 9px 14px;
     border: 1px solid var(--line);
-    padding: 9px 16px;
-    border-radius: 50px;
     color: var(--muted);
-    font-size: 12px;
-    margin-bottom: 30px;
-    background: rgba(255,255,255,.04);
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
 }
 
-.hero-bottom {
-    position: absolute;
-    bottom: 35px;
-    left: 8%;
-    color: #777987;
-    font-size: 11px;
-    letter-spacing: 3px;
+.hero p {
+    max-width: 480px;
+    margin: 25px 0 35px;
+    font-size: 16px;
 }
 
 .hero-decoration {
     position: absolute;
     right: 8%;
     top: 30%;
-    font-size: clamp(90px, 16vw, 200px);
-    color: rgba(231,166,184,.10);
     font-family: 'Playfair Display', serif;
-    animation: float 6s ease-in-out infinite;
+    font-size: clamp(100px, 18vw, 230px);
+    color: rgba(196,167,125,.07);
     pointer-events: none;
 }
 
-@keyframes float {
-    0%,100% { transform: translateY(0) rotate(-8deg); }
-    50% { transform: translateY(-20px) rotate(4deg); }
+.hero-bottom {
+    position: absolute;
+    bottom: 35px;
+    left: 8%;
+    color: #747781;
+    font-size: 10px;
+    letter-spacing: 3px;
 }
 
 /* INTRO */
@@ -233,80 +211,60 @@ p {
     margin: auto;
     padding: 55px;
     border: 1px solid var(--line);
-    border-radius: 28px;
-    background: var(--card);
-    backdrop-filter: blur(20px);
+    background: var(--surface);
     text-align: center;
 }
 
-.intro-box p {
-    margin-top: 18px;
-}
+.intro-box p { margin-top: 18px; }
 
 /* BERLIN */
 
-.berlin-section {
-    text-align: center;
-}
+.berlin-section { text-align: center; }
 
 .berlin-visual {
-    position: relative;
-    height: 390px;
+    height: 400px;
     margin: 40px 0;
-    border-radius: 28px;
+    border-radius: 6px;
     overflow: hidden;
-    background:
-      linear-gradient(to top, rgba(10,12,20,.95), rgba(10,12,20,.08)),
-      radial-gradient(ellipse at 50% 30%, #8d6a87, transparent 50%),
-      linear-gradient(135deg, #262b48, #4c3c5a, #191e32);
+    position: relative;
     display: flex;
-    align-items: end;
     justify-content: center;
+    align-items: end;
+    background:
+        linear-gradient(to top, rgba(10,12,18,.95), transparent 85%),
+        linear-gradient(135deg, #41495a, #74716d, #242b39);
 }
 
 .berlin-visual::before {
     content: "BERLIN";
     position: absolute;
-    top: 38px;
+    top: 40px;
     font-size: clamp(65px, 14vw, 150px);
+    letter-spacing: 15px;
     font-weight: 700;
-    letter-spacing: 12px;
-    color: rgba(255,255,255,.09);
+    color: rgba(255,255,255,.08);
 }
 
 .skyline {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 150px;
+    height: 160px;
     display: flex;
-    align-items: end;
     justify-content: center;
+    align-items: end;
     gap: 8px;
 }
 
 .building {
-    background: #171a29;
-    border-top: 2px solid rgba(255,255,255,.12);
-    width: 8%;
+    width: 9%;
     height: 65%;
-    position: relative;
+    background: #171b25;
+    border-top: 2px solid rgba(255,255,255,.1);
 }
 
 .building:nth-child(2n) { height: 90%; }
 .building:nth-child(3n) { height: 55%; }
-
-.building::after {
-    content: "";
-    position: absolute;
-    inset: 15px 8px;
-    background: repeating-linear-gradient(
-        to bottom,
-        #d8b78c 0 5px,
-        transparent 5px 17px
-    );
-    opacity: .45;
-}
 
 .berlin-caption {
     position: relative;
@@ -317,7 +275,7 @@ p {
 }
 
 .berlin-section > p {
-    max-width: 600px;
+    max-width: 620px;
     margin: auto;
 }
 
@@ -326,32 +284,29 @@ p {
 .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    gap: 16px;
     margin-top: 40px;
 }
 
 .card {
     padding: 28px;
-    border-radius: 22px;
-    background: var(--card);
     border: 1px solid var(--line);
+    background: var(--surface);
     transition: .3s;
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(231,166,184,.4);
+    transform: translateY(-5px);
+    border-color: rgba(196,167,125,.4);
 }
 
 .card-icon {
-    font-size: 28px;
-    margin-bottom: 22px;
+    font-size: 25px;
     display: block;
+    margin-bottom: 20px;
 }
 
-.card p {
-    font-size: 13px;
-}
+.card p { font-size: 13px; }
 
 /* ITINERARY */
 
@@ -362,24 +317,20 @@ p {
 
 .day {
     border: 1px solid var(--line);
-    background: var(--card);
-    border-radius: 18px;
-    margin-bottom: 13px;
-    overflow: hidden;
+    background: var(--surface);
+    margin-bottom: 12px;
 }
 
 .day button {
-    background: none;
-    border: none;
-    color: white;
     width: 100%;
-    text-align: left;
-    padding: 23px;
-    cursor: pointer;
+    padding: 22px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: 15px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: left;
     font-weight: 600;
 }
 
@@ -389,35 +340,27 @@ p {
     transition: max-height .4s ease;
 }
 
-.day-content p {
-    padding: 0 23px 23px;
-    font-size: 14px;
-}
+.day-content p { padding: 0 22px 22px; }
 
 .plus {
-    color: var(--pink);
-    font-size: 22px;
+    color: var(--accent);
+    font-size: 20px;
     transition: .3s;
 }
 
-.day.active .plus {
-    transform: rotate(45deg);
-}
+.day.active .plus { transform: rotate(45deg); }
 
-/* WHY */
+/* DETAILS */
 
 .why {
-    max-width: 720px;
+    max-width: 760px;
     margin: auto;
     padding: 45px;
-    border-radius: 25px;
-    background: linear-gradient(135deg, rgba(183,127,157,.13), rgba(146,120,185,.12));
-    border: 1px solid rgba(231,166,184,.2);
+    border: 1px solid var(--line);
+    background: var(--surface);
 }
 
-.why p {
-    margin-top: 17px;
-}
+.why p { margin-top: 17px; }
 
 /* COUNTDOWN */
 
@@ -425,15 +368,14 @@ p {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin: 40px 0;
     flex-wrap: wrap;
+    margin: 40px 0;
 }
 
 .time-box {
     min-width: 95px;
-    padding: 20px 12px;
-    border-radius: 17px;
-    background: var(--card);
+    padding: 22px 12px;
+    background: var(--surface);
     border: 1px solid var(--line);
 }
 
@@ -458,9 +400,8 @@ p {
     margin: auto;
     padding: 60px 35px;
     text-align: center;
-    border-radius: 30px;
-    border: 1px solid rgba(231,166,184,.24);
-    background: linear-gradient(145deg, rgba(183,127,157,.13), rgba(146,120,185,.10));
+    background: var(--surface);
+    border: 1px solid var(--line);
 }
 
 .final-card p {
@@ -480,31 +421,19 @@ p {
     display: none;
     margin-top: 30px;
     padding: 22px;
-    border-radius: 18px;
-    background: rgba(255,255,255,.06);
-    animation: appear .5s ease;
+    background: var(--surface2);
+    border: 1px solid var(--line);
 }
 
-.response.show {
-    display: block;
-}
-
-@keyframes appear {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.response.show { display: block; }
 
 /* FOOTER */
 
 footer {
     text-align: center;
     padding: 55px 20px;
-    color: #777987;
+    color: #747781;
     font-size: 12px;
-}
-
-footer span {
-    color: var(--pink);
 }
 
 /* PROGRESS */
@@ -514,32 +443,17 @@ footer span {
     top: 0;
     left: 0;
     height: 3px;
-    width: 0%;
+    width: 0;
     z-index: 50;
-    background: linear-gradient(90deg, var(--pink), var(--purple));
+    background: var(--accent);
 }
 
-/* MOBILE */
-
-@media(max-width: 750px) {
-    nav { padding: 17px 6%; }
-    .nav-right { font-size: 9px; }
-    section { padding: 85px 6%; }
-    .hero { min-height: 95vh; }
-    .hero-decoration { right: 5%; top: 24%; }
-    .intro-box { padding: 35px 23px; }
-    .cards { grid-template-columns: 1fr; }
-    .berlin-visual { height: 280px; }
-    .why { padding: 30px 23px; }
-    .final-card { padding: 45px 22px; }
-    .time-box { min-width: 72px; }
-    .time-box strong { font-size: 28px; }
-}
+/* ANIMATIONS */
 
 .reveal {
     opacity: 0;
-    transform: translateY(25px);
-    transition: opacity .8s ease, transform .8s ease;
+    transform: translateY(22px);
+    transition: .8s ease;
 }
 
 .reveal.visible {
@@ -547,6 +461,20 @@ footer span {
     transform: translateY(0);
 }
 
+@media(max-width:750px) {
+    nav { padding: 17px 6%; }
+    section { padding: 85px 6%; }
+    .nav-right { font-size: 9px; }
+    .hero { min-height: 95vh; }
+    .hero-decoration { right: 4%; top: 25%; }
+    .intro-box { padding: 35px 22px; }
+    .cards { grid-template-columns: 1fr; }
+    .berlin-visual { height: 280px; }
+    .why { padding: 30px 23px; }
+    .final-card { padding: 45px 22px; }
+    .time-box { min-width: 72px; }
+    .time-box strong { font-size: 28px; }
+}
 </style>
 </head>
 
@@ -555,28 +483,24 @@ footer span {
 <div class="progress" id="progress"></div>
 
 <nav>
-    <div class="logo">a little something ♡</div>
-    <div class="nav-right">Eine Einladung</div>
+    <div class="logo">A little invitation.</div>
+    <div class="nav-right">Winter · 2026 / 2027</div>
 </nav>
-
-<!-- HERO -->
 
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-tag">✦ Eine kleine Überraschung für Liza</div>
+        <div class="hero-tag">Eine kleine Überraschung</div>
         <div class="eyebrow">Ich habe mir etwas überlegt</div>
-        <h1>Hey Liza,<br>ich hätte da<br><span class="accent">eine Frage.</span></h1>
+        <h1>Hey,<br>ich hätte da<br><span class="accent">eine Idee.</span></h1>
         <p>
             Keine Sorge, es wird weder kompliziert noch gibt es etwas zu lernen.
-            Ich wollte dir nur etwas zeigen. :)
+            Ich wollte dir nur etwas zeigen.
         </p>
-        <a href="#idee" class="btn">Na, dann zeig mal <span>↓</span></a>
+        <a href="#idee" class="btn">Weiter geht's <span>→</span></a>
     </div>
-    <div class="hero-decoration">♡</div>
-    <div class="hero-bottom">SCROLL A LITTLE · 01 / 05</div>
+    <div class="hero-decoration">01</div>
+    <div class="hero-bottom">SCROLL TO EXPLORE · 01 / 05</div>
 </section>
-
-<!-- INTRO -->
 
 <section id="idee">
     <div class="intro-box reveal">
@@ -584,7 +508,7 @@ footer span {
         <h2>Eine kleine <span class="accent">Idee.</span></h2>
         <p>
             Ich habe überlegt, was ich an Silvester machen könnte.
-            Dabei ist mir eine Idee gekommen, die ich irgendwie ziemlich schön finde.
+            Dabei ist mir eine Idee gekommen, die ich ziemlich gut finde.
         </p>
         <p>
             Und bevor ich lange um den heißen Brei herumrede:
@@ -593,11 +517,9 @@ footer span {
     </div>
 </section>
 
-<!-- BERLIN -->
-
 <section class="berlin-section reveal">
     <div class="eyebrow">Destination · 2026 / 2027</div>
-    <h2>Unser kleiner <span class="accent">Berlin-Trip?</span></h2>
+    <h2>Ein kleiner <span class="accent">Berlin-Trip?</span></h2>
 
     <div class="berlin-visual">
         <div class="skyline">
@@ -620,75 +542,62 @@ footer span {
     </p>
 </section>
 
-<!-- IDEAS -->
-
 <section class="reveal">
     <div class="center">
         <div class="eyebrow">Was wir machen könnten</div>
-        <h2>Ein paar <span class="accent">Ideen.</span></h2>
-        <p>Natürlich ohne strikten Zeitplan. Wir wollen schließlich keinen Marathon laufen.</p>
+        <h2>Ein paar <span class="accent">Möglichkeiten.</span></h2>
+        <p>Ohne strikten Zeitplan. Wir wollen schließlich keinen Marathon laufen.</p>
     </div>
 
     <div class="cards">
         <div class="card">
             <span class="card-icon">🏙️</span>
             <h3>Die Stadt erkunden</h3>
-            <p>Durch Berlin schlendern, schöne Ecken entdecken und einfach schauen, wo es uns hinführt.</p>
+            <p>Durch Berlin schlendern, schöne Ecken entdecken und schauen, wo es uns hinführt.</p>
         </div>
-
         <div class="card">
             <span class="card-icon">🍝</span>
             <h3>Gut essen</h3>
-            <p>Ein paar leckere Restaurants ausprobieren und uns zwischendurch etwas gönnen.</p>
+            <p>Ein paar Restaurants ausprobieren und uns zwischendurch etwas gönnen.</p>
         </div>
-
         <div class="card">
-            <span class="card-icon">✨</span>
+            <span class="card-icon">🎆</span>
             <h3>Silvester</h3>
             <p>Gemeinsam ins neue Jahr starten und einen schönen Abend verbringen.</p>
         </div>
-
         <div class="card">
             <span class="card-icon">☕</span>
             <h3>Kleine Pausen</h3>
             <p>Gemütliche Cafés, etwas Warmes trinken und einfach mal abschalten.</p>
         </div>
-
         <div class="card">
             <span class="card-icon">📸</span>
             <h3>Erinnerungen</h3>
-            <p>Ein paar schöne Fotos machen und vielleicht die eine oder andere lustige Geschichte sammeln.</p>
+            <p>Ein paar Fotos machen und vielleicht die eine oder andere lustige Geschichte sammeln.</p>
         </div>
-
         <div class="card">
             <span class="card-icon">🗺️</span>
             <h3>Spontan sein</h3>
-            <p>Wir müssen nicht alles vorher planen. Manchmal entstehen die besten Momente ganz nebenbei.</p>
+            <p>Nicht alles vorher planen. Manchmal entstehen die besten Momente ganz nebenbei.</p>
         </div>
     </div>
 </section>
 
-<!-- ITINERARY -->
-
 <section class="reveal">
     <div class="center">
         <div class="eyebrow">Ein möglicher Ablauf</div>
-        <h2>Unser kleiner <span class="accent">Reiseplan.</span></h2>
-        <p>Nur eine grobe Vorstellung. Wir können alles so gestalten, wie wir Lust haben.</p>
+        <h2>Der grobe <span class="accent">Reiseplan.</span></h2>
+        <p>Nur eine Vorstellung. Wir können alles so gestalten, wie wir Lust haben.</p>
     </div>
 
     <div class="itinerary">
-
         <div class="day">
             <button onclick="toggleDay(this)">
                 <span>01 · Ankommen & Berlin entdecken</span>
                 <span class="plus">+</span>
             </button>
             <div class="day-content">
-                <p>
-                    Ankommen, einchecken, die ersten Eindrücke sammeln und den Abend
-                    entspannt ausklingen lassen.
-                </p>
+                <p>Ankommen, einchecken, erste Eindrücke sammeln und den Abend entspannt ausklingen lassen.</p>
             </div>
         </div>
 
@@ -698,23 +607,17 @@ footer span {
                 <span class="plus">+</span>
             </button>
             <div class="day-content">
-                <p>
-                    Die Stadt erkunden, etwas Leckeres essen, vielleicht ein paar
-                    Sehenswürdigkeiten besuchen und den Tag genießen.
-                </p>
+                <p>Die Stadt erkunden, etwas Leckeres essen, vielleicht ein paar Sehenswürdigkeiten besuchen und den Tag genießen.</p>
             </div>
         </div>
 
         <div class="day">
             <button onclick="toggleDay(this)">
-                <span>03 · Silvester 🎆</span>
+                <span>03 · Silvester</span>
                 <span class="plus">+</span>
             </button>
             <div class="day-content">
-                <p>
-                    Den letzten Tag des Jahres entspannt verbringen und abends
-                    gemeinsam ins neue Jahr starten.
-                </p>
+                <p>Den letzten Tag des Jahres entspannt verbringen und abends gemeinsam ins neue Jahr starten.</p>
             </div>
         </div>
 
@@ -724,44 +627,24 @@ footer span {
                 <span class="plus">+</span>
             </button>
             <div class="day-content">
-                <p>
-                    Noch gemütlich frühstücken, vielleicht einen letzten Spaziergang
-                    machen und anschließend die Heimreise antreten.
-                </p>
+                <p>Gemütlich frühstücken, vielleicht einen letzten Spaziergang machen und anschließend die Heimreise antreten.</p>
             </div>
         </div>
-
     </div>
 </section>
 
-<!-- COUNTDOWN -->
-
 <section class="center reveal">
-    <div class="eyebrow">Die Zeit läuft</div>
-    <h2>Bis zum <span class="accent">Jahreswechsel.</span></h2>
+    <div class="eyebrow">Der Jahreswechsel rückt näher</div>
+    <h2>Countdown bis <span class="accent">2027.</span></h2>
     <p>Ein neues Jahr wartet schon.</p>
 
     <div class="countdown">
-        <div class="time-box">
-            <strong id="days">00</strong>
-            <span>Tage</span>
-        </div>
-        <div class="time-box">
-            <strong id="hours">00</strong>
-            <span>Stunden</span>
-        </div>
-        <div class="time-box">
-            <strong id="minutes">00</strong>
-            <span>Minuten</span>
-        </div>
-        <div class="time-box">
-            <strong id="seconds">00</strong>
-            <span>Sekunden</span>
-        </div>
+        <div class="time-box"><strong id="days">00</strong><span>Tage</span></div>
+        <div class="time-box"><strong id="hours">00</strong><span>Stunden</span></div>
+        <div class="time-box"><strong id="minutes">00</strong><span>Minuten</span></div>
+        <div class="time-box"><strong id="seconds">00</strong><span>Sekunden</span></div>
     </div>
 </section>
-
-<!-- THE IMPORTANT PART -->
 
 <section class="reveal">
     <div class="why">
@@ -771,7 +654,7 @@ footer span {
         <p>
             Mir ist bewusst, dass wir uns noch nicht ewig kennen.
             Deshalb möchte ich auch nicht, dass du das Gefühl hast,
-            dass du zu irgendetwas Ja sagen musst.
+            zu irgendetwas Ja sagen zu müssen.
         </p>
 
         <p>
@@ -783,41 +666,29 @@ footer span {
         <p>
             Ich hätte einfach lieber dich dabei. Ich finde, manche Erlebnisse
             sind schöner, wenn man sie mit jemandem teilen kann.
-            Und ich würde mich wirklich freuen, dich dabei noch besser kennenzulernen.
+            Außerdem würde ich mich freuen, dich noch ein Stück besser kennenzulernen.
         </p>
 
         <p>
             Wenn es dir zu früh ist oder du keine Lust hast, ist das natürlich
-            vollkommen okay. Ich wollte dich einfach gerne fragen. ♡
+            vollkommen okay. Ich wollte dich einfach gerne fragen.
         </p>
     </div>
 </section>
 
-<!-- FINAL QUESTION -->
-
 <section class="reveal" id="antwort">
     <div class="final-card">
-        <div class="eyebrow">Und jetzt die eigentliche Frage</div>
-
-        <h2>Liza, hast du Lust, mit mir nach <span class="accent">Berlin</span> zu fahren?</h2>
-
+        <div class="eyebrow">Die eigentliche Frage</div>
+        <h2>Hast du Lust, mit mir nach <span class="accent">Berlin</span> zu fahren?</h2>
         <p>
-            3–4 Tage, Silvester, ein bisschen Abenteuer und hoffentlich
+            3–4 Tage, Silvester, ein bisschen Großstadt und hoffentlich
             eine richtig schöne gemeinsame Zeit.
         </p>
 
         <div class="final-buttons">
-            <button class="btn" onclick="answer('yes')">
-                Ich wäre dabei! ♡
-            </button>
-
-            <button class="btn secondary" onclick="answer('think')">
-                Ich muss noch überlegen
-            </button>
-
-            <button class="btn secondary" onclick="answer('no')">
-                Diesmal lieber nicht
-            </button>
+            <button class="btn" onclick="answer('yes')">Klingt gut, ich bin dabei.</button>
+            <button class="btn secondary" onclick="answer('think')">Ich muss noch überlegen.</button>
+            <button class="btn secondary" onclick="answer('no')">Diesmal lieber nicht.</button>
         </div>
 
         <div class="response" id="response"></div>
@@ -825,112 +696,82 @@ footer span {
 </section>
 
 <footer>
-    Mit ein bisschen Mühe gemacht <span>♡</span><br><br>
-    Und ganz ohne Verpflichtungen.
+    Mit etwas Mühe zusammengestellt.<br><br>
+    Eine Einladung, nicht mehr und nicht weniger.
 </footer>
 
 <script>
-
-// Fortschrittsbalken
-
 window.addEventListener('scroll', () => {
     const scrollTop = document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = height > 0 ? (scrollTop / height) * 100 : 0;
-    document.getElementById('progress').style.width = progress + '%';
+    document.getElementById('progress').style.width =
+        (height > 0 ? scrollTop / height * 100 : 0) + '%';
 });
-
-// Kapitel aufklappen
 
 function toggleDay(button) {
     const day = button.parentElement;
     const content = day.querySelector('.day-content');
 
     day.classList.toggle('active');
-
-    if (day.classList.contains('active')) {
-        content.style.maxHeight = content.scrollHeight + 'px';
-    } else {
-        content.style.maxHeight = '0px';
-    }
+    content.style.maxHeight = day.classList.contains('active')
+        ? content.scrollHeight + 'px'
+        : '0px';
 }
-
-// Countdown bis Silvester 2026
 
 function updateCountdown() {
     const target = new Date('2027-01-01T00:00:00').getTime();
-    const now = new Date().getTime();
-    const difference = target - now;
+    const difference = target - Date.now();
 
-    if (difference <= 0) {
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
-        return;
-    }
+    const values = {
+        days: Math.max(0, Math.floor(difference / 86400000)),
+        hours: Math.max(0, Math.floor(difference / 3600000) % 24),
+        minutes: Math.max(0, Math.floor(difference / 60000) % 60),
+        seconds: Math.max(0, Math.floor(difference / 1000) % 60)
+    };
 
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / (1000 * 60)) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    document.getElementById('days').textContent = String(days).padStart(2,'0');
-    document.getElementById('hours').textContent = String(hours).padStart(2,'0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
+    Object.entries(values).forEach(([id, value]) => {
+        document.getElementById(id).textContent = String(value).padStart(2, '0');
+    });
 }
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// Antworten
 
 function answer(type) {
     const response = document.getElementById('response');
 
     const messages = {
         yes: `
-            <h3>Das freut mich wirklich! ❤️</h3>
-            <p>Dann müssen wir nur noch gemeinsam schauen, wie wir das Ganze am schönsten organisieren.</p>
+            <h3>Das freut mich!</h3>
+            <p>Dann schauen wir gemeinsam, wie wir das Ganze am besten organisieren.</p>
         `,
         think: `
-            <h3>Natürlich. 😊</h3>
-            <p>Nimm dir alle Zeit, die du brauchst. Du musst dich nicht sofort entscheiden. Ich wollte dir die Idee einfach zeigen.</p>
+            <h3>Natürlich, kein Problem.</h3>
+            <p>Nimm dir alle Zeit, die du brauchst. Du musst dich nicht sofort entscheiden.</p>
         `,
         no: `
-            <h3>Alles gut. ♡</h3>
-            <p>Danke, dass du ehrlich bist. Kein Druck und kein schlechtes Gewissen. Ich hoffe trotzdem, dass wir uns bald wiedersehen.</p>
+            <h3>Alles gut.</h3>
+            <p>Danke für deine Ehrlichkeit. Kein Druck und kein schlechtes Gewissen. Ich hoffe trotzdem, dass wir uns bald wiedersehen.</p>
         `
     };
 
     response.innerHTML = messages[type];
     response.classList.add('show');
-
-    response.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-    });
+    response.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-
-// Sanfte Scroll-Animationen
 
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
     });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(element => {
-    observer.observe(element);
-});
-
+document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 </script>
 
 </body>
 </html>
+
 
 
 
