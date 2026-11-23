@@ -4,769 +4,993 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111318">
-<title>Eine kleine Einladung</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<title>Eine kleine Angelegenheit</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
 :root {
-    --bg: #111318;
-    --surface: #191c23;
-    --surface2: #20242d;
-    --text: #f1f0ed;
-    --muted: #a1a4ad;
-    --accent: #c4a77d;
-    --line: rgba(255,255,255,.09);
+  --bg: #101114;
+  --panel: #17191e;
+  --panel-light: #1d2026;
+  --text: #e9e5dc;
+  --muted: #8c8b88;
+  --gold: #c4a77d;
+  --gold-light: #e1c9a4;
+  --line: rgba(196,167,125,.2);
+  --success: #9db99b;
+  --danger: #c78e83;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(196,167,125,.07), transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
 }
 
 body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-        radial-gradient(ellipse at 10% 10%, rgba(120,110,90,.12), transparent 45%),
-        radial-gradient(ellipse at 90% 70%, rgba(70,85,110,.12), transparent 45%);
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  z-index: 10;
 }
 
-button, a { font: inherit; }
-a { color: inherit; text-decoration: none; }
-
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 20;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 8%;
-    background: rgba(17,19,24,.8);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--line);
+button, input {
+  font: inherit;
 }
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 19px;
-    letter-spacing: .5px;
+button {
+  cursor: pointer;
 }
 
-.nav-right {
-    color: var(--muted);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.wrapper {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 35px 24px 80px;
+  position: relative;
+  z-index: 1;
 }
 
-section {
-    max-width: 1200px;
-    padding: 110px 8%;
-    margin: auto;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 17px;
+  margin-bottom: 80px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 500;
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-h1 {
-    font-size: clamp(48px, 8vw, 90px);
-    line-height: 1.08;
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(196,167,125,.6);
 }
 
-h2 {
-    font-size: clamp(35px, 5vw, 54px);
-    line-height: 1.15;
-    margin-bottom: 20px;
+.screen {
+  display: none;
+  animation: appear .7s ease both;
 }
 
-h3 {
-    font-size: 23px;
-    margin-bottom: 12px;
+.screen.active {
+  display: block;
 }
 
-p {
-    color: var(--muted);
-    line-height: 1.85;
-    font-size: 15px;
-}
-
-.accent {
-    color: var(--accent);
-    font-style: italic;
+@keyframes appear {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
-    color: var(--accent);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 23px;
+  font-family: 'DM Mono', monospace;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 10px;
+  margin-bottom: 22px;
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 15px 25px;
-    border-radius: 5px;
-    background: var(--accent);
-    color: #171717;
-    border: 1px solid var(--accent);
-    font-weight: 700;
-    cursor: pointer;
-    transition: .25s;
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  line-height: 1.16;
 }
 
-.btn:hover {
-    transform: translateY(-3px);
-    background: #d6bd99;
+h1 {
+  font-size: clamp(40px, 8vw, 67px);
+  max-width: 650px;
+  margin-bottom: 24px;
 }
 
-.btn.secondary {
-    background: transparent;
-    border-color: var(--line);
-    color: var(--text);
+h2 {
+  font-size: clamp(31px, 6vw, 46px);
+  margin-bottom: 20px;
 }
 
-.btn.secondary:hover {
-    background: var(--surface2);
+p {
+  color: #aaa9a4;
+  line-height: 1.8;
+  font-size: 15px;
 }
 
-.center { text-align: center; }
-
-/* HERO */
-
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-top: 130px;
+.gold {
+  color: var(--gold-light);
 }
 
-.hero-content { max-width: 800px; }
-
-.hero-tag {
-    display: inline-block;
-    padding: 9px 14px;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 1px;
-    margin-bottom: 32px;
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 38px 0;
 }
 
-.hero p {
-    max-width: 480px;
-    margin: 25px 0 35px;
-    font-size: 16px;
+.intro-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 40px 0;
 }
 
-.hero-decoration {
-    position: absolute;
-    right: 8%;
-    top: 30%;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(100px, 18vw, 230px);
-    color: rgba(196,167,125,.07);
-    pointer-events: none;
+.meta-box {
+  border: 1px solid var(--line);
+  padding: 17px;
+  background: rgba(255,255,255,.015);
 }
 
-.hero-bottom {
-    position: absolute;
-    bottom: 35px;
-    left: 8%;
-    color: #747781;
-    font-size: 10px;
-    letter-spacing: 3px;
+.meta-label {
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 9px;
 }
 
-/* INTRO */
-
-.intro-box {
-    max-width: 760px;
-    margin: auto;
-    padding: 55px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-    text-align: center;
+.meta-value {
+  font-size: 13px;
+  color: var(--text);
 }
 
-.intro-box p { margin-top: 18px; }
-
-/* BERLIN */
-
-.berlin-section { text-align: center; }
-
-.berlin-visual {
-    height: 400px;
-    margin: 40px 0;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    background:
-        linear-gradient(to top, rgba(10,12,18,.95), transparent 85%),
-        linear-gradient(135deg, #41495a, #74716d, #242b39);
+.primary-btn, .secondary-btn {
+  border: 1px solid var(--gold);
+  padding: 15px 22px;
+  background: var(--gold);
+  color: #171717;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: .25s;
+  margin-top: 20px;
 }
 
-.berlin-visual::before {
-    content: "BERLIN";
-    position: absolute;
-    top: 40px;
-    font-size: clamp(65px, 14vw, 150px);
-    letter-spacing: 15px;
-    font-weight: 700;
-    color: rgba(255,255,255,.08);
+.primary-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
 }
 
-.skyline {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 160px;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    gap: 8px;
+.secondary-btn {
+  background: transparent;
+  color: var(--gold-light);
 }
 
-.building {
-    width: 9%;
-    height: 65%;
-    background: #171b25;
-    border-top: 2px solid rgba(255,255,255,.1);
+.secondary-btn:hover {
+  background: rgba(196,167,125,.1);
 }
 
-.building:nth-child(2n) { height: 90%; }
-.building:nth-child(3n) { height: 55%; }
-
-.berlin-caption {
-    position: relative;
-    z-index: 2;
-    padding-bottom: 32px;
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
+button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
 }
 
-.berlin-section > p {
-    max-width: 620px;
-    margin: auto;
+.file-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 25px;
+  margin: 32px 0;
+  position: relative;
 }
 
-/* CARDS */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 40px;
+.file-card::before {
+  content: "VERTRAULICH";
+  position: absolute;
+  top: 16px;
+  right: 17px;
+  font-family: 'DM Mono', monospace;
+  color: rgba(196,167,125,.5);
+  font-size: 9px;
+  letter-spacing: 2px;
 }
 
-.card {
-    padding: 28px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-    transition: .3s;
+.file-number {
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  margin-bottom: 18px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(196,167,125,.4);
+.file-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
 }
 
-.card-icon {
-    font-size: 25px;
-    display: block;
-    margin-bottom: 20px;
+.file-card p {
+  font-size: 13px;
 }
 
-.card p { font-size: 13px; }
-
-/* ITINERARY */
-
-.itinerary {
-    max-width: 780px;
-    margin: 40px auto 0;
+.progress-wrap {
+  margin: 35px 0 45px;
 }
 
-.day {
-    border: 1px solid var(--line);
-    background: var(--surface);
-    margin-bottom: 12px;
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
-.day button {
-    width: 100%;
-    padding: 22px;
-    display: flex;
-    justify-content: space-between;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    text-align: left;
-    font-weight: 600;
+.progress-track {
+  width: 100%;
+  height: 2px;
+  background: #292b30;
 }
 
-.day-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .4s ease;
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  transition: width .5s ease;
 }
 
-.day-content p { padding: 0 22px 22px; }
-
-.plus {
-    color: var(--accent);
-    font-size: 20px;
-    transition: .3s;
+.riddle-box {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 28px;
+  margin: 28px 0;
 }
 
-.day.active .plus { transform: rotate(45deg); }
-
-/* DETAILS */
-
-.why {
-    max-width: 760px;
-    margin: auto;
-    padding: 45px;
-    border: 1px solid var(--line);
-    background: var(--surface);
+.riddle-number {
+  font-family: 'DM Mono', monospace;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
 }
 
-.why p { margin-top: 17px; }
+.riddle-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 20px;
+}
 
-/* COUNTDOWN */
+.clue {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 17px;
+  line-height: 1.7;
+}
 
-.countdown {
-    display: flex;
-    justify-content: center;
+.answer-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.answer-row input {
+  flex: 1;
+  min-width: 0;
+  background: #101216;
+  border: 1px solid #383a3f;
+  color: var(--text);
+  padding: 14px 15px;
+  outline: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.answer-row input:focus {
+  border-color: var(--gold);
+}
+
+.answer-row button {
+  margin: 0;
+  padding: 0 18px;
+}
+
+.feedback {
+  min-height: 23px;
+  font-size: 12px;
+  margin-top: 14px;
+  color: var(--danger);
+}
+
+.feedback.good {
+  color: var(--success);
+}
+
+.hint-btn {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-top: 8px;
+}
+
+.hint-text {
+  display: none;
+  font-size: 12px;
+  color: var(--gold-light);
+  margin-top: 12px;
+}
+
+.hint-text.visible {
+  display: block;
+}
+
+.success-mark {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--success);
+  color: var(--success);
+  display: grid;
+  place-items: center;
+  margin-bottom: 25px;
+  font-size: 20px;
+}
+
+.reveal-card {
+  background: linear-gradient(135deg, #1e2025, #14161a);
+  border: 1px solid var(--line);
+  padding: 35px;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.reveal-label {
+  font-family: 'DM Mono', monospace;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+
+.reveal-word {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 9vw, 70px);
+  color: var(--gold-light);
+  letter-spacing: 2px;
+}
+
+.reveal-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.trip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.trip-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 20px;
+}
+
+.trip-item .icon {
+  font-size: 18px;
+  margin-bottom: 13px;
+  color: var(--gold);
+}
+
+.trip-item h4 {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+.trip-item p {
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.invitation {
+  border-left: 2px solid var(--gold);
+  padding: 5px 0 5px 23px;
+  margin: 32px 0;
+}
+
+.invitation p {
+  color: #c5c1b8;
+  font-size: 15px;
+}
+
+.choice-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.choice {
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  padding: 18px 20px;
+  transition: .2s;
+}
+
+.choice:hover {
+  border-color: var(--gold);
+  background: var(--panel-light);
+  transform: translateX(3px);
+}
+
+.choice strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.choice span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.final-message {
+  display: none;
+  margin-top: 28px;
+  padding: 25px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  animation: appear .5s ease;
+}
+
+.final-message.visible {
+  display: block;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  margin-top: 90px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: #65666a;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+@media(max-width: 520px) {
+  .wrapper {
+    padding: 25px 19px 60px;
+  }
+  .topbar {
+    margin-bottom: 60px;
+  }
+  .intro-meta, .trip-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .riddle-box {
+    padding: 21px;
+  }
+  .answer-row {
+    flex-direction: column;
+  }
+  .answer-row button {
+    padding: 14px;
+  }
+  .footer {
     gap: 15px;
-    flex-wrap: wrap;
-    margin: 40px 0;
-}
-
-.time-box {
-    min-width: 95px;
-    padding: 22px 12px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-}
-
-.time-box strong {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 34px;
-    font-weight: 500;
-}
-
-.time-box span {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-/* FINAL */
-
-.final-card {
-    max-width: 760px;
-    margin: auto;
-    padding: 60px 35px;
-    text-align: center;
-    background: var(--surface);
-    border: 1px solid var(--line);
-}
-
-.final-card p {
-    max-width: 520px;
-    margin: 20px auto;
-}
-
-.final-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
-.response {
-    display: none;
-    margin-top: 30px;
-    padding: 22px;
-    background: var(--surface2);
-    border: 1px solid var(--line);
-}
-
-.response.show { display: block; }
-
-/* FOOTER */
-
-footer {
-    text-align: center;
-    padding: 55px 20px;
-    color: #747781;
-    font-size: 12px;
-}
-
-/* PROGRESS */
-
-.progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0;
-    z-index: 50;
-    background: var(--accent);
-}
-
-/* ANIMATIONS */
-
-.reveal {
-    opacity: 0;
-    transform: translateY(22px);
-    transition: .8s ease;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@media(max-width:750px) {
-    nav { padding: 17px 6%; }
-    section { padding: 85px 6%; }
-    .nav-right { font-size: 9px; }
-    .hero { min-height: 95vh; }
-    .hero-decoration { right: 4%; top: 25%; }
-    .intro-box { padding: 35px 22px; }
-    .cards { grid-template-columns: 1fr; }
-    .berlin-visual { height: 280px; }
-    .why { padding: 30px 23px; }
-    .final-card { padding: 45px 22px; }
-    .time-box { min-width: 72px; }
-    .time-box strong { font-size: 28px; }
+    flex-direction: column;
+  }
 }
 </style>
 </head>
 
 <body>
+<div class="wrapper">
 
-<div class="progress" id="progress"></div>
-
-<nav>
-    <div class="logo">A little invitation.</div>
-    <div class="nav-right">Winter · 2026 / 2027</div>
-</nav>
-
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-tag">Eine kleine Überraschung</div>
-        <div class="eyebrow">Ich habe mir etwas überlegt</div>
-        <h1>Hey,<br>ich hätte da<br><span class="accent">eine Idee.</span></h1>
-        <p>
-            Keine Sorge, es wird weder kompliziert noch gibt es etwas zu lernen.
-            Ich wollte dir nur etwas zeigen.
-        </p>
-        <a href="#idee" class="btn">Weiter geht's <span>→</span></a>
+  <div class="topbar">
+    <span>PROJECT 27 / FILE 001</span>
+    <div class="status">
+      <span class="status-dot"></span>
+      <span>Aktenstatus: Offen</span>
     </div>
-    <div class="hero-decoration">01</div>
-    <div class="hero-bottom">SCROLL TO EXPLORE · 01 / 05</div>
-</section>
+  </div>
 
-<section id="idee">
-    <div class="intro-box reveal">
-        <div class="eyebrow">Zunächst einmal</div>
-        <h2>Eine kleine <span class="accent">Idee.</span></h2>
-        <p>
-            Ich habe überlegt, was ich an Silvester machen könnte.
-            Dabei ist mir eine Idee gekommen, die ich ziemlich gut finde.
-        </p>
-        <p>
-            Und bevor ich lange um den heißen Brei herumrede:
-            Wie wäre es, wenn wir gemeinsam nach Berlin fahren?
-        </p>
+  <!-- STARTSEITE -->
+  <section class="screen active" id="start">
+    <div class="eyebrow">Eine kleine Angelegenheit</div>
+
+    <h1>Manche Dinge sollte man nicht sofort <span class="gold">verraten.</span></h1>
+
+    <p>
+      Es gibt da etwas, das ich dich fragen möchte.
+      Allerdings wäre es ziemlich langweilig, wenn ich dir
+      einfach direkt erzählen würde, worum es geht.
+    </p>
+
+    <div class="intro-meta">
+      <div class="meta-box">
+        <div class="meta-label">Aktenzeichen</div>
+        <div class="meta-value">27-12 / 2026</div>
+      </div>
+      <div class="meta-box">
+        <div class="meta-label">Schwierigkeitsgrad</div>
+        <div class="meta-value">Machbar. Versprochen.</div>
+      </div>
     </div>
-</section>
 
-<section class="berlin-section reveal">
-    <div class="eyebrow">Destination · 2026 / 2027</div>
-    <h2>Ein kleiner <span class="accent">Berlin-Trip?</span></h2>
+    <div class="file-card">
+      <div class="file-number">DOKUMENT 001 — EINGANG</div>
+      <h3>Eine Einladung?</h3>
+      <p>
+        Die vollständigen Informationen sind noch nicht freigegeben.
+        Drei kleine Hinweise sollten allerdings ausreichen,
+        um herauszufinden, worum es geht.
+      </p>
+    </div>
 
-    <div class="berlin-visual">
-        <div class="skyline">
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-            <div class="building"></div>
-        </div>
-        <div class="berlin-caption">Berlin, wir kommen?</div>
+    <p style="font-size:12px;">
+      Du kannst dir Zeit lassen. Es gibt keine Zeitbegrenzung
+      und auch keinen Grund, etwas zu überstürzen.
+    </p>
+
+    <button class="primary-btn" onclick="goTo('riddle1')">
+      AKTE ÖFFNEN →
+    </button>
+  </section>
+
+
+  <!-- RÄTSEL 1 -->
+  <section class="screen" id="riddle1">
+    <div class="eyebrow">Ermittlungsphase / 01</div>
+    <h2>Der erste Hinweis.</h2>
+    <p>
+      Beginnen wir mit dem Ort. Ein paar Dinge dürften dir
+      bekannt vorkommen.
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>FORTSCHRITT</span>
+        <span>01 / 03</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:33%"></div>
+      </div>
+    </div>
+
+    <div class="riddle-box">
+      <div class="riddle-number">HINWEIS NR. 01 — DER ORT</div>
+      <div class="riddle-text">
+        Ein Tor, das Geschichte geschrieben hat.<br>
+        Ein Turm, der die Stadt überragt.<br>
+        Und ein Bär, der eigentlich gar nicht hierher gehört.
+      </div>
+      <p>
+        Gesucht ist eine deutsche Stadt. Wie heißt sie?
+      </p>
+
+      <div class="answer-row">
+        <input id="answer1" type="text" placeholder="Deine Antwort ..." autocomplete="off">
+        <button class="primary-btn" onclick="checkAnswer(1)">PRÜFEN</button>
+      </div>
+      <div class="feedback" id="feedback1"></div>
+      <button class="hint-btn" onclick="showHint(1)">Kleiner Tipp nötig?</button>
+      <div class="hint-text" id="hint1">
+        Die Stadt hat ein berühmtes Brandenburger Tor.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RÄTSEL 2 -->
+  <section class="screen" id="riddle2">
+    <div class="eyebrow">Ermittlungsphase / 02</div>
+    <h2>Der richtige Zeitpunkt.</h2>
+    <p>
+      Der Ort wäre damit geklärt. Aber wann soll die Sache stattfinden?
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>FORTSCHRITT</span>
+        <span>02 / 03</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:66%"></div>
+      </div>
+    </div>
+
+    <div class="riddle-box">
+      <div class="riddle-number">HINWEIS NR. 02 — DER ZEITPUNKT</div>
+      <div class="riddle-text">
+        Ein Jahr geht zu Ende.<br>
+        Ein neues beginnt.<br>
+        Und irgendwo dazwischen wird es ziemlich laut.
+      </div>
+      <p>
+        An welchem Abend findet das Ganze statt?
+      </p>
+
+      <div class="answer-row">
+        <input id="answer2" type="text" placeholder="Deine Antwort ..." autocomplete="off">
+        <button class="primary-btn" onclick="checkAnswer(2)">PRÜFEN</button>
+      </div>
+      <div class="feedback" id="feedback2"></div>
+      <button class="hint-btn" onclick="showHint(2)">Kleiner Tipp nötig?</button>
+      <div class="hint-text" id="hint2">
+        Es ist der 31. Dezember.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RÄTSEL 3 -->
+  <section class="screen" id="riddle3">
+    <div class="eyebrow">Ermittlungsphase / 03</div>
+    <h2>Die letzte Information.</h2>
+    <p>
+      Fast geschafft. Eine Frage bleibt noch offen:
+      Wie viel Zeit sollte man dafür einplanen?
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>FORTSCHRITT</span>
+        <span>03 / 03</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:100%"></div>
+      </div>
+    </div>
+
+    <div class="riddle-box">
+      <div class="riddle-number">HINWEIS NR. 03 — DIE DAUER</div>
+      <div class="riddle-text">
+        Ein Wochenende wäre zu kurz.<br>
+        Eine ganze Woche vielleicht etwas zu lang.<br>
+        Gesucht ist die goldene Mitte.
+      </div>
+      <p>
+        Wie lange könnte die Reise dauern?
+      </p>
+
+      <div class="answer-row">
+        <input id="answer3" type="text" placeholder="Deine Antwort ..." autocomplete="off">
+        <button class="primary-btn" onclick="checkAnswer(3)">PRÜFEN</button>
+      </div>
+      <div class="feedback" id="feedback3"></div>
+      <button class="hint-btn" onclick="showHint(3)">Kleiner Tipp nötig?</button>
+      <div class="hint-text" id="hint3">
+        Zwischen drei und vier Tagen.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- AUFLÖSUNG -->
+  <section class="screen" id="reveal">
+    <div class="eyebrow">Ermittlungsphase abgeschlossen</div>
+    <div class="success-mark">✓</div>
+    <h2>Die Akte ist vollständig.</h2>
+    <p>
+      Alle Hinweise wurden korrekt zugeordnet.
+      Damit kann das eigentliche Vorhaben endlich offengelegt werden.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="reveal-card">
+      <div class="reveal-label">ZIELORT</div>
+      <div class="reveal-word">BERLIN</div>
+      <div class="reveal-sub">31. Dezember 2026 — 01. Januar 2027</div>
     </div>
 
     <p>
-        Ich dachte an ungefähr 3–4 Tage über den Jahreswechsel.
-        Ein bisschen Großstadtluft, neue Eindrücke und einfach mal raus aus dem Alltag.
+      Richtig geraten. Es geht tatsächlich um einen kleinen
+      Ausflug in die Hauptstadt. Und zwar nicht nur für einen Abend.
     </p>
-</section>
 
-<section class="reveal">
-    <div class="center">
-        <div class="eyebrow">Was wir machen könnten</div>
-        <h2>Ein paar <span class="accent">Möglichkeiten.</span></h2>
-        <p>Ohne strikten Zeitplan. Wir wollen schließlich keinen Marathon laufen.</p>
+    <button class="primary-btn" onclick="goTo('details')">
+      WEITERE INFORMATIONEN →
+    </button>
+  </section>
+
+
+  <!-- DETAILS -->
+  <section class="screen" id="details">
+    <div class="eyebrow">Dokument 004 / Das Vorhaben</div>
+    <h2>Ein paar Tage in Berlin.</h2>
+
+    <p>
+      Die Idee wäre, für ungefähr drei bis vier Tage nach Berlin
+      zu fahren und den Jahreswechsel dort zu verbringen.
+    </p>
+
+    <div class="trip-grid">
+      <div class="trip-item">
+        <div class="icon">⌖</div>
+        <h4>Der Ort</h4>
+        <p>Berlin. Eine Stadt, in der es genug zu entdecken gibt.</p>
+      </div>
+
+      <div class="trip-item">
+        <div class="icon">◷</div>
+        <h4>Die Zeit</h4>
+        <p>Rund um Silvester 2026/27.</p>
+      </div>
+
+      <div class="trip-item">
+        <div class="icon">↗</div>
+        <h4>Der Plan</h4>
+        <p>Die Stadt erkunden, essen gehen und den Jahreswechsel erleben.</p>
+      </div>
+
+      <div class="trip-item">
+        <div class="icon">＋</div>
+        <h4>Die Dauer</h4>
+        <p>Ungefähr drei bis vier Tage, ganz entspannt.</p>
+      </div>
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <span class="card-icon">🏙️</span>
-            <h3>Die Stadt erkunden</h3>
-            <p>Durch Berlin schlendern, schöne Ecken entdecken und schauen, wo es uns hinführt.</p>
-        </div>
-        <div class="card">
-            <span class="card-icon">🍝</span>
-            <h3>Gut essen</h3>
-            <p>Ein paar Restaurants ausprobieren und uns zwischendurch etwas gönnen.</p>
-        </div>
-        <div class="card">
-            <span class="card-icon">🎆</span>
-            <h3>Silvester</h3>
-            <p>Gemeinsam ins neue Jahr starten und einen schönen Abend verbringen.</p>
-        </div>
-        <div class="card">
-            <span class="card-icon">☕</span>
-            <h3>Kleine Pausen</h3>
-            <p>Gemütliche Cafés, etwas Warmes trinken und einfach mal abschalten.</p>
-        </div>
-        <div class="card">
-            <span class="card-icon">📸</span>
-            <h3>Erinnerungen</h3>
-            <p>Ein paar Fotos machen und vielleicht die eine oder andere lustige Geschichte sammeln.</p>
-        </div>
-        <div class="card">
-            <span class="card-icon">🗺️</span>
-            <h3>Spontan sein</h3>
-            <p>Nicht alles vorher planen. Manchmal entstehen die besten Momente ganz nebenbei.</p>
-        </div>
-    </div>
-</section>
+    <div class="divider"></div>
 
-<section class="reveal">
-    <div class="center">
-        <div class="eyebrow">Ein möglicher Ablauf</div>
-        <h2>Der grobe <span class="accent">Reiseplan.</span></h2>
-        <p>Nur eine Vorstellung. Wir können alles so gestalten, wie wir Lust haben.</p>
+    <div class="eyebrow">Eine wichtige Anmerkung</div>
+    <h2>Keine versteckten Bedingungen.</h2>
+
+    <div class="invitation">
+      <p>
+        Ich würde die Reise sowieso machen. Ich hätte dich einfach
+        lieber dabei. Ich finde, manche Erlebnisse sind schöner,
+        wenn man sie mit jemandem teilen kann.
+        Und ich würde mich freuen, dich dabei noch ein Stück
+        besser kennenzulernen.
+      </p>
     </div>
 
-    <div class="itinerary">
-        <div class="day">
-            <button onclick="toggleDay(this)">
-                <span>01 · Ankommen & Berlin entdecken</span>
-                <span class="plus">+</span>
-            </button>
-            <div class="day-content">
-                <p>Ankommen, einchecken, erste Eindrücke sammeln und den Abend entspannt ausklingen lassen.</p>
-            </div>
-        </div>
+    <p>
+      Um die Kosten musst du dir übrigens keine Gedanken machen.
+      Ich würde die Reise bezahlen. Du müsstest also nichts
+      beisteuern und bist mir auch nichts schuldig.
+    </p>
 
-        <div class="day">
-            <button onclick="toggleDay(this)">
-                <span>02 · Ein Tag voller Möglichkeiten</span>
-                <span class="plus">+</span>
-            </button>
-            <div class="day-content">
-                <p>Die Stadt erkunden, etwas Leckeres essen, vielleicht ein paar Sehenswürdigkeiten besuchen und den Tag genießen.</p>
-            </div>
-        </div>
+    <p style="margin-top:15px;">
+      Und ganz wichtig: Das ist eine Einladung, keine Verpflichtung.
+      Wenn es zeitlich nicht passt oder du einfach nicht möchtest,
+      ist das vollkommen in Ordnung.
+    </p>
 
-        <div class="day">
-            <button onclick="toggleDay(this)">
-                <span>03 · Silvester</span>
-                <span class="plus">+</span>
-            </button>
-            <div class="day-content">
-                <p>Den letzten Tag des Jahres entspannt verbringen und abends gemeinsam ins neue Jahr starten.</p>
-            </div>
-        </div>
+    <button class="primary-btn" onclick="goTo('decision')">
+      DIE LETZTE FRAGE →
+    </button>
+  </section>
 
-        <div class="day">
-            <button onclick="toggleDay(this)">
-                <span>04 · Ein schöner Abschluss</span>
-                <span class="plus">+</span>
-            </button>
-            <div class="day-content">
-                <p>Gemütlich frühstücken, vielleicht einen letzten Spaziergang machen und anschließend die Heimreise antreten.</p>
-            </div>
-        </div>
+
+  <!-- ENTSCHEIDUNG -->
+  <section class="screen" id="decision">
+    <div class="eyebrow">Dokument 005 / Abschluss</div>
+    <h2>Damit wäre alles gesagt.</h2>
+
+    <p>
+      Jetzt liegt die Entscheidung bei dir.
+      Es gibt keine richtige oder falsche Antwort.
+    </p>
+
+    <div class="file-card">
+      <div class="file-number">ABSCHLIESSENDE FRAGE</div>
+      <h3>Wärst du dabei?</h3>
+      <p>
+        Ein paar Tage Berlin, Silvester zusammen verbringen
+        und schauen, was die Stadt so zu bieten hat.
+      </p>
     </div>
-</section>
 
-<section class="center reveal">
-    <div class="eyebrow">Der Jahreswechsel rückt näher</div>
-    <h2>Countdown bis <span class="accent">2027.</span></h2>
-    <p>Ein neues Jahr wartet schon.</p>
+    <div class="choice-list">
+      <button class="choice" onclick="choose('yes')">
+        <strong>Ja, klingt gut.</strong>
+        <span>Ich wäre gerne dabei.</span>
+      </button>
 
-    <div class="countdown">
-        <div class="time-box"><strong id="days">00</strong><span>Tage</span></div>
-        <div class="time-box"><strong id="hours">00</strong><span>Stunden</span></div>
-        <div class="time-box"><strong id="minutes">00</strong><span>Minuten</span></div>
-        <div class="time-box"><strong id="seconds">00</strong><span>Sekunden</span></div>
+      <button class="choice" onclick="choose('maybe')">
+        <strong>Ich muss noch überlegen.</strong>
+        <span>Ich würde gerne erst darüber nachdenken.</span>
+      </button>
+
+      <button class="choice" onclick="choose('no')">
+        <strong>Diesmal lieber nicht.</strong>
+        <span>Ist völlig in Ordnung.</span>
+      </button>
     </div>
-</section>
 
-<section class="reveal">
-    <div class="why">
-        <div class="eyebrow">Noch eine wichtige Sache</div>
-        <h2>Mach dir <span class="accent">keinen Kopf.</span></h2>
+    <div class="final-message" id="finalMessage"></div>
+  </section>
 
-        <p>
-            Mir ist bewusst, dass wir uns noch nicht ewig kennen.
-            Deshalb möchte ich auch nicht, dass du das Gefühl hast,
-            zu irgendetwas Ja sagen zu müssen.
-        </p>
 
-        <p>
-            Und wegen der Kosten brauchst du dir wirklich keine Gedanken zu machen.
-            Ich würde die Reise ohnehin machen und übernehme die Kosten.
-            Du musst mir dafür nichts zurückgeben und bist mir auch nichts schuldig.
-        </p>
+  <div class="footer">
+    <span>PROJECT 27</span>
+    <span>ENDE DER AKTE</span>
+    <span>© 2026</span>
+  </div>
 
-        <p>
-            Ich hätte einfach lieber dich dabei. Ich finde, manche Erlebnisse
-            sind schöner, wenn man sie mit jemandem teilen kann.
-            Außerdem würde ich mich freuen, dich noch ein Stück besser kennenzulernen.
-        </p>
-
-        <p>
-            Wenn es dir zu früh ist oder du keine Lust hast, ist das natürlich
-            vollkommen okay. Ich wollte dich einfach gerne fragen.
-        </p>
-    </div>
-</section>
-
-<section class="reveal" id="antwort">
-    <div class="final-card">
-        <div class="eyebrow">Die eigentliche Frage</div>
-        <h2>Hast du Lust, mit mir nach <span class="accent">Berlin</span> zu fahren?</h2>
-        <p>
-            3–4 Tage, Silvester, ein bisschen Großstadt und hoffentlich
-            eine richtig schöne gemeinsame Zeit.
-        </p>
-
-        <div class="final-buttons">
-            <button class="btn" onclick="answer('yes')">Klingt gut, ich bin dabei.</button>
-            <button class="btn secondary" onclick="answer('think')">Ich muss noch überlegen.</button>
-            <button class="btn secondary" onclick="answer('no')">Diesmal lieber nicht.</button>
-        </div>
-
-        <div class="response" id="response"></div>
-    </div>
-</section>
-
-<footer>
-    Mit etwas Mühe zusammengestellt.<br><br>
-    Eine Einladung, nicht mehr und nicht weniger.
-</footer>
+</div>
 
 <script>
-window.addEventListener('scroll', () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('progress').style.width =
-        (height > 0 ? scrollTop / height * 100 : 0) + '%';
+const answers = {
+  1: ["berlin"],
+  2: ["silvester", "31.12.", "31.12", "31 dezember", "silvesterabend"],
+  3: ["3-4", "3–4", "3 bis 4", "drei bis vier", "3 bis vier", "drei bis 4", "3 tage", "4 tage", "drei tage", "vier tage"]
+};
+
+const nextScreens = {
+  1: "riddle2",
+  2: "riddle3",
+  3: "reveal"
+};
+
+function normalize(value) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/[ä]/g, "ae")
+    .replace(/[ö]/g, "oe")
+    .replace(/[ü]/g, "ue");
+}
+
+function goTo(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  const target = document.getElementById(id);
+  target.classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function checkAnswer(number) {
+  const input = document.getElementById("answer" + number);
+  const feedback = document.getElementById("feedback" + number);
+  const answer = normalize(input.value);
+
+  const correct = answers[number].some(item => {
+    return normalize(item) === answer;
+  });
+
+  if (correct) {
+    feedback.textContent = "Richtig. Der nächste Hinweis wird freigegeben.";
+    feedback.className = "feedback good";
+
+    input.disabled = true;
+
+    setTimeout(() => {
+      goTo(nextScreens[number]);
+    }, 1100);
+  } else {
+    const messages = {
+      1: "Noch nicht ganz. Denk an das berühmte Tor.",
+      2: "Nicht ganz. Gesucht ist der letzte Abend des Jahres.",
+      3: "Fast. Denk an die Zeit zwischen einem Wochenende und einer Woche."
+    };
+
+    feedback.textContent = messages[number];
+    feedback.className = "feedback";
+    input.focus();
+  }
+}
+
+function showHint(number) {
+  document.getElementById("hint" + number)
+    .classList.toggle("visible");
+}
+
+document.querySelectorAll(".answer-row input").forEach(input => {
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      const number = Number(input.id.replace("answer", ""));
+      checkAnswer(number);
+    }
+  });
 });
 
-function toggleDay(button) {
-    const day = button.parentElement;
-    const content = day.querySelector('.day-content');
+function choose(answer) {
+  const message = document.getElementById("finalMessage");
 
-    day.classList.toggle('active');
-    content.style.maxHeight = day.classList.contains('active')
-        ? content.scrollHeight + 'px'
-        : '0px';
+  const messages = {
+    yes: `
+      <div class="eyebrow">Antwort erhalten</div>
+      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
+        Das freut mich.
+      </h3>
+      <p>
+        Dann können wir ja langsam anfangen, die Reise zu planen.
+        Die Details klären wir ganz entspannt zusammen.
+      </p>
+    `,
+    maybe: `
+      <div class="eyebrow">Antwort erhalten</div>
+      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
+        Natürlich.
+      </h3>
+      <p>
+        Lass dir ruhig Zeit. Du musst dich nicht sofort entscheiden.
+        Wir können jederzeit darüber sprechen.
+      </p>
+    `,
+    no: `
+      <div class="eyebrow">Antwort erhalten</div>
+      <h3 style="font-family:'Playfair Display',serif;font-weight:400;font-size:25px;margin-bottom:12px;">
+        Alles gut.
+      </h3>
+      <p>
+        Danke, dass du dir die kleine Akte überhaupt angesehen hast.
+        Kein Stress und keine unangenehme Situation.
+      </p>
+    `
+  };
+
+  message.innerHTML = messages[answer];
+  message.classList.add("visible");
+
+  document.querySelectorAll(".choice").forEach(button => {
+    button.disabled = true;
+    button.style.opacity = ".45";
+    button.style.cursor = "default";
+  });
+
+  message.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }
-
-function updateCountdown() {
-    const target = new Date('2027-01-01T00:00:00').getTime();
-    const difference = target - Date.now();
-
-    const values = {
-        days: Math.max(0, Math.floor(difference / 86400000)),
-        hours: Math.max(0, Math.floor(difference / 3600000) % 24),
-        minutes: Math.max(0, Math.floor(difference / 60000) % 60),
-        seconds: Math.max(0, Math.floor(difference / 1000) % 60)
-    };
-
-    Object.entries(values).forEach(([id, value]) => {
-        document.getElementById(id).textContent = String(value).padStart(2, '0');
-    });
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-function answer(type) {
-    const response = document.getElementById('response');
-
-    const messages = {
-        yes: `
-            <h3>Das freut mich!</h3>
-            <p>Dann schauen wir gemeinsam, wie wir das Ganze am besten organisieren.</p>
-        `,
-        think: `
-            <h3>Natürlich, kein Problem.</h3>
-            <p>Nimm dir alle Zeit, die du brauchst. Du musst dich nicht sofort entscheiden.</p>
-        `,
-        no: `
-            <h3>Alles gut.</h3>
-            <p>Danke für deine Ehrlichkeit. Kein Druck und kein schlechtes Gewissen. Ich hoffe trotzdem, dass wir uns bald wiedersehen.</p>
-        `
-    };
-
-    response.innerHTML = messages[type];
-    response.classList.add('show');
-    response.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 </script>
 
 </body>
